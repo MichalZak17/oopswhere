@@ -1,0 +1,16 @@
+{
+  "course_unit_id": 9297,
+  "group_number": 3,
+  "class_type_id": "CW",
+  "class_type": {
+    "pl": "ćwiczenia audytoryjne",
+    "en": "auditory classes"
+  },
+  "course_id": "IIN-N1-5-XXZ>0AGZ-CW",
+  "course_name": {
+    "pl": "Przetwarzanie i analiza danych",
+    "en": ""
+  },
+  "term_id": "2026/2027-Z",
+  "group_url": null
+}

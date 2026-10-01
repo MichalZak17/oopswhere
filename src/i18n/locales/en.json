@@ -1,0 +1,176 @@
+{
+    "meta": {
+        "title": "Oopswhere",
+        "description": "Your USOS timetable, finally readable. Sign in once, through your university. No database, no passwords."
+    },
+    "landing": {
+        "eyebrow": "A timetable for ZUT students",
+        "title": "Which room?\nYou already know.",
+        "lead": "Your USOS timetable — clear, fast and always at hand. Sign in once, not every five minutes.",
+        "login": "Sign in with USOS",
+        "demo": "See a sample timetable",
+        "loginUnavailable": "Sign-in is disabled on this instance (no USOS API key configured).",
+        "promiseTitle": "How it works",
+        "promise": [
+            [
+                "You only type your password on ZUT's site.",
+                "Sign-in goes through your university's USOS. We never see your password."
+            ],
+            [
+                "We have no database.",
+                "We only remember your list of class groups — in an encrypted cookie, on your device."
+            ],
+            [
+                "You sign in once.",
+                "Group timetables are public, so after that we fetch them without your account. Once a semester is enough."
+            ]
+        ],
+        "questionsTitle": "Not needed today",
+        "questions": [
+            "A screenshot of the timetable",
+            "“Does anyone know where we are?”",
+            "A second tab",
+            "Patience"
+        ],
+        "chips": ["1 sign-in per semester", "room: visible", "phones: supported"],
+        "clicksTitle": "Clicks to your room",
+        "clicksBefore": "Until now",
+        "clicksNow": "Now",
+        "clicksUnit": "clicks",
+        "clicksNote": "Counted by hand, between classes.",
+        "winsTitle": "What it does",
+        "wins": [
+            "Shows where the room is.",
+            "Shows when.",
+            "Two classes at once? Side by side, like on paper.",
+            "Works on a phone. Yes, that one.",
+            "Remembers you've already signed in.",
+            "Dark mode. You're welcome."
+        ],
+        "faqTitle": "Questions",
+        "faq": [
+            [
+                "Is this the university's official site?",
+                "No. Being official has its advantages. We leave those to the university."
+            ],
+            [
+                "Why is it so fast?",
+                "We show the timetable and nothing else. Apparently that can be done."
+            ],
+            [
+                "What if USOS has a bad day?",
+                "We show the last timetable we have and mention it quietly. Everyone has bad days."
+            ],
+            ["Will I be signed out?", "If you want to be. There's a button for that."],
+            [
+                "How much does it cost?",
+                "Nothing. If something's off, write on GitHub. We'll answer."
+            ]
+        ],
+        "closingTitle": "No need to thank us.",
+        "closingBody": "Just know where your room is.",
+        "closingCta": "Sign in. Once.",
+        "errors": {
+            "denied": "Sign-in cancelled. Try again whenever you like.",
+            "expired": "The sign-in session expired. Please try again.",
+            "error": "Couldn't sign in with USOS. Please try again in a moment.",
+            "nogroups": "Signed in, but USOS returned no class groups for this semester."
+        }
+    },
+    "nav": {
+        "openSource": "Source code",
+        "privacy": "Privacy",
+        "language": "Polski",
+        "theme": "Theme",
+        "themeAuto": "Auto",
+        "themeLight": "Light",
+        "themeDark": "Dark"
+    },
+    "cal": {
+        "prevWeek": "Previous week",
+        "nextWeek": "Next week",
+        "today": "Today",
+        "week": "Week",
+        "session": "Session",
+        "of": "of",
+        "allDays": "Whole week",
+        "classDays": "Class days only",
+        "emptyTitle": "Nothing on.",
+        "emptyNext": "Next classes:",
+        "emptyNone": "No more classes this semester.",
+        "jump": "Go",
+        "now": "Now",
+        "next": "Next",
+        "in": "in",
+        "until": "until",
+        "endsIn": "ends in",
+        "minutes": "min",
+        "hours": "h",
+        "tomorrow": "tomorrow",
+        "group": "gr.",
+        "room": "room",
+        "lecturers": "Lecturers",
+        "place": "Where",
+        "time": "When",
+        "meetings": "Upcoming meetings",
+        "showAllMeetings": "Show all",
+        "noMoreMeetings": "This is the last meeting this semester.",
+        "openUsos": "Open in USOSweb",
+        "close": "Close",
+        "clash": "clash",
+        "hello": "Hi",
+        "refresh": "Refresh groups",
+        "refreshHint": "After a group change in USOS",
+        "logout": "Sign out",
+        "groups": {
+            "one": "group",
+            "few": "groups",
+            "many": "groups",
+            "other": "groups"
+        },
+        "asOf": "as of",
+        "language": "Language",
+        "account": "Your account",
+        "menu": "Menu",
+        "demo": "This is a sample timetable of a few public ZUT groups.",
+        "demoCta": "Sign in to see yours",
+        "stale": "USOS isn't responding — showing the last timetable we fetched.",
+        "missing": "Part of the timetable couldn't be loaded.",
+        "retry": "Try again",
+        "gone": "Some of your groups no longer exist in USOS — refresh your groups.",
+        "newTerm": "New semester? Refresh your groups to see the new timetable.",
+        "scope": "Shows your class groups' meetings. Check exams and cancellations in USOSweb.",
+        "loading": "Loading…"
+    },
+    "types": {
+        "WK": "Lecture",
+        "LB": "Laboratory",
+        "CW": "Tutorial",
+        "PR": "Project",
+        "LK": "Language class",
+        "KN": "Discussion class",
+        "SM": "Seminar",
+        "SD": "Diploma seminar",
+        "PD": "Thesis",
+        "PP": "Internship",
+        "WF": "Physical education",
+        "WR": "Workshop",
+        "ZT": "Field classes",
+        "OK": "Final assessment"
+    },
+    "privacy": {
+        "title": "Privacy",
+        "body": [
+            "Oopswhere has no database and never sees your password. You sign in on your university's own site (USOS), and we receive one-time access that we use only to read your list of class groups and your first name. We revoke that access right away.",
+            "The group list and first name are stored in an encrypted cookie in your browser. The server keeps nothing about you. Signing out deletes the cookie.",
+            "Class group timetables, lecturer names and rooms are public USOS data. We cache them briefly so we don't put load on the university's servers.",
+            "No analytics, no ads, no third-party fonts. The code is open — you can verify every sentence on this page."
+        ],
+        "back": "Back to the timetable"
+    },
+    "notFound": {
+        "title": "No such room.",
+        "body": "The page you're looking for doesn't exist.",
+        "back": "Back to start"
+    }
+}

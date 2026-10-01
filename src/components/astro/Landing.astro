@@ -1,0 +1,880 @@
+---
+import Base from "@/layouts/Base.astro";
+import AppHeader from "./AppHeader.astro";
+import Footer from "./Footer.astro";
+import LoginButton from "./LoginButton.astro";
+import { localePath, t, type Lang } from "@/i18n";
+import { demoEnabled } from "@/lib/env";
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const dict = t(lang);
+const authCode = Astro.url.searchParams.get("auth");
+const error =
+    authCode && authCode in dict.landing.errors
+        ? dict.landing.errors[authCode as keyof typeof dict.landing.errors]
+        : null;
+const [line1, line2] = dict.landing.title.split("\n");
+const home = localePath(lang, "/");
+---
+
+<Base lang={lang} path="/">
+    <AppHeader lang={lang} profile={null} path="/" />
+    <main id="main" class="landing">
+        {error && (
+            <p class="error" role="alert">
+                {error}
+            </p>
+        )}
+
+        <section class="hero">
+            <div class="copy">
+                <p class="eyebrow">{dict.landing.eyebrow}</p>
+                <h1>
+                    <span class="l1">{line1}</span>
+                    <span class="l2">{line2}</span>
+                </h1>
+                <p class="lead">{dict.landing.lead}</p>
+                <div class="actions">
+                    <LoginButton lang={lang} returnTo={home} />
+                    {demoEnabled() && (
+                        <a class="btn btn-ghost demo" href={localePath(lang, "/demo")}>
+                            {dict.landing.demo}
+                        </a>
+                    )}
+                </div>
+                <div class="asked">
+                    <p class="asked-title">{dict.landing.questionsTitle}</p>
+                    <ul>
+                        {dict.landing.questions.map((q, i) => (
+                            <li style={`--i:${i}`}>
+                                <s>{q}</s>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="stage">
+                <div class="specimen" aria-hidden="true">
+                    <div class="spec-head">
+                        <span class="spec-eyebrow">
+                            {dict.cal.session} 3 {dict.cal.of} 10
+                        </span>
+                        <span class="spec-title">
+                            {lang === "pl" ? "Sobota, 10 października" : "Saturday, 10 October"}
+                        </span>
+                    </div>
+                    <div class="spec-body">
+                        <span class="spec-hour" style="--r:0">
+                            8:00
+                        </span>
+                        <span class="spec-hour" style="--r:1">
+                            9:00
+                        </span>
+                        <span class="spec-hour" style="--r:2">
+                            10:00
+                        </span>
+                        <span class="spec-hour" style="--r:3">
+                            11:00
+                        </span>
+                        <div
+                            class="spec-card"
+                            data-type="LB"
+                            style="--top:0; --len:1.5; --lane:0; --lanes:2; --d:0"
+                        >
+                            <span class="t">8:00–9:30</span>
+                            <span class="n">Przetwarzanie i analiza danych</span>
+                            <span class="m">
+                                <b>LB</b> · WI1 303
+                            </span>
+                        </div>
+                        <div
+                            class="spec-card"
+                            data-type="WK"
+                            style="--top:0; --len:1.5; --lane:1; --lanes:2; --d:1"
+                        >
+                            <span class="t">8:00–9:30</span>
+                            <span class="n">Algorytmy 2</span>
+                            <span class="m">
+                                <b>WK</b> · WI1 215
+                            </span>
+                        </div>
+                        <div
+                            class="spec-card now"
+                            data-type="WK"
+                            style="--top:1.67; --len:1.5; --lane:0; --lanes:1; --d:2"
+                        >
+                            <span class="t">9:40–11:10</span>
+                            <span class="n">Testowanie oprogramowania</span>
+                            <span class="m">
+                                <b>WK</b> · WI2 100
+                            </span>
+                        </div>
+                        <div class="spec-now" style="--top:2.3"></div>
+                    </div>
+                </div>
+                <ul class="chips" aria-hidden="true">
+                    {dict.landing.chips.map((c, i) => (
+                        <li style={`--i:${i}`}>{c}</li>
+                    ))}
+                </ul>
+            </div>
+        </section>
+
+        <section class="clicks" aria-labelledby="clicks-title">
+            <h2 id="clicks-title" class="kicker">
+                {dict.landing.clicksTitle}
+            </h2>
+            <dl class="meter">
+                <div class="row before">
+                    <dt>{dict.landing.clicksBefore}</dt>
+                    <dd>
+                        <span class="bar" style="--n:11">
+                            {Array.from({ length: 11 }, (_, i) => (
+                                <i style={`--k:${i}`} />
+                            ))}
+                        </span>
+                        <span class="val">
+                            <span class="sr">11</span>
+                            <span class="count" aria-hidden="true" style="--to:11" />
+                            {dict.landing.clicksUnit}
+                        </span>
+                    </dd>
+                </div>
+                <div class="row now">
+                    <dt>{dict.landing.clicksNow}</dt>
+                    <dd>
+                        <span class="bar zero">
+                            <i style="--k:0" />
+                        </span>
+                        <span class="val">
+                            <span class="sr">0</span>
+                            <span class="count" aria-hidden="true" style="--to:0" />
+                            {dict.landing.clicksUnit}
+                        </span>
+                    </dd>
+                </div>
+            </dl>
+            <p class="note">{dict.landing.clicksNote}</p>
+        </section>
+
+        <section class="wins" aria-labelledby="wins-title">
+            <div class="wins-head">
+                <h2 id="wins-title" class="kicker">
+                    {dict.landing.winsTitle}
+                </h2>
+            </div>
+            <ul class="ticks">
+                {dict.landing.wins.map((w, i) => (
+                    <li style={`--i:${i}`}>
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10.5" pathLength="1" />
+                            <path d="M7 12.5l3.2 3.2L17 9" pathLength="1" />
+                        </svg>
+                        <span>{w}</span>
+                    </li>
+                ))}
+            </ul>
+        </section>
+
+        <section class="how" aria-labelledby="how-title">
+            <h2 id="how-title" class="how-title">
+                {dict.landing.promiseTitle}
+            </h2>
+            <ol class="steps">
+                {dict.landing.promise.map(([title, body], i) => (
+                    <li class="step">
+                        <span class="no num">0{i + 1}</span>
+                        <h3>{title}</h3>
+                        <p>{body}</p>
+                    </li>
+                ))}
+            </ol>
+        </section>
+
+        <section class="faq" aria-labelledby="faq-title">
+            <h2 id="faq-title" class="kicker">
+                {dict.landing.faqTitle}
+            </h2>
+            <dl>
+                {dict.landing.faq.map(([q, a], i) => (
+                    <div class="qa" style={`--i:${i}`}>
+                        <dt>{q}</dt>
+                        <dd>{a}</dd>
+                    </div>
+                ))}
+            </dl>
+        </section>
+
+        <section class="closing" aria-labelledby="closing-title">
+            <h2 id="closing-title">{dict.landing.closingTitle}</h2>
+            <p>{dict.landing.closingBody}</p>
+            <LoginButton lang={lang} returnTo={home} label={dict.landing.closingCta} />
+        </section>
+    </main>
+    <Footer lang={lang} />
+</Base>
+
+<style>
+    .landing {
+        max-width: var(--page-max);
+        margin: 0 auto;
+        padding: 0 var(--gutter);
+    }
+    .error {
+        margin: 8px 0 0;
+        padding: 12px 16px;
+        border-radius: var(--radius-m);
+        background: color-mix(in oklch, var(--accent) 10%, var(--paper));
+        color: var(--ink);
+    }
+
+    .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+        align-items: center;
+        gap: 64px;
+        min-height: min(78vh, 760px);
+        padding: 48px 0 72px;
+    }
+    .eyebrow {
+        font-size: 0.82rem;
+        font-weight: 550;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        margin-bottom: 22px;
+    }
+    h1 {
+        font-size: clamp(3rem, 1.6rem + 5.4vw, 6.2rem);
+        line-height: 0.95;
+        font-weight: 680;
+        letter-spacing: -0.055em;
+    }
+    h1 span {
+        display: block;
+    }
+    .l2 {
+        color: var(--ink-faint);
+    }
+    .lead {
+        max-width: 30em;
+        margin-top: 28px;
+        font-size: 1.15rem;
+        line-height: 1.55;
+        color: var(--ink-2);
+    }
+    .actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px;
+        margin-top: 36px;
+    }
+    .demo {
+        height: 52px;
+        padding: 0 22px;
+    }
+
+    /* Entrance: text rises in, then the specimen settles */
+    .copy > * {
+        animation: rise 760ms var(--ease-out) both;
+    }
+    .copy > :nth-child(2) {
+        animation-delay: 60ms;
+    }
+    .copy > :nth-child(3) {
+        animation-delay: 140ms;
+    }
+    .copy > :nth-child(4) {
+        animation-delay: 220ms;
+    }
+    @keyframes rise {
+        from {
+            opacity: 0;
+            transform: translateY(14px);
+        }
+    }
+
+    /* ---- Specimen: a slice of a real Saturday ---- */
+    .specimen {
+        --row: 74px;
+        padding: 22px 22px 26px;
+        border: 1px solid var(--rule);
+        border-radius: 20px;
+        background: var(--paper-raised);
+        box-shadow: var(--shadow-lift);
+        animation: settle 1000ms var(--ease-out) 200ms both;
+    }
+    @keyframes settle {
+        from {
+            opacity: 0;
+            transform: translateY(24px) rotate(0.6deg);
+        }
+    }
+    .spec-head {
+        display: grid;
+        gap: 4px;
+        padding-bottom: 16px;
+        margin-bottom: 8px;
+        border-bottom: 1px solid var(--rule);
+    }
+    .spec-eyebrow {
+        font-size: 0.72rem;
+        font-weight: 550;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+    }
+    .spec-title {
+        font-size: 1.35rem;
+        font-weight: 650;
+        letter-spacing: -0.03em;
+    }
+    .spec-body {
+        position: relative;
+        height: calc(var(--row) * 3.4);
+        margin-left: 46px;
+        background-image: repeating-linear-gradient(
+            to bottom,
+            var(--rule) 0 1px,
+            transparent 1px var(--row)
+        );
+    }
+    .spec-hour {
+        position: absolute;
+        left: -46px;
+        top: calc(var(--r) * var(--row));
+        transform: translateY(-50%);
+        font-size: 0.72rem;
+        color: var(--ink-3);
+        font-variant-numeric: tabular-nums;
+    }
+    .spec-card {
+        position: absolute;
+        top: calc(var(--top) * var(--row) + 3px);
+        height: calc(var(--len) * var(--row) - 6px);
+        left: calc(var(--lane) / var(--lanes) * 100% + 3px);
+        width: calc(100% / var(--lanes) - 6px);
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        padding: 9px 10px 9px 14px;
+        overflow: hidden;
+        border-radius: var(--radius-m);
+        background: oklch(var(--tint-l) var(--tint-c) var(--h));
+        animation: card-in 640ms var(--ease-out) both;
+        animation-delay: calc(500ms + var(--d) * 90ms);
+    }
+    .spec-card::before {
+        content: "";
+        position: absolute;
+        inset: 6px auto 6px 5px;
+        width: 2.5px;
+        border-radius: 2px;
+        background: oklch(var(--rule-l) var(--rule-c) var(--h));
+    }
+    .spec-card.now {
+        isolation: isolate;
+    }
+    .spec-card.now::after {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 42%;
+        z-index: -1;
+        background: oklch(var(--tint-strong-l) var(--tint-strong-c) var(--h));
+        animation: fill 2400ms var(--ease-out) 900ms both;
+    }
+    @keyframes fill {
+        from {
+            height: 0;
+        }
+    }
+    @keyframes card-in {
+        from {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+    }
+    .spec-card .t {
+        font-size: 0.72rem;
+        color: var(--ink-2);
+        font-variant-numeric: tabular-nums;
+    }
+    .spec-card .n {
+        font-weight: 620;
+        font-size: 0.9rem;
+        line-height: 1.2;
+        letter-spacing: -0.012em;
+    }
+    .spec-card .m {
+        margin-top: auto;
+        font-size: 0.75rem;
+        color: var(--ink-2);
+    }
+    .spec-card .m b {
+        color: oklch(var(--code-l) var(--rule-c) var(--h));
+    }
+    .spec-now {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: calc(var(--top) * var(--row));
+        border-top: 1.5px solid var(--accent);
+        animation: card-in 600ms var(--ease-out) 1100ms both;
+    }
+    .spec-now::before {
+        content: "";
+        position: absolute;
+        left: -5px;
+        top: -5.5px;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 0 3px var(--paper-raised);
+    }
+
+    /* ---- How it works ---- */
+    .how {
+        padding: 48px 0 64px;
+        border-top: 1px solid var(--rule);
+    }
+    .how-title {
+        font-size: 0.82rem;
+        font-weight: 550;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        margin-bottom: 36px;
+    }
+    .steps {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 48px;
+    }
+    .no {
+        display: block;
+        font-size: 0.82rem;
+        color: var(--accent-text);
+        font-weight: 600;
+        margin-bottom: 14px;
+    }
+    .step h3 {
+        font-size: 1.2rem;
+        font-weight: 640;
+        letter-spacing: -0.02em;
+        line-height: 1.25;
+        margin-bottom: 10px;
+    }
+    .step p {
+        color: var(--ink-2);
+    }
+
+    /* ---- Hero extras ---- */
+    .asked {
+        margin-top: 44px;
+        animation: rise 760ms var(--ease-out) 300ms both;
+    }
+    .asked-title {
+        font-size: 0.78rem;
+        font-weight: 550;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+    }
+    .asked ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 22px;
+        margin-top: 12px;
+    }
+    .asked li {
+        font-size: 0.95rem;
+        color: var(--ink-3);
+    }
+    .asked s {
+        position: relative;
+        display: inline-block;
+        text-decoration: none;
+    }
+    /* the struck line is drawn, one question at a time */
+    .asked s::after {
+        content: "";
+        position: absolute;
+        inset: 55% -3px auto -3px;
+        height: 1.5px;
+        background: var(--accent);
+        transform-origin: left;
+        animation: strike 520ms var(--ease-out) calc(1500ms + var(--i) * 420ms) both;
+    }
+    @keyframes strike {
+        from {
+            transform: scaleX(0);
+        }
+    }
+
+    .stage {
+        position: relative;
+    }
+    .chips li {
+        position: absolute;
+        z-index: 2;
+        padding: 7px 13px;
+        border-radius: 999px;
+        background: var(--ink);
+        color: var(--paper);
+        font-size: 0.8rem;
+        font-weight: 600;
+        white-space: nowrap;
+        box-shadow: var(--shadow-lift);
+        animation:
+            pop 620ms var(--ease-spring) calc(1700ms + var(--i) * 320ms) both,
+            bob 6s ease-in-out calc(var(--i) * -1.7s) infinite;
+    }
+    .chips li:nth-child(1) {
+        top: -16px;
+        right: -12px;
+        rotate: 2.5deg;
+    }
+    .chips li:nth-child(2) {
+        top: 52%;
+        left: -22px;
+        rotate: -3deg;
+    }
+    .chips li:nth-child(3) {
+        bottom: -18px;
+        right: 9%;
+        rotate: 1.5deg;
+    }
+    @keyframes pop {
+        from {
+            opacity: 0;
+            transform: scale(0.6);
+        }
+    }
+    @keyframes bob {
+        50% {
+            translate: 0 -5px;
+        }
+    }
+
+    /* ---- Shared section chrome ---- */
+    .clicks,
+    .wins,
+    .faq {
+        padding: 48px 0 64px;
+        border-top: 1px solid var(--rule);
+    }
+    .kicker {
+        font-size: 0.82rem;
+        font-weight: 550;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        margin-bottom: 32px;
+    }
+    .sr {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
+
+    /* ---- Clicks to the room ---- */
+    @property --c {
+        syntax: "<integer>";
+        inherits: false;
+        initial-value: 0;
+    }
+    .meter {
+        display: grid;
+        gap: 6px;
+        max-width: 760px;
+    }
+    .row {
+        display: grid;
+        grid-template-columns: 8.5em minmax(0, 1fr);
+        align-items: center;
+        gap: 16px;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--rule);
+    }
+    .row dt {
+        font-weight: 620;
+        letter-spacing: -0.01em;
+    }
+    .row.now dt {
+        color: var(--accent-text);
+    }
+    .row dd {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        min-width: 0;
+    }
+    .bar {
+        display: flex;
+        flex: 1;
+        gap: 5px;
+        max-width: 420px;
+    }
+    .bar i {
+        flex: 1;
+        height: 28px;
+        border-radius: 6px;
+        background: var(--rule-strong);
+    }
+    .bar.zero {
+        flex: none;
+    }
+    .bar.zero i {
+        flex: none;
+        width: 28px;
+        border-radius: 50%;
+        background: var(--accent);
+    }
+    .val {
+        font-size: 0.9rem;
+        color: var(--ink-2);
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+    }
+    .count {
+        --c: var(--to);
+        counter-reset: c var(--c);
+        font-size: 1.5rem;
+        font-weight: 650;
+        letter-spacing: -0.03em;
+        color: var(--ink);
+    }
+    .count::after {
+        content: counter(c);
+        margin-right: 4px;
+    }
+    .note {
+        margin-top: 16px;
+        font-size: 0.85rem;
+        color: var(--ink-3);
+    }
+
+    /* ---- Groundbreaking features ---- */
+    .wins-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 4px 24px;
+        margin-bottom: 32px;
+    }
+    .wins-head .kicker {
+        margin: 0;
+    }
+    .ticks {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0 56px;
+    }
+    .ticks li {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--rule);
+        font-size: 1.05rem;
+        letter-spacing: -0.01em;
+    }
+    .ticks svg {
+        flex: none;
+        width: 26px;
+        height: 26px;
+        fill: none;
+        stroke: var(--accent);
+        stroke-width: 1.6;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        overflow: visible;
+    }
+    .ticks path,
+    .ticks circle {
+        stroke-dasharray: 1;
+        stroke-dashoffset: 0;
+    }
+
+    /* ---- FAQ ---- */
+    .faq dl {
+        max-width: 860px;
+    }
+    .qa {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        gap: 12px 40px;
+        padding: 22px 0;
+        border-bottom: 1px solid var(--rule);
+    }
+    .qa dt {
+        font-weight: 640;
+        letter-spacing: -0.02em;
+        font-size: 1.1rem;
+        line-height: 1.3;
+    }
+    .qa dd {
+        color: var(--ink-2);
+    }
+
+    /* ---- Closing ---- */
+    .closing {
+        position: relative;
+        padding: 72px 0 112px;
+    }
+    .closing::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto 0;
+        border-top: 1.5px solid var(--accent);
+        transform-origin: left;
+    }
+    .closing h2 {
+        font-size: clamp(2.2rem, 1.2rem + 3.6vw, 4.2rem);
+        line-height: 1;
+        font-weight: 680;
+        letter-spacing: -0.05em;
+    }
+    .closing p {
+        max-width: 28em;
+        margin: 20px 0 32px;
+        font-size: 1.1rem;
+        color: var(--ink-2);
+    }
+
+    /* Scroll-driven reveals: no JS, no observers. Browsers without support just show the end state. */
+    @supports (animation-timeline: view()) {
+        @media (prefers-reduced-motion: no-preference) {
+            .bar i,
+            .row dt,
+            .ticks li,
+            .qa,
+            .closing h2,
+            .closing p,
+            .closing :global(.login),
+            .wins-head {
+                animation: lift linear both;
+                animation-timeline: view();
+                animation-range: entry calc(var(--i, 0) * 4%) entry calc(45% + var(--i, 0) * 4%);
+            }
+            .bar i {
+                --i: var(--k);
+                transform-origin: bottom;
+                animation-name: grow;
+                animation-range: entry calc(var(--k) * 2.5%) entry calc(50% + var(--k) * 2.5%);
+            }
+            .row dt {
+                animation-range: entry 0% entry 40%;
+            }
+            .count {
+                animation: tally linear both;
+                animation-timeline: view();
+                animation-range: entry 5% entry 60%;
+            }
+            .ticks svg path,
+            .ticks svg circle {
+                animation: draw linear both;
+                animation-timeline: view();
+                animation-range: entry calc(var(--i) * 4%) entry calc(50% + var(--i) * 4%);
+            }
+            .closing::before {
+                animation: sweep linear both;
+                animation-timeline: view();
+                animation-range: entry 0% entry 100%;
+            }
+            @keyframes lift {
+                from {
+                    opacity: 0;
+                    translate: 0 18px;
+                }
+            }
+            @keyframes grow {
+                from {
+                    opacity: 0;
+                    transform: scaleY(0.05);
+                }
+            }
+            @keyframes tally {
+                from {
+                    --c: 0;
+                }
+            }
+            @keyframes draw {
+                from {
+                    stroke-dashoffset: 1;
+                }
+            }
+            @keyframes sweep {
+                from {
+                    transform: scaleX(0);
+                }
+            }
+        }
+    }
+
+    /* Reduced motion: show the "answered" state without the performance */
+    @media (prefers-reduced-motion: reduce) {
+        .asked s::after {
+            animation: none;
+        }
+        .chips li {
+            animation: none;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .hero {
+            grid-template-columns: 1fr;
+            gap: 48px;
+            min-height: 0;
+            padding: 32px 0 56px;
+        }
+        .steps {
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
+        .ticks {
+            grid-template-columns: 1fr;
+        }
+        .qa {
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+        .chips li:nth-child(1) {
+            right: -4px;
+        }
+        .chips li:nth-child(2) {
+            left: -4px;
+        }
+    }
+    @media (max-width: 480px) {
+        .actions {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .actions :global(.login),
+        .actions :global(.btn) {
+            width: 100%;
+        }
+        .row {
+            grid-template-columns: 1fr;
+            gap: 6px;
+        }
+        .specimen {
+            --row: 64px;
+            padding: 18px 16px 22px;
+        }
+    }
+</style>

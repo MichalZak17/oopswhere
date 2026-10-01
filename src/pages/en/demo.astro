@@ -1,0 +1,9 @@
+---
+import CalendarView from "@/components/astro/CalendarView.astro";
+import { demoEnabled } from "@/lib/env";
+
+// An empty 404 is rerouted to the 404 page.
+if (!demoEnabled()) return new Response(null, { status: 404 });
+---
+
+<CalendarView lang="en" demo />

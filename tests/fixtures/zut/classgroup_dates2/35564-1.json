@@ -1,0 +1,292 @@
+[
+  {
+    "type": "classgroup2",
+    "start_time": "2026-10-11 08:00:00",
+    "end_time": "2026-10-11 11:00:00",
+    "course_id": "IIN-N1-5-XXZ>BACZ-LK",
+    "course_name": {
+      "pl": "Język angielski 2",
+      "en": ""
+    },
+    "classtype_id": "LK",
+    "classtype_name": {
+      "pl": "lektorat",
+      "en": "foreign language course"
+    },
+    "group_number": 1,
+    "unit_id": 35564,
+    "lecturer_ids": [
+      23872
+    ],
+    "building_id": "WI_WI2",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 2",
+      "en": ""
+    },
+    "room_number": "10",
+    "room_id": 560,
+    "sm_id": 355561,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=1&zaj_cyk_id=35564"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-10-18 08:00:00",
+    "end_time": "2026-10-18 11:00:00",
+    "course_id": "IIN-N1-5-XXZ>BACZ-LK",
+    "course_name": {
+      "pl": "Język angielski 2",
+      "en": ""
+    },
+    "classtype_id": "LK",
+    "classtype_name": {
+      "pl": "lektorat",
+      "en": "foreign language course"
+    },
+    "group_number": 1,
+    "unit_id": 35564,
+    "lecturer_ids": [
+      23872
+    ],
+    "building_id": "WI_WI2",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 2",
+      "en": ""
+    },
+    "room_number": "10",
+    "room_id": 560,
+    "sm_id": 355563,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=1&zaj_cyk_id=35564"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-10-25 08:00:00",
+    "end_time": "2026-10-25 11:00:00",
+    "course_id": "IIN-N1-5-XXZ>BACZ-LK",
+    "course_name": {
+      "pl": "Język angielski 2",
+      "en": ""
+    },
+    "classtype_id": "LK",
+    "classtype_name": {
+      "pl": "lektorat",
+      "en": "foreign language course"
+    },
+    "group_number": 1,
+    "unit_id": 35564,
+    "lecturer_ids": [
+      23872
+    ],
+    "building_id": "WI_WI2",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 2",
+      "en": ""
+    },
+    "room_number": "10",
+    "room_id": 560,
+    "sm_id": 355564,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=1&zaj_cyk_id=35564"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-11-15 08:00:00",
+    "end_time": "2026-11-15 11:00:00",
+    "course_id": "IIN-N1-5-XXZ>BACZ-LK",
+    "course_name": {
+      "pl": "Język angielski 2",
+      "en": ""
+    },
+    "classtype_id": "LK",
+    "classtype_name": {
+      "pl": "lektorat",
+      "en": "foreign language course"
+    },
+    "group_number": 1,
+    "unit_id": 35564,
+    "lecturer_ids": [
+      23872
+    ],
+    "building_id": "WI_WI2",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 2",
+      "en": ""
+    },
+    "room_number": "10",
+    "room_id": 560,
+    "sm_id": 355566,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=1&zaj_cyk_id=35564"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-11-22 08:00:00",
+    "end_time": "2026-11-22 11:00:00",
+    "course_id": "IIN-N1-5-XXZ>BACZ-LK",
+    "course_name": {
+      "pl": "Język angielski 2",
+      "en": ""
+    },
+    "classtype_id": "LK",
+    "classtype_name": {
+      "pl": "lektorat",
+      "en": "foreign language course"
+    },
+    "group_number": 1,
+    "unit_id": 35564,
+    "lecturer_ids": [
+      23872
+    ],
+    "building_id": "WI_WI2",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 2",
+      "en": ""
+    },
+    "room_number": "10",
+    "room_id": 560,
+    "sm_id": 355567,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=1&zaj_cyk_id=35564"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-11-29 08:00:00",
+    "end_time": "2026-11-29 11:00:00",
+    "course_id": "IIN-N1-5-XXZ>BACZ-LK",
+    "course_name": {
+      "pl": "Język angielski 2",
+      "en": ""
+    },
+    "classtype_id": "LK",
+    "classtype_name": {
+      "pl": "lektorat",
+      "en": "foreign language course"
+    },
+    "group_number": 1,
+    "unit_id": 35564,
+    "lecturer_ids": [
+      23872
+    ],
+    "building_id": "WI_WI2",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 2",
+      "en": ""
+    },
+    "room_number": "10",
+    "room_id": 560,
+    "sm_id": 355568,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=1&zaj_cyk_id=35564"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-12-06 08:00:00",
+    "end_time": "2026-12-06 11:00:00",
+    "course_id": "IIN-N1-5-XXZ>BACZ-LK",
+    "course_name": {
+      "pl": "Język angielski 2",
+      "en": ""
+    },
+    "classtype_id": "LK",
+    "classtype_name": {
+      "pl": "lektorat",
+      "en": "foreign language course"
+    },
+    "group_number": 1,
+    "unit_id": 35564,
+    "lecturer_ids": [
+      23872
+    ],
+    "building_id": "WI_WI2",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 2",
+      "en": ""
+    },
+    "room_number": "10",
+    "room_id": 560,
+    "sm_id": 355569,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=1&zaj_cyk_id=35564"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-12-13 08:00:00",
+    "end_time": "2026-12-13 11:00:00",
+    "course_id": "IIN-N1-5-XXZ>BACZ-LK",
+    "course_name": {
+      "pl": "Język angielski 2",
+      "en": ""
+    },
+    "classtype_id": "LK",
+    "classtype_name": {
+      "pl": "lektorat",
+      "en": "foreign language course"
+    },
+    "group_number": 1,
+    "unit_id": 35564,
+    "lecturer_ids": [
+      23872
+    ],
+    "building_id": "WI_WI2",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 2",
+      "en": ""
+    },
+    "room_number": "10",
+    "room_id": 560,
+    "sm_id": 355570,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=1&zaj_cyk_id=35564"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2027-01-17 08:00:00",
+    "end_time": "2027-01-17 11:00:00",
+    "course_id": "IIN-N1-5-XXZ>BACZ-LK",
+    "course_name": {
+      "pl": "Język angielski 2",
+      "en": ""
+    },
+    "classtype_id": "LK",
+    "classtype_name": {
+      "pl": "lektorat",
+      "en": "foreign language course"
+    },
+    "group_number": 1,
+    "unit_id": 35564,
+    "lecturer_ids": [
+      23872
+    ],
+    "building_id": "WI_WI2",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 2",
+      "en": ""
+    },
+    "room_number": "10",
+    "room_id": 560,
+    "sm_id": 355565,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=1&zaj_cyk_id=35564"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2027-01-24 08:00:00",
+    "end_time": "2027-01-24 11:00:00",
+    "course_id": "IIN-N1-5-XXZ>BACZ-LK",
+    "course_name": {
+      "pl": "Język angielski 2",
+      "en": ""
+    },
+    "classtype_id": "LK",
+    "classtype_name": {
+      "pl": "lektorat",
+      "en": "foreign language course"
+    },
+    "group_number": 1,
+    "unit_id": 35564,
+    "lecturer_ids": [
+      23872
+    ],
+    "building_id": "WI_WI2",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 2",
+      "en": ""
+    },
+    "room_number": "10",
+    "room_id": 560,
+    "sm_id": 355562,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=1&zaj_cyk_id=35564"
+  }
+]

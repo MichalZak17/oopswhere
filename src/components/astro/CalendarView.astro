@@ -1,0 +1,100 @@
+---
+import Base from "@/layouts/Base.astro";
+import AppHeader from "./AppHeader.astro";
+import Footer from "./Footer.astro";
+import LoginButton from "./LoginButton.astro";
+import Calendar from "@/components/calendar/Calendar.svelte";
+import { localePath, t, type Lang } from "@/i18n";
+import { DEFAULT_INSTALLATION } from "@/config/installations";
+import { DEMO_GROUPS } from "@/config/demo";
+import { resolveInstallation } from "@/lib/env";
+import { loadTimetable } from "@/lib/timetable/load";
+import { needsRefresh } from "@/lib/profile";
+import { isLocalDate, startOfWeek } from "@/lib/time/local-date";
+import { initialHeadingSpan } from "@/components/calendar/model";
+import { weekHeading } from "@/components/calendar/format";
+
+interface Props {
+    lang: Lang;
+    demo?: boolean;
+}
+
+const { lang, demo = false } = Astro.props;
+const dict = t(lang);
+const profile = demo ? null : Astro.locals.profile;
+const inst = resolveInstallation(profile?.i ?? DEFAULT_INSTALLATION)!;
+const groups = demo ? (DEMO_GROUPS[inst.id] ?? []) : (profile?.g ?? []);
+const payload = await loadTimetable(inst, groups, { budgetMs: 1500 });
+
+const week = Astro.url.searchParams.get("week");
+const initialWeek = isLocalDate(week) ? week : null;
+const path = demo ? "/demo" : "/";
+const title = weekHeading(
+    lang,
+    initialHeadingSpan(payload, startOfWeek(initialWeek ?? payload.today)),
+);
+const showNewTerm = profile ? needsRefresh(profile, payload.today) : false;
+---
+
+<Base lang={lang} path={path} title={title} noindex={!demo}>
+    <AppHeader lang={lang} profile={profile} path={path} />
+    <main id="main" class="main">
+        {demo && (
+            <div class="banner">
+                <p>{dict.cal.demo}</p>
+                <LoginButton
+                    lang={lang}
+                    returnTo={localePath(lang, "/")}
+                    size="s"
+                    label={dict.cal.demoCta}
+                />
+            </div>
+        )}
+        {showNewTerm && profile && (
+            <form class="banner" method="post" action={`/auth/${profile.i}/login`}>
+                <p>{dict.cal.newTerm}</p>
+                <input type="hidden" name="returnTo" value={localePath(lang, "/")} />
+                <button class="btn btn-ghost" type="submit">
+                    {dict.cal.refresh}
+                </button>
+            </form>
+        )}
+        <Calendar
+            client:load
+            payload={payload}
+            lang={lang}
+            dict={dict.cal}
+            types={dict.types}
+            initialWeek={initialWeek}
+            apiUrl={demo ? "/api/v1/timetable?demo=1" : "/api/v1/timetable"}
+        />
+    </main>
+    <Footer lang={lang} path={path} />
+</Base>
+
+<style>
+    .main {
+        max-width: var(--page-max);
+        margin: 0 auto;
+        padding: 20px var(--gutter) 0;
+        min-height: 70vh;
+    }
+    .banner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px 20px;
+        margin-bottom: 32px;
+        padding: 12px 12px 12px 18px;
+        border: 1px solid var(--rule);
+        border-radius: var(--radius-l);
+        color: var(--ink-2);
+        font-size: 0.92rem;
+    }
+    .banner .btn {
+        height: 36px;
+        padding: 0 16px;
+        font-size: 0.9rem;
+    }
+</style>

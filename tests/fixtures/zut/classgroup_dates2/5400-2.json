@@ -1,0 +1,292 @@
+[
+  {
+    "type": "classgroup2",
+    "start_time": "2026-10-10 08:00:00",
+    "end_time": "2026-10-10 09:30:00",
+    "course_id": "IIN-N1-3-XXZ>0AAD-WK",
+    "course_name": {
+      "pl": "Algorytmy 2",
+      "en": ""
+    },
+    "classtype_id": "WK",
+    "classtype_name": {
+      "pl": "wykład",
+      "en": "lecture"
+    },
+    "group_number": 2,
+    "unit_id": 5400,
+    "lecturer_ids": [
+      25434
+    ],
+    "building_id": "WI_WI1",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 1",
+      "en": ""
+    },
+    "room_number": "215",
+    "room_id": 542,
+    "sm_id": 355378,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=2&zaj_cyk_id=5400"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-10-17 08:00:00",
+    "end_time": "2026-10-17 09:30:00",
+    "course_id": "IIN-N1-3-XXZ>0AAD-WK",
+    "course_name": {
+      "pl": "Algorytmy 2",
+      "en": ""
+    },
+    "classtype_id": "WK",
+    "classtype_name": {
+      "pl": "wykład",
+      "en": "lecture"
+    },
+    "group_number": 2,
+    "unit_id": 5400,
+    "lecturer_ids": [
+      25434
+    ],
+    "building_id": "WI_WI1",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 1",
+      "en": ""
+    },
+    "room_number": "215",
+    "room_id": 542,
+    "sm_id": 355379,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=2&zaj_cyk_id=5400"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-10-24 08:00:00",
+    "end_time": "2026-10-24 09:30:00",
+    "course_id": "IIN-N1-3-XXZ>0AAD-WK",
+    "course_name": {
+      "pl": "Algorytmy 2",
+      "en": ""
+    },
+    "classtype_id": "WK",
+    "classtype_name": {
+      "pl": "wykład",
+      "en": "lecture"
+    },
+    "group_number": 2,
+    "unit_id": 5400,
+    "lecturer_ids": [
+      25434
+    ],
+    "building_id": "WI_WI1",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 1",
+      "en": ""
+    },
+    "room_number": "215",
+    "room_id": 542,
+    "sm_id": 355380,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=2&zaj_cyk_id=5400"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-11-14 08:00:00",
+    "end_time": "2026-11-14 09:30:00",
+    "course_id": "IIN-N1-3-XXZ>0AAD-WK",
+    "course_name": {
+      "pl": "Algorytmy 2",
+      "en": ""
+    },
+    "classtype_id": "WK",
+    "classtype_name": {
+      "pl": "wykład",
+      "en": "lecture"
+    },
+    "group_number": 2,
+    "unit_id": 5400,
+    "lecturer_ids": [
+      25434
+    ],
+    "building_id": "WI_WI1",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 1",
+      "en": ""
+    },
+    "room_number": "215",
+    "room_id": 542,
+    "sm_id": 355383,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=2&zaj_cyk_id=5400"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-11-21 08:00:00",
+    "end_time": "2026-11-21 09:30:00",
+    "course_id": "IIN-N1-3-XXZ>0AAD-WK",
+    "course_name": {
+      "pl": "Algorytmy 2",
+      "en": ""
+    },
+    "classtype_id": "WK",
+    "classtype_name": {
+      "pl": "wykład",
+      "en": "lecture"
+    },
+    "group_number": 2,
+    "unit_id": 5400,
+    "lecturer_ids": [
+      25434
+    ],
+    "building_id": "WI_WI1",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 1",
+      "en": ""
+    },
+    "room_number": "215",
+    "room_id": 542,
+    "sm_id": 355384,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=2&zaj_cyk_id=5400"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-11-28 08:00:00",
+    "end_time": "2026-11-28 09:30:00",
+    "course_id": "IIN-N1-3-XXZ>0AAD-WK",
+    "course_name": {
+      "pl": "Algorytmy 2",
+      "en": ""
+    },
+    "classtype_id": "WK",
+    "classtype_name": {
+      "pl": "wykład",
+      "en": "lecture"
+    },
+    "group_number": 2,
+    "unit_id": 5400,
+    "lecturer_ids": [
+      23388
+    ],
+    "building_id": "WI_WI1",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 1",
+      "en": ""
+    },
+    "room_number": "215",
+    "room_id": 542,
+    "sm_id": 355385,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=2&zaj_cyk_id=5400"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-12-05 08:00:00",
+    "end_time": "2026-12-05 09:30:00",
+    "course_id": "IIN-N1-3-XXZ>0AAD-WK",
+    "course_name": {
+      "pl": "Algorytmy 2",
+      "en": ""
+    },
+    "classtype_id": "WK",
+    "classtype_name": {
+      "pl": "wykład",
+      "en": "lecture"
+    },
+    "group_number": 2,
+    "unit_id": 5400,
+    "lecturer_ids": [
+      23388
+    ],
+    "building_id": "WI_WI1",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 1",
+      "en": ""
+    },
+    "room_number": "215",
+    "room_id": 542,
+    "sm_id": 355386,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=2&zaj_cyk_id=5400"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-12-12 08:00:00",
+    "end_time": "2026-12-12 09:30:00",
+    "course_id": "IIN-N1-3-XXZ>0AAD-WK",
+    "course_name": {
+      "pl": "Algorytmy 2",
+      "en": ""
+    },
+    "classtype_id": "WK",
+    "classtype_name": {
+      "pl": "wykład",
+      "en": "lecture"
+    },
+    "group_number": 2,
+    "unit_id": 5400,
+    "lecturer_ids": [
+      23388
+    ],
+    "building_id": "WI_WI1",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 1",
+      "en": ""
+    },
+    "room_number": "215",
+    "room_id": 542,
+    "sm_id": 355387,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=2&zaj_cyk_id=5400"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2027-01-16 08:00:00",
+    "end_time": "2027-01-16 09:30:00",
+    "course_id": "IIN-N1-3-XXZ>0AAD-WK",
+    "course_name": {
+      "pl": "Algorytmy 2",
+      "en": ""
+    },
+    "classtype_id": "WK",
+    "classtype_name": {
+      "pl": "wykład",
+      "en": "lecture"
+    },
+    "group_number": 2,
+    "unit_id": 5400,
+    "lecturer_ids": [
+      23388
+    ],
+    "building_id": "WI_WI1",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 1",
+      "en": ""
+    },
+    "room_number": "215",
+    "room_id": 542,
+    "sm_id": 355381,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=2&zaj_cyk_id=5400"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2027-01-23 08:00:00",
+    "end_time": "2027-01-23 09:30:00",
+    "course_id": "IIN-N1-3-XXZ>0AAD-WK",
+    "course_name": {
+      "pl": "Algorytmy 2",
+      "en": ""
+    },
+    "classtype_id": "WK",
+    "classtype_name": {
+      "pl": "wykład",
+      "en": "lecture"
+    },
+    "group_number": 2,
+    "unit_id": 5400,
+    "lecturer_ids": [
+      23388
+    ],
+    "building_id": "WI_WI1",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 1",
+      "en": ""
+    },
+    "room_number": "215",
+    "room_id": 542,
+    "sm_id": 355382,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=2&zaj_cyk_id=5400"
+  }
+]

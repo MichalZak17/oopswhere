@@ -1,0 +1,263 @@
+[
+  {
+    "type": "classgroup2",
+    "start_time": "2026-10-10 09:40:00",
+    "end_time": "2026-10-10 11:10:00",
+    "course_id": "IIN-N1-5-IOZ>0AIQ-WK",
+    "course_name": {
+      "pl": "Testowanie oprogramowania",
+      "en": ""
+    },
+    "classtype_id": "WK",
+    "classtype_name": {
+      "pl": "wykład",
+      "en": "lecture"
+    },
+    "group_number": 32,
+    "unit_id": 39536,
+    "lecturer_ids": [
+      1265207
+    ],
+    "building_id": "WI_WI2",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 2",
+      "en": ""
+    },
+    "room_number": "100",
+    "room_id": 561,
+    "sm_id": 356640,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=32&zaj_cyk_id=39536"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-10-17 09:40:00",
+    "end_time": "2026-10-17 11:10:00",
+    "course_id": "IIN-N1-5-IOZ>0AIQ-WK",
+    "course_name": {
+      "pl": "Testowanie oprogramowania",
+      "en": ""
+    },
+    "classtype_id": "WK",
+    "classtype_name": {
+      "pl": "wykład",
+      "en": "lecture"
+    },
+    "group_number": 32,
+    "unit_id": 39536,
+    "lecturer_ids": [
+      1265207
+    ],
+    "building_id": "WI_WI2",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 2",
+      "en": ""
+    },
+    "room_number": "100",
+    "room_id": 561,
+    "sm_id": 356641,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=32&zaj_cyk_id=39536"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-10-24 09:40:00",
+    "end_time": "2026-10-24 11:10:00",
+    "course_id": "IIN-N1-5-IOZ>0AIQ-WK",
+    "course_name": {
+      "pl": "Testowanie oprogramowania",
+      "en": ""
+    },
+    "classtype_id": "WK",
+    "classtype_name": {
+      "pl": "wykład",
+      "en": "lecture"
+    },
+    "group_number": 32,
+    "unit_id": 39536,
+    "lecturer_ids": [
+      1265207
+    ],
+    "building_id": "WI_WI2",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 2",
+      "en": ""
+    },
+    "room_number": "100",
+    "room_id": 561,
+    "sm_id": 356642,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=32&zaj_cyk_id=39536"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-11-07 09:40:00",
+    "end_time": "2026-11-07 11:10:00",
+    "course_id": "IIN-N1-5-IOZ>0AIQ-WK",
+    "course_name": {
+      "pl": "Testowanie oprogramowania",
+      "en": ""
+    },
+    "classtype_id": "WK",
+    "classtype_name": {
+      "pl": "wykład",
+      "en": "lecture"
+    },
+    "group_number": 32,
+    "unit_id": 39536,
+    "lecturer_ids": [
+      1265207
+    ],
+    "building_id": "WI_WI2",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 2",
+      "en": ""
+    },
+    "room_number": "100",
+    "room_id": 561,
+    "sm_id": 356644,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=32&zaj_cyk_id=39536"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-11-14 09:40:00",
+    "end_time": "2026-11-14 11:10:00",
+    "course_id": "IIN-N1-5-IOZ>0AIQ-WK",
+    "course_name": {
+      "pl": "Testowanie oprogramowania",
+      "en": ""
+    },
+    "classtype_id": "WK",
+    "classtype_name": {
+      "pl": "wykład",
+      "en": "lecture"
+    },
+    "group_number": 32,
+    "unit_id": 39536,
+    "lecturer_ids": [
+      1265207
+    ],
+    "building_id": "WI_WI2",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 2",
+      "en": ""
+    },
+    "room_number": "100",
+    "room_id": 561,
+    "sm_id": 356645,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=32&zaj_cyk_id=39536"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-11-21 09:40:00",
+    "end_time": "2026-11-21 11:10:00",
+    "course_id": "IIN-N1-5-IOZ>0AIQ-WK",
+    "course_name": {
+      "pl": "Testowanie oprogramowania",
+      "en": ""
+    },
+    "classtype_id": "WK",
+    "classtype_name": {
+      "pl": "wykład",
+      "en": "lecture"
+    },
+    "group_number": 32,
+    "unit_id": 39536,
+    "lecturer_ids": [
+      1265207
+    ],
+    "building_id": "WI_WI2",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 2",
+      "en": ""
+    },
+    "room_number": "100",
+    "room_id": 561,
+    "sm_id": 356646,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=32&zaj_cyk_id=39536"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-11-28 09:40:00",
+    "end_time": "2026-11-28 11:10:00",
+    "course_id": "IIN-N1-5-IOZ>0AIQ-WK",
+    "course_name": {
+      "pl": "Testowanie oprogramowania",
+      "en": ""
+    },
+    "classtype_id": "WK",
+    "classtype_name": {
+      "pl": "wykład",
+      "en": "lecture"
+    },
+    "group_number": 32,
+    "unit_id": 39536,
+    "lecturer_ids": [
+      1265207
+    ],
+    "building_id": "WI_WI2",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 2",
+      "en": ""
+    },
+    "room_number": "100",
+    "room_id": 561,
+    "sm_id": 356647,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=32&zaj_cyk_id=39536"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-12-05 09:40:00",
+    "end_time": "2026-12-05 11:10:00",
+    "course_id": "IIN-N1-5-IOZ>0AIQ-WK",
+    "course_name": {
+      "pl": "Testowanie oprogramowania",
+      "en": ""
+    },
+    "classtype_id": "WK",
+    "classtype_name": {
+      "pl": "wykład",
+      "en": "lecture"
+    },
+    "group_number": 32,
+    "unit_id": 39536,
+    "lecturer_ids": [
+      1265207
+    ],
+    "building_id": "WI_WI2",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 2",
+      "en": ""
+    },
+    "room_number": "100",
+    "room_id": 561,
+    "sm_id": 356648,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=32&zaj_cyk_id=39536"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-12-12 09:40:00",
+    "end_time": "2026-12-12 11:10:00",
+    "course_id": "IIN-N1-5-IOZ>0AIQ-WK",
+    "course_name": {
+      "pl": "Testowanie oprogramowania",
+      "en": ""
+    },
+    "classtype_id": "WK",
+    "classtype_name": {
+      "pl": "wykład",
+      "en": "lecture"
+    },
+    "group_number": 32,
+    "unit_id": 39536,
+    "lecturer_ids": [
+      1265207
+    ],
+    "building_id": "WI_WI2",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 2",
+      "en": ""
+    },
+    "room_number": "100",
+    "room_id": 561,
+    "sm_id": 356643,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=32&zaj_cyk_id=39536"
+  }
+]

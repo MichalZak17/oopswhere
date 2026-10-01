@@ -1,0 +1,96 @@
+/*
+ * Same-document View Transitions, driven by the calendar island.
+ * html[data-nav-dir] tells the week content which way to slide.
+ */
+@keyframes vt-out-left {
+    to {
+        opacity: 0;
+        transform: translateX(-28px);
+    }
+}
+@keyframes vt-in-right {
+    from {
+        opacity: 0;
+        transform: translateX(28px);
+    }
+}
+@keyframes vt-out-right {
+    to {
+        opacity: 0;
+        transform: translateX(28px);
+    }
+}
+@keyframes vt-in-left {
+    from {
+        opacity: 0;
+        transform: translateX(-28px);
+    }
+}
+@keyframes vt-fade-out {
+    to {
+        opacity: 0;
+    }
+}
+@keyframes vt-fade-in {
+    from {
+        opacity: 0;
+    }
+}
+@keyframes vt-rise {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+}
+
+::view-transition-group(*) {
+    animation-duration: var(--dur-3);
+    animation-timing-function: var(--ease-out);
+}
+
+/* Default page cross-fade stays subtle. */
+::view-transition-old(root) {
+    animation: var(--dur-1) var(--ease-in) both vt-fade-out;
+}
+::view-transition-new(root) {
+    animation: var(--dur-2) var(--ease-out) both vt-fade-in;
+}
+
+html[data-nav-dir="next"]::view-transition-old(cal-days) {
+    animation: 160ms var(--ease-in) both vt-out-left;
+}
+html[data-nav-dir="next"]::view-transition-new(cal-days) {
+    animation: 300ms var(--ease-out) 40ms both vt-in-right;
+}
+html[data-nav-dir="prev"]::view-transition-old(cal-days) {
+    animation: 160ms var(--ease-in) both vt-out-right;
+}
+html[data-nav-dir="prev"]::view-transition-new(cal-days) {
+    animation: 300ms var(--ease-out) 40ms both vt-in-left;
+}
+
+::view-transition-old(cal-title) {
+    animation: 140ms var(--ease-in) both vt-fade-out;
+}
+::view-transition-new(cal-title) {
+    animation: 320ms var(--ease-out) 60ms both vt-rise;
+}
+
+/* Card → detail sheet morph */
+::view-transition-group(ev-morph) {
+    animation-duration: 380ms;
+    animation-timing-function: cubic-bezier(0.25, 1, 0.3, 1);
+}
+::view-transition-old(ev-morph),
+::view-transition-new(ev-morph) {
+    height: 100%;
+    animation-duration: 260ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none !important;
+    }
+}

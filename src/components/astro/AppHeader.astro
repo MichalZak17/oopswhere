@@ -1,0 +1,295 @@
+---
+import Wordmark from "./Wordmark.astro";
+import LoginButton from "./LoginButton.astro";
+import ThemeSwitch from "./ThemeSwitch.astro";
+import { localePath, t, type Lang } from "@/i18n";
+import type { Profile } from "@/lib/profile";
+
+interface Props {
+    lang: Lang;
+    profile: Profile | null;
+    /** Path without the locale prefix, for the language switch. */
+    path: string;
+}
+
+const { lang, profile, path } = Astro.props;
+const dict = t(lang);
+const home = localePath(lang, "/");
+const other: Lang = lang === "pl" ? "en" : "pl";
+const LANG_NAMES: Record<Lang, string> = { pl: "Polski", en: "English" };
+const langHref = `/lang/${other}?to=${encodeURIComponent(localePath(other, path))}`;
+const locale = lang === "pl" ? "pl-PL" : "en-GB";
+// "15 grup · stan na 1 października 2026": how many groups, and when they were read from USOS.
+const groupCount = profile?.g.length ?? 0;
+const plural = new Intl.PluralRules(locale).select(groupCount) as keyof typeof dict.cal.groups;
+const readOn = profile
+    ? new Intl.DateTimeFormat(locale, {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+          timeZone: "Europe/Warsaw",
+      }).format(new Date(profile.a * 1000))
+    : "";
+---
+
+<header class="app-header">
+    <Wordmark href={home} intro={!profile} />
+    <div class="right">
+        {profile ? (
+            <>
+                <button class="account" popovertarget="account-menu" aria-haspopup="menu">
+                    <span class="avatar" aria-hidden="true">
+                        {profile.n.charAt(0) || "·"}
+                    </span>
+                    <span class="name">{profile.n || dict.cal.menu}</span>
+                    <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
+                        <path
+                            d="M4 6l4 4 4-4"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                </button>
+                <div id="account-menu" class="menu" popover>
+                    <div class="menu-head">
+                        <p class="who">{profile.n || dict.cal.account}</p>
+                        <p class="meta">
+                            {groupCount} {dict.cal.groups[plural]} · {dict.cal.asOf} {readOn}
+                        </p>
+                    </div>
+                    <form method="post" action={`/auth/${profile.i}/login`}>
+                        <input type="hidden" name="returnTo" value={home} />
+                        <button class="item" type="submit">
+                            {dict.cal.refresh}
+                            <span class="hint">{dict.cal.refreshHint}</span>
+                        </button>
+                    </form>
+                    <div class="lang-row">
+                        <span id="menu-lang">{dict.cal.language}</span>
+                        <span class="seg" role="group" aria-labelledby="menu-lang">
+                            <span class="on" aria-current="true" title={LANG_NAMES[lang]}>
+                                {lang.toUpperCase()}
+                            </span>
+                            <a
+                                href={langHref}
+                                hreflang={other}
+                                lang={other}
+                                aria-label={LANG_NAMES[other]}
+                            >
+                                {other.toUpperCase()}
+                            </a>
+                        </span>
+                    </div>
+                    <div class="lang-row">
+                        <span id="menu-theme">{dict.nav.theme}</span>
+                        <ThemeSwitch lang={lang} path={path} labelledby="menu-theme" />
+                    </div>
+                    <a class="item" href={localePath(lang, "/privacy")}>
+                        {dict.nav.privacy}
+                    </a>
+                    <hr />
+                    <form method="post" action="/auth/logout">
+                        <input type="hidden" name="returnTo" value={home} />
+                        <button class="item" type="submit">
+                            {dict.cal.logout}
+                        </button>
+                    </form>
+                </div>
+            </>
+        ) : (
+            <>
+                <ThemeSwitch lang={lang} path={path} />
+                <a class="lang" href={langHref} hreflang={other}>
+                    {other.toUpperCase()}
+                </a>
+                <LoginButton lang={lang} returnTo={home} size="s" />
+            </>
+        )}
+    </div>
+</header>
+
+<style>
+    .app-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        max-width: var(--page-max);
+        margin: 0 auto;
+        padding: max(18px, env(safe-area-inset-top)) var(--gutter) 18px;
+    }
+    .right {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+    .lang {
+        font-size: 0.84rem;
+        font-weight: 550;
+        letter-spacing: 0.04em;
+        color: var(--ink-2);
+        text-decoration: none;
+    }
+    .lang:hover {
+        color: var(--ink);
+    }
+
+    .account {
+        anchor-name: --account;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        height: 38px;
+        padding: 0 12px 0 4px;
+        border-radius: 999px;
+        border: 1px solid var(--rule);
+        color: var(--ink-2);
+        transition:
+            border-color var(--dur-1) var(--ease-out),
+            background-color var(--dur-1) var(--ease-out);
+    }
+    .account:hover {
+        border-color: var(--rule-strong);
+        background: var(--paper-sunk);
+    }
+    .avatar {
+        display: grid;
+        place-items: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: var(--ink);
+        color: var(--paper);
+        font-weight: 650;
+        font-size: 0.86rem;
+    }
+    .name {
+        font-weight: 550;
+        color: var(--ink);
+    }
+
+    .menu {
+        inset: auto;
+        top: 68px;
+        right: var(--gutter);
+        margin: 0;
+        min-width: 240px;
+        padding: 6px;
+        border: 1px solid var(--rule);
+        border-radius: var(--radius-m);
+        background: var(--paper-raised);
+        color: var(--ink);
+        box-shadow: var(--shadow-sheet);
+        opacity: 1;
+        transform: none;
+        transition:
+            opacity var(--dur-2) var(--ease-out),
+            transform var(--dur-2) var(--ease-out),
+            overlay var(--dur-2) allow-discrete,
+            display var(--dur-2) allow-discrete;
+    }
+    @supports (anchor-name: --a) {
+        .menu {
+            position-anchor: --account;
+            top: anchor(bottom);
+            right: anchor(right);
+            margin-top: 8px;
+        }
+    }
+    @starting-style {
+        .menu:popover-open {
+            opacity: 0;
+            transform: translateY(-4px) scale(0.98);
+        }
+    }
+    .menu:not(:popover-open) {
+        opacity: 0;
+        transform: translateY(-4px) scale(0.98);
+    }
+    .menu-head {
+        margin: 0 4px 6px;
+        padding: 8px 6px 12px;
+        border-bottom: 1px solid var(--rule);
+    }
+    .who {
+        font-weight: 650;
+    }
+    .meta {
+        margin-top: 2px;
+        font-size: 0.8rem;
+        color: var(--ink-3);
+    }
+    .item {
+        display: block;
+        width: 100%;
+        padding: 9px 10px;
+        border-radius: 6px;
+        text-align: left;
+        text-decoration: none;
+        font-size: 0.92rem;
+        color: var(--ink);
+    }
+    .item:hover {
+        background: var(--paper-sunk);
+    }
+    .hint {
+        display: block;
+        margin-top: 1px;
+        font-size: 0.8rem;
+        color: var(--ink-3);
+    }
+    .lang-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 6px 6px 6px 10px;
+        font-size: 0.92rem;
+    }
+    .seg {
+        display: inline-flex;
+        padding: 2px;
+        border: 1px solid var(--rule);
+        border-radius: 999px;
+    }
+    .seg > * {
+        padding: 3px 10px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        color: var(--ink-3);
+        text-decoration: none;
+    }
+    .seg .on {
+        background: var(--ink);
+        color: var(--paper);
+    }
+    .seg a:hover {
+        color: var(--ink);
+    }
+    hr {
+        margin: 6px 4px;
+        border: 0;
+        border-top: 1px solid var(--rule);
+    }
+
+    /* Logged out on a phone: the hero already has the sign-in button, so the header keeps the logo,
+       theme and language instead of overflowing the screen. */
+    @media (max-width: 560px) {
+        .right :global(.login) {
+            display: none;
+        }
+    }
+    @media (max-width: 480px) {
+        .name {
+            display: none;
+        }
+        .account {
+            padding-right: 10px;
+        }
+    }
+</style>

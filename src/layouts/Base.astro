@@ -1,0 +1,66 @@
+---
+import { Font } from "astro:assets";
+import "@/styles/tokens.css";
+import "@/styles/base.css";
+import "@/styles/view-transitions.css";
+import { t, type Lang } from "@/i18n";
+import { THEME_COLOR } from "@/lib/theme";
+
+interface Props {
+    lang: Lang;
+    title?: string;
+    description?: string;
+    /** Path without the /en prefix, for hreflang alternates. */
+    path?: string;
+    noindex?: boolean;
+}
+
+const { lang, title, description, path = "/", noindex = false } = Astro.props;
+const dict = t(lang);
+const theme = Astro.locals.theme;
+const site = Astro.url.origin;
+const plHref = new URL(path, site).toString();
+const enHref = new URL(path === "/" ? "/en/" : `/en${path}`, site).toString();
+---
+
+<!doctype html>
+<html lang={lang} data-theme={theme === "auto" ? undefined : theme}>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <title>{title ?? dict.meta.title}</title>
+        <meta name="description" content={description ?? dict.meta.description} />
+        <meta name="color-scheme" content={theme === "auto" ? "light dark" : theme} />
+        {theme === "auto" ? (
+            <>
+                <meta
+                    name="theme-color"
+                    media="(prefers-color-scheme: light)"
+                    content={THEME_COLOR.light}
+                />
+                <meta
+                    name="theme-color"
+                    media="(prefers-color-scheme: dark)"
+                    content={THEME_COLOR.dark}
+                />
+            </>
+        ) : (
+            <meta name="theme-color" content={THEME_COLOR[theme]} />
+        )}
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="alternate" hreflang="pl" href={plHref} />
+        <link rel="alternate" hreflang="en" href={enHref} />
+        <link rel="alternate" hreflang="x-default" href={plHref} />
+        {noindex && <meta name="robots" content="noindex" />}
+        <meta property="og:title" content={title ?? dict.meta.title} />
+        <meta property="og:description" content={description ?? dict.meta.description} />
+        <meta property="og:type" content="website" />
+        <Font cssVariable="--font-sans" preload />
+    </head>
+    <body>
+        <a class="skip-link" href="#main">
+            {lang === "pl" ? "Przejdź do treści" : "Skip to content"}
+        </a>
+        <slot />
+    </body>
+</html>

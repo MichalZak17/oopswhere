@@ -1,0 +1,147 @@
+[
+  {
+    "type": "classgroup2",
+    "start_time": "2026-10-11 11:25:00",
+    "end_time": "2026-10-11 12:55:00",
+    "course_id": "IIN-N1-5-XXZ>0AGZ-CW",
+    "course_name": {
+      "pl": "Przetwarzanie i analiza danych",
+      "en": ""
+    },
+    "classtype_id": "CW",
+    "classtype_name": {
+      "pl": "ćwiczenia audytoryjne",
+      "en": "auditory classes"
+    },
+    "group_number": 3,
+    "unit_id": 9297,
+    "lecturer_ids": [
+      34016
+    ],
+    "building_id": "WI_WI2",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 2",
+      "en": ""
+    },
+    "room_number": "10",
+    "room_id": 560,
+    "sm_id": 358685,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=3&zaj_cyk_id=9297"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-10-18 11:25:00",
+    "end_time": "2026-10-18 12:55:00",
+    "course_id": "IIN-N1-5-XXZ>0AGZ-CW",
+    "course_name": {
+      "pl": "Przetwarzanie i analiza danych",
+      "en": ""
+    },
+    "classtype_id": "CW",
+    "classtype_name": {
+      "pl": "ćwiczenia audytoryjne",
+      "en": "auditory classes"
+    },
+    "group_number": 3,
+    "unit_id": 9297,
+    "lecturer_ids": [
+      34016
+    ],
+    "building_id": "WI_WI2",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 2",
+      "en": ""
+    },
+    "room_number": "10",
+    "room_id": 560,
+    "sm_id": 358686,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=3&zaj_cyk_id=9297"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-10-25 11:25:00",
+    "end_time": "2026-10-25 12:55:00",
+    "course_id": "IIN-N1-5-XXZ>0AGZ-CW",
+    "course_name": {
+      "pl": "Przetwarzanie i analiza danych",
+      "en": ""
+    },
+    "classtype_id": "CW",
+    "classtype_name": {
+      "pl": "ćwiczenia audytoryjne",
+      "en": "auditory classes"
+    },
+    "group_number": 3,
+    "unit_id": 9297,
+    "lecturer_ids": [
+      34016
+    ],
+    "building_id": "WI_WI2",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 2",
+      "en": ""
+    },
+    "room_number": "10",
+    "room_id": 560,
+    "sm_id": 358687,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=3&zaj_cyk_id=9297"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-11-15 11:25:00",
+    "end_time": "2026-11-15 12:55:00",
+    "course_id": "IIN-N1-5-XXZ>0AGZ-CW",
+    "course_name": {
+      "pl": "Przetwarzanie i analiza danych",
+      "en": ""
+    },
+    "classtype_id": "CW",
+    "classtype_name": {
+      "pl": "ćwiczenia audytoryjne",
+      "en": "auditory classes"
+    },
+    "group_number": 3,
+    "unit_id": 9297,
+    "lecturer_ids": [
+      34016
+    ],
+    "building_id": "WI_WI2",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 2",
+      "en": ""
+    },
+    "room_number": "10",
+    "room_id": 560,
+    "sm_id": 358689,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=3&zaj_cyk_id=9297"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-11-22 11:25:00",
+    "end_time": "2026-11-22 12:55:00",
+    "course_id": "IIN-N1-5-XXZ>0AGZ-CW",
+    "course_name": {
+      "pl": "Przetwarzanie i analiza danych",
+      "en": ""
+    },
+    "classtype_id": "CW",
+    "classtype_name": {
+      "pl": "ćwiczenia audytoryjne",
+      "en": "auditory classes"
+    },
+    "group_number": 3,
+    "unit_id": 9297,
+    "lecturer_ids": [
+      34016
+    ],
+    "building_id": "WI_WI2",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 2",
+      "en": ""
+    },
+    "room_number": "10",
+    "room_id": 560,
+    "sm_id": 358688,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=3&zaj_cyk_id=9297"
+  }
+]

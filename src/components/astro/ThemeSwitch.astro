@@ -1,0 +1,159 @@
+---
+import { localePath, t, type Lang } from "@/i18n";
+import { THEMES, type Theme } from "@/lib/theme";
+
+interface Props {
+    lang: Lang;
+    /** Path without the locale prefix, to come back to when JavaScript is off. */
+    path: string;
+    /** Id of the element that names the group (the menu row label); falls back to aria-label. */
+    labelledby?: string;
+}
+
+const { lang, path, labelledby } = Astro.props;
+const dict = t(lang);
+const current: Theme = Astro.locals.theme;
+const NAMES: Record<Theme, string> = {
+    auto: dict.nav.themeAuto,
+    light: dict.nav.themeLight,
+    dark: dict.nav.themeDark,
+};
+const back = encodeURIComponent(localePath(lang, path));
+---
+
+<span
+    class="theme-switch"
+    role="group"
+    aria-labelledby={labelledby}
+    aria-label={labelledby ? undefined : dict.nav.theme}
+>
+    {THEMES.map((theme) => (
+        <a
+            href={`/theme/${theme}?to=${back}`}
+            data-theme-set={theme}
+            aria-label={NAMES[theme]}
+            title={NAMES[theme]}
+            aria-current={theme === current ? "true" : undefined}
+            rel="nofollow"
+        >
+            {theme === "auto" && (
+                <svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true">
+                    <circle
+                        cx="8"
+                        cy="8"
+                        r="5.5"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                    />
+                    <path d="M8 2.5a5.5 5.5 0 0 1 0 11z" fill="currentColor" />
+                </svg>
+            )}
+            {theme === "light" && (
+                <svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true">
+                    <circle
+                        cx="8"
+                        cy="8"
+                        r="2.8"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                    />
+                    <path
+                        d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                    />
+                </svg>
+            )}
+            {theme === "dark" && (
+                <svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true">
+                    <path
+                        d="M13.2 9.6A5.6 5.6 0 0 1 6.4 2.8a5.6 5.6 0 1 0 6.8 6.8z"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            )}
+        </a>
+    ))}
+</span>
+
+<style>
+    .theme-switch {
+        display: inline-flex;
+        padding: 3px;
+        border: 1px solid var(--rule);
+        border-radius: 999px;
+    }
+    a {
+        display: grid;
+        place-items: center;
+        width: 38px;
+        height: 32px;
+        border-radius: 999px;
+        color: var(--ink-3);
+        transition:
+            color var(--dur-1) var(--ease-out),
+            background-color var(--dur-1) var(--ease-out);
+    }
+    a:hover {
+        color: var(--ink);
+    }
+    a[aria-current="true"] {
+        background: var(--ink);
+        color: var(--paper);
+    }
+</style>
+
+<script>
+    // Progressive enhancement: the links work without JS (cookie + redirect); with JS the
+    // switch is instant and keeps scroll position, selection and the open menu.
+    import { THEME_COLOR, asTheme, THEME_COOKIE } from "@/lib/theme";
+
+    const root = document.documentElement;
+
+    function chrome(theme: ReturnType<typeof asTheme>) {
+        document.querySelectorAll('meta[name="theme-color"]').forEach((m) => m.remove());
+        const add = (color: string, media?: string) => {
+            const meta = document.createElement("meta");
+            meta.name = "theme-color";
+            meta.content = color;
+            if (media) meta.media = media;
+            document.head.append(meta);
+        };
+        if (theme === "auto") {
+            add(THEME_COLOR.light, "(prefers-color-scheme: light)");
+            add(THEME_COLOR.dark, "(prefers-color-scheme: dark)");
+        } else {
+            add(THEME_COLOR[theme]);
+        }
+        const scheme = document.querySelector('meta[name="color-scheme"]');
+        scheme?.setAttribute("content", theme === "auto" ? "light dark" : theme);
+    }
+
+    function apply(theme: ReturnType<typeof asTheme>) {
+        const secure = location.protocol === "https:" ? "; Secure" : "";
+        document.cookie =
+            theme === "auto"
+                ? `${THEME_COOKIE}=; Path=/; Max-Age=0; SameSite=Lax${secure}`
+                : `${THEME_COOKIE}=${theme}; Path=/; Max-Age=31536000; SameSite=Lax${secure}`;
+        if (theme === "auto") root.removeAttribute("data-theme");
+        else root.dataset.theme = theme;
+        chrome(theme);
+        document.querySelectorAll<HTMLElement>("[data-theme-set]").forEach((a) => {
+            if (a.dataset.themeSet === theme) a.setAttribute("aria-current", "true");
+            else a.removeAttribute("aria-current");
+        });
+    }
+
+    document.addEventListener("click", (e) => {
+        const link = (e.target as Element | null)?.closest<HTMLElement>("[data-theme-set]");
+        if (!link || e.defaultPrevented || (e as MouseEvent).button !== 0) return;
+        e.preventDefault();
+        apply(asTheme(link.dataset.themeSet));
+    });
+</script>

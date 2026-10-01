@@ -1,0 +1,15 @@
+node_modules
+dist
+.vercel
+.astro
+.git
+.github
+.claude
+.env
+.env.*
+!.env.example
+test-results
+playwright-report
+coverage
+*.log
+.DS_Store

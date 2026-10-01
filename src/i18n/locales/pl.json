@@ -1,0 +1,170 @@
+{
+    "meta": {
+        "title": "Oopswhere",
+        "description": "Twój plan zajęć z USOS w czytelnej formie. Logujesz się raz, przez stronę uczelni. Bez bazy danych, bez haseł."
+    },
+    "landing": {
+        "eyebrow": "Plan zajęć dla studentów ZUT",
+        "title": "Która sala?\nJuż wiesz.",
+        "lead": "Twój plan z USOS — czytelny, szybki i zawsze pod ręką. Logujesz się raz, a nie co pięć minut.",
+        "login": "Zaloguj przez USOS",
+        "demo": "Zobacz przykładowy plan",
+        "loginUnavailable": "Logowanie jest wyłączone na tej instancji (brak klucza USOS API).",
+        "promiseTitle": "Jak to działa",
+        "promise": [
+            [
+                "Hasło wpisujesz tylko na stronie ZUT.",
+                "Logowanie odbywa się przez uczelniany USOS. My nigdy nie widzimy Twojego hasła."
+            ],
+            [
+                "Nie mamy bazy danych.",
+                "Zapamiętujemy tylko listę Twoich grup — w zaszyfrowanym ciasteczku, na Twoim urządzeniu."
+            ],
+            [
+                "Logujesz się raz.",
+                "Plan grup jest publiczny, więc potem pobieramy go bez Twojego konta. Wystarczy raz na semestr."
+            ]
+        ],
+        "questionsTitle": "Dziś niepotrzebne",
+        "questions": [
+            "Zrzut ekranu planu",
+            "„Ktoś wie, gdzie mamy?”",
+            "Druga zakładka",
+            "Cierpliwość"
+        ],
+        "chips": ["1 logowanie na semestr", "sala: widoczna", "telefon: obsługiwany"],
+        "clicksTitle": "Kliknięcia do sali",
+        "clicksBefore": "Dotychczas",
+        "clicksNow": "Teraz",
+        "clicksUnit": "klików",
+        "clicksNote": "Liczone ręcznie, w przerwie między zajęciami.",
+        "winsTitle": "Co umie",
+        "wins": [
+            "Pokazuje, gdzie jest sala.",
+            "Pokazuje, kiedy.",
+            "Dwa zajęcia naraz? Stoją obok siebie, jak na kartce.",
+            "Działa na telefonie. Tak, na tym.",
+            "Pamięta, że logowanie już było.",
+            "Tryb ciemny. Nie ma za co."
+        ],
+        "faqTitle": "Pytania",
+        "faq": [
+            [
+                "Czy to oficjalna strona uczelni?",
+                "Nie. Oficjalność ma swoje zalety. Zostawiamy je uczelni."
+            ],
+            ["Dlaczego to takie szybkie?", "Pokazujemy plan i nic poza tym. Podobno tak się da."],
+            [
+                "Co, jeśli USOS będzie miał gorszy dzień?",
+                "Pokażemy ostatni pobrany plan i powiemy o tym cicho. Każdy ma gorsze dni."
+            ],
+            ["Czy mnie wylogujecie?", "Jeśli tego zechcesz. Jest do tego przycisk."],
+            ["Ile to kosztuje?", "Nic. Jeśli coś nie gra, napisz na GitHubie. Odpowiemy."]
+        ],
+        "closingTitle": "Nie musisz dziękować.",
+        "closingBody": "Wystarczy, że będziesz wiedzieć, gdzie masz salę.",
+        "closingCta": "Zaloguj się. Raz.",
+        "errors": {
+            "denied": "Logowanie przerwane. Spróbuj ponownie, kiedy zechcesz.",
+            "expired": "Sesja logowania wygasła. Spróbuj jeszcze raz.",
+            "error": "Nie udało się zalogować przez USOS. Spróbuj ponownie za chwilę.",
+            "nogroups": "Zalogowano, ale USOS nie zwrócił żadnych grup na ten semestr."
+        }
+    },
+    "nav": {
+        "openSource": "Kod źródłowy",
+        "privacy": "Prywatność",
+        "language": "English",
+        "theme": "Motyw",
+        "themeAuto": "Auto",
+        "themeLight": "Jasny",
+        "themeDark": "Ciemny"
+    },
+    "cal": {
+        "prevWeek": "Poprzedni tydzień",
+        "nextWeek": "Następny tydzień",
+        "today": "Dziś",
+        "week": "Tydzień",
+        "session": "Zjazd",
+        "of": "z",
+        "allDays": "Cały tydzień",
+        "classDays": "Tylko dni z zajęciami",
+        "emptyTitle": "Wolne.",
+        "emptyNext": "Najbliższe zajęcia:",
+        "emptyNone": "W tym semestrze nie ma już zajęć.",
+        "jump": "Przejdź",
+        "now": "Teraz",
+        "next": "Następne",
+        "in": "za",
+        "until": "do",
+        "endsIn": "koniec za",
+        "minutes": "min",
+        "hours": "godz.",
+        "tomorrow": "jutro",
+        "group": "gr.",
+        "room": "sala",
+        "lecturers": "Prowadzący",
+        "place": "Miejsce",
+        "time": "Termin",
+        "meetings": "Kolejne spotkania",
+        "showAllMeetings": "Pokaż wszystkie",
+        "noMoreMeetings": "To ostatnie spotkanie w semestrze.",
+        "openUsos": "Otwórz w USOSweb",
+        "close": "Zamknij",
+        "clash": "kolizja",
+        "hello": "Cześć",
+        "refresh": "Odśwież grupy",
+        "refreshHint": "Po zmianie grup w USOS",
+        "logout": "Wyloguj",
+        "groups": {
+            "one": "grupa",
+            "few": "grupy",
+            "many": "grup",
+            "other": "grupy"
+        },
+        "asOf": "stan na",
+        "language": "Język",
+        "account": "Twoje konto",
+        "menu": "Menu",
+        "demo": "To przykładowy plan kilku publicznych grup ZUT.",
+        "demoCta": "Zaloguj się, aby zobaczyć swój",
+        "stale": "USOS nie odpowiada — pokazujemy ostatnio pobrany plan.",
+        "missing": "Nie udało się pobrać części planu.",
+        "retry": "Spróbuj ponownie",
+        "gone": "Niektóre Twoje grupy zniknęły z USOS — odśwież listę grup.",
+        "newTerm": "Nowy semestr? Odśwież listę grup, aby zobaczyć nowy plan.",
+        "scope": "Plan pokazuje zajęcia Twoich grup. Egzaminy i odwołane zajęcia sprawdzaj w USOSweb.",
+        "loading": "Ładowanie…"
+    },
+    "types": {
+        "WK": "Wykład",
+        "LB": "Laboratorium",
+        "CW": "Ćwiczenia",
+        "PR": "Projekt",
+        "LK": "Lektorat",
+        "KN": "Konwersatorium",
+        "SM": "Seminarium",
+        "SD": "Seminarium dyplomowe",
+        "PD": "Praca dyplomowa",
+        "PP": "Praktyka",
+        "WF": "Wychowanie fizyczne",
+        "WR": "Warsztaty",
+        "ZT": "Zajęcia terenowe",
+        "OK": "Ocena końcowa"
+    },
+    "privacy": {
+        "title": "Prywatność",
+        "body": [
+            "Oopswhere nie ma bazy danych i nigdy nie widzi Twojego hasła. Logujesz się na stronie Twojej uczelni (USOS), a my dostajemy jednorazowy dostęp, którego używamy tylko do pobrania listy Twoich grup zajęciowych i Twojego imienia. Zaraz potem unieważniamy ten dostęp.",
+            "Lista grup i imię są zapisywane w zaszyfrowanym ciasteczku w Twojej przeglądarce. Serwer niczego o Tobie nie przechowuje. Wylogowanie usuwa ciasteczko.",
+            "Plany grup zajęciowych, nazwiska prowadzących i sale są publicznymi danymi USOS. Przechowujemy je przez krótki czas w pamięci podręcznej, żeby nie obciążać serwerów uczelni.",
+            "Nie używamy analityki, reklam ani zewnętrznych czcionek. Kod jest otwarty — możesz sprawdzić każde zdanie z tej strony."
+        ],
+        "back": "Wróć do planu"
+    },
+    "notFound": {
+        "title": "Tej sali nie ma.",
+        "body": "Strona, której szukasz, nie istnieje.",
+        "back": "Wróć na start"
+    }
+}

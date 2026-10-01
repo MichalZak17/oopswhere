@@ -1,0 +1,56 @@
+---
+import { localePath, t, type Lang } from "@/i18n";
+interface Props {
+    lang: Lang;
+    /** Path without the locale prefix, for the language switch. */
+    path?: string;
+}
+const { lang, path = "/" } = Astro.props;
+const dict = t(lang);
+const other: Lang = lang === "pl" ? "en" : "pl";
+const langHref = `/lang/${other}?to=${encodeURIComponent(localePath(other, path))}`;
+---
+
+<footer class="footer">
+    <p class="mark">oopswhere</p>
+    <nav aria-label="Footer">
+        <a href={localePath(lang, "/privacy")}>{dict.nav.privacy}</a>
+        <a href="https://github.com/MichalZak17/oopswhere" rel="noopener">
+            {dict.nav.openSource}
+        </a>
+        <a href={langHref} hreflang={other}>
+            {dict.nav.language}
+        </a>
+    </nav>
+</footer>
+
+<style>
+    .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px 24px;
+        max-width: var(--page-max);
+        margin: 0 auto;
+        padding: 32px var(--gutter) max(32px, env(safe-area-inset-bottom));
+        color: var(--ink-3);
+        font-size: 0.87rem;
+    }
+    .mark {
+        font-weight: 650;
+        letter-spacing: -0.03em;
+    }
+    nav {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    nav a {
+        color: var(--ink-2);
+        text-decoration: none;
+    }
+    nav a:hover {
+        color: var(--ink);
+    }
+</style>

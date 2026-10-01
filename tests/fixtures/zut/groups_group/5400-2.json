@@ -1,0 +1,16 @@
+{
+  "course_unit_id": 5400,
+  "group_number": 2,
+  "class_type_id": "WK",
+  "class_type": {
+    "pl": "wykład",
+    "en": "lecture"
+  },
+  "course_id": "IIN-N1-3-XXZ>0AAD-WK",
+  "course_name": {
+    "pl": "Algorytmy 2",
+    "en": ""
+  },
+  "term_id": "2026/2027-Z",
+  "group_url": null
+}

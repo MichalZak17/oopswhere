@@ -1,0 +1,16 @@
+{
+  "course_unit_id": 12940,
+  "group_number": 321,
+  "class_type_id": "LB",
+  "class_type": {
+    "pl": "ćwiczenia laboratoryjne",
+    "en": "laboratory course"
+  },
+  "course_id": "IIN-N1-5-IOZ>0AIQ-LB",
+  "course_name": {
+    "pl": "Testowanie oprogramowania",
+    "en": ""
+  },
+  "term_id": "2026/2027-Z",
+  "group_url": null
+}

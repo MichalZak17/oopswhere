@@ -1,0 +1,163 @@
+---
+interface Props {
+    href: string;
+    size?: "s" | "l";
+    /** Play the entrance animation (landing, 404). Inside the app the mark stays still. */
+    intro?: boolean;
+}
+const { href, size = "s", intro = false } = Astro.props;
+const letters = Array.from("oopswhere");
+---
+
+<a class:list={["wordmark", size, { intro }]} href={href} aria-label="oopswhere">
+    <!-- A tiny timetable: three rows, and one dot that knows which one is yours. -->
+    <svg class="mark" viewBox="4 5 24 22" aria-hidden="true">
+        <rect class="bar" style="--i:0" x="5" y="6" width="22" height="3" rx="1.5"></rect>
+        <rect class="bar" style="--i:1" x="5" y="13" width="14" height="3" rx="1.5"></rect>
+        <rect class="bar" style="--i:2" x="5" y="20" width="14" height="3" rx="1.5"></rect>
+        <circle class="ring" cx="24" cy="21.5" r="3.5"></circle>
+        <circle class="dot" cx="24" cy="21.5" r="3.5"></circle>
+    </svg>
+    <span class="word" aria-hidden="true">
+        {letters.map((c, i) => (
+            <span style={`--i:${i}`}>{c}</span>
+        ))}
+    </span>
+</a>
+
+<style>
+    .wordmark {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.42em;
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        text-decoration: none;
+        color: var(--ink);
+        font-size: 1.15rem;
+        line-height: 1;
+    }
+    .wordmark.l {
+        font-size: 1.5rem;
+    }
+    .mark {
+        width: 1.25em;
+        height: 1.15em;
+        overflow: visible;
+    }
+    .bar {
+        fill: currentColor;
+    }
+    .dot,
+    .ring {
+        fill: var(--accent);
+    }
+    .ring {
+        opacity: 0;
+    }
+    .word {
+        display: inline-flex;
+    }
+    .word span {
+        display: inline-block;
+    }
+
+    /* Entrance: rows draw in, letters rise, the dot drops onto its row. */
+    .intro .bar {
+        transform-box: fill-box;
+        transform-origin: left center;
+        animation: draw 520ms var(--ease-out) calc(var(--i) * 90ms) both;
+    }
+    .intro .word span {
+        animation: rise 520ms var(--ease-out) calc(280ms + var(--i) * 26ms) both;
+    }
+    .dot {
+        transform-box: fill-box;
+        transform-origin: center bottom;
+    }
+    .intro .dot {
+        animation: drop 760ms var(--ease-out) 420ms both;
+    }
+    /* afterwards, every so often, "now" gives a quiet ping */
+    .intro .ring {
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: ping 5200ms ease-out 3200ms infinite;
+    }
+
+    /* Hover: the dot searches the rows, and lands on yours */
+    .wordmark:hover .dot,
+    .wordmark:focus-visible .dot {
+        animation: seek 900ms var(--ease-out) both;
+    }
+    .wordmark:hover .word span {
+        animation: wave 520ms var(--ease-out) calc(var(--i) * 24ms) both;
+    }
+
+    @keyframes draw {
+        from {
+            transform: scaleX(0);
+        }
+    }
+    @keyframes rise {
+        from {
+            opacity: 0;
+            transform: translateY(0.35em);
+        }
+    }
+    @keyframes drop {
+        0% {
+            opacity: 0;
+            transform: translateY(-16px) scale(0.7, 1.3);
+        }
+        40% {
+            opacity: 1;
+            transform: translateY(0) scale(1.25, 0.75);
+        }
+        62% {
+            transform: translateY(-4px) scale(0.92, 1.08);
+        }
+        80% {
+            transform: translateY(0) scale(1.06, 0.94);
+        }
+        100% {
+            transform: none;
+        }
+    }
+    @keyframes seek {
+        0% {
+            transform: translateY(0);
+        }
+        30% {
+            transform: translateY(-14.5px);
+        }
+        60% {
+            transform: translateY(-7.5px);
+        }
+        100% {
+            transform: translateY(0);
+        }
+    }
+    @keyframes wave {
+        40% {
+            transform: translateY(-0.12em);
+        }
+    }
+    @keyframes ping {
+        0% {
+            opacity: 0.55;
+            transform: scale(1);
+        }
+        18%,
+        100% {
+            opacity: 0;
+            transform: scale(2.6);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .ring {
+            display: none;
+        }
+    }
+</style>

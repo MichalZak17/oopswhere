@@ -1,0 +1,12 @@
+---
+import CalendarView from "./CalendarView.astro";
+import Landing from "./Landing.astro";
+import type { Lang } from "@/i18n";
+
+interface Props {
+    lang: Lang;
+}
+const { lang } = Astro.props;
+---
+
+{Astro.locals.profile ? <CalendarView lang={lang} /> : <Landing lang={lang} />}

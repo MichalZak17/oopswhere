@@ -1,0 +1,49 @@
+---
+import { t, type Lang } from "@/i18n";
+import { resolveInstallation } from "@/lib/env";
+import { DEFAULT_INSTALLATION } from "@/config/installations";
+
+interface Props {
+    lang: Lang;
+    returnTo: string;
+    size?: "s" | "l";
+    label?: string;
+    inst?: string;
+}
+
+const { lang, returnTo, size = "l", label, inst: instId = DEFAULT_INSTALLATION } = Astro.props;
+const dict = t(lang);
+const inst = resolveInstallation(instId);
+const enabled = Boolean(inst?.consumer);
+---
+
+<form method="post" action={`/auth/${instId}/login`} class:list={["login", size]}>
+    <input type="hidden" name="returnTo" value={returnTo} />
+    <button
+        class="btn btn-primary"
+        type="submit"
+        disabled={!enabled}
+        title={enabled ? undefined : dict.landing.loginUnavailable}
+    >
+        {label ?? dict.landing.login}
+        <span class="arrow" aria-hidden="true">
+            →
+        </span>
+    </button>
+</form>
+
+<style>
+    .login {
+        display: inline-flex;
+    }
+    .login.l .btn {
+        height: 52px;
+        padding: 0 26px;
+        font-size: 1.02rem;
+    }
+    .login.s .btn {
+        height: 36px;
+        padding: 0 16px;
+        font-size: 0.9rem;
+    }
+</style>

@@ -1,0 +1,52 @@
+{
+    "name": "oopswhere",
+    "type": "module",
+    "version": "0.1.0",
+    "private": true,
+    "description": "A calm, fast timetable for USOS universities. Sign in once, never wonder which room again.",
+    "license": "MIT",
+    "engines": {
+        "node": ">=22.12.0"
+    },
+    "scripts": {
+        "dev": "astro dev",
+        "build": "astro build",
+        "build:node": "DEPLOY_TARGET=node astro build",
+        "preview": "astro preview",
+        "start": "node ./dist/server/entry.mjs",
+        "astro": "astro",
+        "check": "astro check",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "test:e2e": "playwright test",
+        "fixtures": "tsx scripts/capture-fixtures.ts",
+        "secret": "node scripts/gen-secret.mjs",
+        "format": "prettier --write .",
+        "format:check": "prettier --check ."
+    },
+    "dependencies": {
+        "@astrojs/node": "^11.1.6",
+        "@astrojs/svelte": "^9.0.1",
+        "@astrojs/vercel": "^11.0.11",
+        "@vercel/functions": "^3.9.9",
+        "astro": "^7.3.5",
+        "svelte": "^5.57.1"
+    },
+    "devDependencies": {
+        "@astrojs/check": "^0.9.10",
+        "@axe-core/playwright": "^4.13.0",
+        "@playwright/test": "^1.63.0",
+        "@types/node": "^24.19.0",
+        "prettier": "^3.9.9",
+        "prettier-plugin-astro": "^1.1.0",
+        "prettier-plugin-svelte": "^4.1.1",
+        "tsx": "^4.23.15",
+        "typescript": "^6.0.3",
+        "vitest": "^5.0.3"
+    },
+    "overrides": {
+        "@vercel/routing-utils": {
+            "path-to-regexp": "6.3.0"
+        }
+    }
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "2026/2027",
+    "name": {
+      "pl": "Rok akademicki 2026/2027",
+      "en": "Academic year 2026/2027"
+    },
+    "start_date": "2026-10-01",
+    "end_date": "2027-09-30",
+    "order_key": 88,
+    "finish_date": "2027-09-30",
+    "is_active": true
+  },
+  {
+    "id": "2026/2027-Z",
+    "name": {
+      "pl": "Semestr zimowy 2026/2027",
+      "en": "Winter semester 2026/2027"
+    },
+    "start_date": "2026-10-01",
+    "end_date": "2027-02-28",
+    "order_key": 89,
+    "finish_date": "2027-02-28",
+    "is_active": true
+  }
+]

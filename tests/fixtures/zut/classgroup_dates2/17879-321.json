@@ -1,0 +1,263 @@
+[
+  {
+    "type": "classgroup2",
+    "start_time": "2026-10-10 08:00:00",
+    "end_time": "2026-10-10 09:30:00",
+    "course_id": "IIN-N1-5-XXZ>0AGZ-LB",
+    "course_name": {
+      "pl": "Przetwarzanie i analiza danych",
+      "en": ""
+    },
+    "classtype_id": "LB",
+    "classtype_name": {
+      "pl": "ćwiczenia laboratoryjne",
+      "en": "laboratory course"
+    },
+    "group_number": 321,
+    "unit_id": 17879,
+    "lecturer_ids": [
+      34016
+    ],
+    "building_id": "WI_WI1",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 1",
+      "en": ""
+    },
+    "room_number": "303",
+    "room_id": 546,
+    "sm_id": 355328,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=321&zaj_cyk_id=17879"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-10-17 08:00:00",
+    "end_time": "2026-10-17 09:30:00",
+    "course_id": "IIN-N1-5-XXZ>0AGZ-LB",
+    "course_name": {
+      "pl": "Przetwarzanie i analiza danych",
+      "en": ""
+    },
+    "classtype_id": "LB",
+    "classtype_name": {
+      "pl": "ćwiczenia laboratoryjne",
+      "en": "laboratory course"
+    },
+    "group_number": 321,
+    "unit_id": 17879,
+    "lecturer_ids": [
+      34016
+    ],
+    "building_id": "WI_WI1",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 1",
+      "en": ""
+    },
+    "room_number": "303",
+    "room_id": 546,
+    "sm_id": 355327,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=321&zaj_cyk_id=17879"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-10-24 08:00:00",
+    "end_time": "2026-10-24 09:30:00",
+    "course_id": "IIN-N1-5-XXZ>0AGZ-LB",
+    "course_name": {
+      "pl": "Przetwarzanie i analiza danych",
+      "en": ""
+    },
+    "classtype_id": "LB",
+    "classtype_name": {
+      "pl": "ćwiczenia laboratoryjne",
+      "en": "laboratory course"
+    },
+    "group_number": 321,
+    "unit_id": 17879,
+    "lecturer_ids": [
+      34016
+    ],
+    "building_id": "WI_WI1",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 1",
+      "en": ""
+    },
+    "room_number": "303",
+    "room_id": 546,
+    "sm_id": 355329,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=321&zaj_cyk_id=17879"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-11-07 08:00:00",
+    "end_time": "2026-11-07 09:30:00",
+    "course_id": "IIN-N1-5-XXZ>0AGZ-LB",
+    "course_name": {
+      "pl": "Przetwarzanie i analiza danych",
+      "en": ""
+    },
+    "classtype_id": "LB",
+    "classtype_name": {
+      "pl": "ćwiczenia laboratoryjne",
+      "en": "laboratory course"
+    },
+    "group_number": 321,
+    "unit_id": 17879,
+    "lecturer_ids": [
+      34016
+    ],
+    "building_id": "WI_WI1",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 1",
+      "en": ""
+    },
+    "room_number": "303",
+    "room_id": 546,
+    "sm_id": 355330,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=321&zaj_cyk_id=17879"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-11-14 08:00:00",
+    "end_time": "2026-11-14 09:30:00",
+    "course_id": "IIN-N1-5-XXZ>0AGZ-LB",
+    "course_name": {
+      "pl": "Przetwarzanie i analiza danych",
+      "en": ""
+    },
+    "classtype_id": "LB",
+    "classtype_name": {
+      "pl": "ćwiczenia laboratoryjne",
+      "en": "laboratory course"
+    },
+    "group_number": 321,
+    "unit_id": 17879,
+    "lecturer_ids": [
+      34016
+    ],
+    "building_id": "WI_WI1",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 1",
+      "en": ""
+    },
+    "room_number": "303",
+    "room_id": 546,
+    "sm_id": 355331,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=321&zaj_cyk_id=17879"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-11-21 08:00:00",
+    "end_time": "2026-11-21 09:30:00",
+    "course_id": "IIN-N1-5-XXZ>0AGZ-LB",
+    "course_name": {
+      "pl": "Przetwarzanie i analiza danych",
+      "en": ""
+    },
+    "classtype_id": "LB",
+    "classtype_name": {
+      "pl": "ćwiczenia laboratoryjne",
+      "en": "laboratory course"
+    },
+    "group_number": 321,
+    "unit_id": 17879,
+    "lecturer_ids": [
+      34016
+    ],
+    "building_id": "WI_WI1",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 1",
+      "en": ""
+    },
+    "room_number": "303",
+    "room_id": 546,
+    "sm_id": 355332,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=321&zaj_cyk_id=17879"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-11-28 08:00:00",
+    "end_time": "2026-11-28 09:30:00",
+    "course_id": "IIN-N1-5-XXZ>0AGZ-LB",
+    "course_name": {
+      "pl": "Przetwarzanie i analiza danych",
+      "en": ""
+    },
+    "classtype_id": "LB",
+    "classtype_name": {
+      "pl": "ćwiczenia laboratoryjne",
+      "en": "laboratory course"
+    },
+    "group_number": 321,
+    "unit_id": 17879,
+    "lecturer_ids": [
+      34016
+    ],
+    "building_id": "WI_WI1",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 1",
+      "en": ""
+    },
+    "room_number": "303",
+    "room_id": 546,
+    "sm_id": 355333,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=321&zaj_cyk_id=17879"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-12-05 08:00:00",
+    "end_time": "2026-12-05 09:30:00",
+    "course_id": "IIN-N1-5-XXZ>0AGZ-LB",
+    "course_name": {
+      "pl": "Przetwarzanie i analiza danych",
+      "en": ""
+    },
+    "classtype_id": "LB",
+    "classtype_name": {
+      "pl": "ćwiczenia laboratoryjne",
+      "en": "laboratory course"
+    },
+    "group_number": 321,
+    "unit_id": 17879,
+    "lecturer_ids": [
+      34016
+    ],
+    "building_id": "WI_WI1",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 1",
+      "en": ""
+    },
+    "room_number": "303",
+    "room_id": 546,
+    "sm_id": 355334,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=321&zaj_cyk_id=17879"
+  },
+  {
+    "type": "classgroup2",
+    "start_time": "2026-12-12 08:00:00",
+    "end_time": "2026-12-12 09:30:00",
+    "course_id": "IIN-N1-5-XXZ>0AGZ-LB",
+    "course_name": {
+      "pl": "Przetwarzanie i analiza danych",
+      "en": ""
+    },
+    "classtype_id": "LB",
+    "classtype_name": {
+      "pl": "ćwiczenia laboratoryjne",
+      "en": "laboratory course"
+    },
+    "group_number": 321,
+    "unit_id": 17879,
+    "lecturer_ids": [
+      34016
+    ],
+    "building_id": "WI_WI1",
+    "building_name": {
+      "pl": "WI Wydział Informatyki 1",
+      "en": ""
+    },
+    "room_number": "303",
+    "room_id": 546,
+    "sm_id": 355335,
+    "classgroup_profile_url": "https://usosweb.zut.edu.pl/kontroler.php?_action=katalog2/przedmioty/pokazZajecia&gr_nr=321&zaj_cyk_id=17879"
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "course_unit_id": 39536,
+  "group_number": 32,
+  "class_type_id": "WK",
+  "class_type": {
+    "pl": "wykład",
+    "en": "lecture"
+  },
+  "course_id": "IIN-N1-5-IOZ>0AIQ-WK",
+  "course_name": {
+    "pl": "Testowanie oprogramowania",
+    "en": ""
+  },
+  "term_id": "2026/2027-Z",
+  "group_url": null
+}

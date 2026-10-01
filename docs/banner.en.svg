@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 260" role="img" aria-label="Which room? You already know.">
+  <style>
+    :root { --paper:#faf8f4; --ink:#2b2622; --faint:#a39c94; --accent:#e8553a; --rule:#e8e4dd; }
+    @media (prefers-color-scheme: dark) { :root { --paper:#141210; --ink:#f3efe8; --faint:#6f6962; --rule:#2c2824; } }
+    text { font-family: "Schibsted Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+    .bg { fill: var(--paper); }
+    .hour { stroke: var(--rule); stroke-width: 1; }
+    .h1 { fill: var(--ink); font-size: 56px; font-weight: 680; letter-spacing: -2.5px; }
+    .h2 { fill: var(--faint); }
+    .q { fill: var(--faint); font-size: 16px; }
+    .strike { stroke: var(--accent); stroke-width: 2; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw .6s ease-out forwards; }
+    .dot { fill: var(--accent); animation: sweep-dot 7s linear 2.6s infinite; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    @keyframes sweep-dot { 0% { transform: translateX(0); opacity: 0; } 5% { opacity: 1; } 95% { opacity: 1; } 100% { transform: translateX(900px); opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .dot { animation: none; opacity: 0; } .strike { animation: none; stroke-dashoffset: 0; } }
+  </style>
+  <rect class="bg" width="900" height="260" rx="20"/>
+  <line class="hour" x1="0" y1="60" x2="900" y2="60"/>
+  <line class="hour" x1="0" y1="130" x2="900" y2="130"/>
+  <line class="hour" x1="0" y1="200" x2="900" y2="200"/>
+  <text class="h1" x="48" y="118">Which room? <tspan class="h2">You already know.</tspan></text>
+  <g class="q">
+    <text x="48" y="172" textLength="200" lengthAdjust="spacingAndGlyphs">A screenshot of the timetable</text>
+    <line class="strike" pathLength="1" x1="46" y1="167" x2="250" y2="167" style="animation-delay:0.8s"/>
+    <text x="284" y="172" textLength="218" lengthAdjust="spacingAndGlyphs">“Does anyone know where we are?”</text>
+    <line class="strike" pathLength="1" x1="282" y1="167" x2="504" y2="167" style="animation-delay:1.3s"/>
+    <text x="538" y="172" textLength="90" lengthAdjust="spacingAndGlyphs">A second tab</text>
+    <line class="strike" pathLength="1" x1="536" y1="167" x2="630" y2="167" style="animation-delay:1.8s"/>
+    <text x="664" y="172" textLength="62" lengthAdjust="spacingAndGlyphs">Patience</text>
+    <line class="strike" pathLength="1" x1="662" y1="167" x2="728" y2="167" style="animation-delay:2.2s"/>
+  </g>
+
+
+  <g class="dot"><circle cx="0" cy="130" r="5"/></g>
+</svg>

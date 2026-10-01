@@ -1,0 +1,51 @@
+---
+import Base from "@/layouts/Base.astro";
+import AppHeader from "./AppHeader.astro";
+import Footer from "./Footer.astro";
+import { localePath, t, type Lang } from "@/i18n";
+
+interface Props {
+    lang: Lang;
+}
+const { lang } = Astro.props;
+const dict = t(lang);
+---
+
+<Base lang={lang} path="/privacy" title={dict.privacy.title}>
+    <AppHeader lang={lang} profile={Astro.locals.profile} path="/privacy" />
+    <main id="main" class="prose">
+        <h1>{dict.privacy.title}</h1>
+        {dict.privacy.body.map((p) => (
+            <p>{p}</p>
+        ))}
+        <a class="back" href={localePath(lang, "/")}>
+            ← {dict.privacy.back}
+        </a>
+    </main>
+    <Footer lang={lang} path="/privacy" />
+</Base>
+
+<style>
+    .prose {
+        max-width: 640px;
+        margin: 0 auto;
+        padding: 56px var(--gutter) 96px;
+    }
+    h1 {
+        font-size: clamp(2.4rem, 1.8rem + 2vw, 3.4rem);
+        font-weight: 680;
+        letter-spacing: -0.045em;
+        margin-bottom: 32px;
+    }
+    p {
+        font-size: 1.08rem;
+        line-height: 1.65;
+        color: var(--ink-2);
+        margin-bottom: 18px;
+    }
+    .back {
+        display: inline-block;
+        margin-top: 24px;
+        color: var(--ink-2);
+    }
+</style>
