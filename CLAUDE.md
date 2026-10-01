@@ -65,7 +65,7 @@ Never store tokens, USOS user ids or emails. Never request `participants` (class
   `NextUp`, `EventSheet` (native `<dialog>`), `model.ts`/`display.ts`/`format.ts` (pure helpers),
   `transitions.ts` (View Transitions: `slide()` for weeks, `morph()` card ↔ sheet).
 - `src/config/installations.ts` — USOS installations (data only). Keys come from
-  `USOS_<ID>_CONSUMER_KEY/SECRET`. Add the API origin to `USOS_ORIGINS` in `astro.config.mjs`
+  `USOS_<ID>_CONSUMER_KEY/SECRET`. Add the API origin **and its SSO login origin** to `USOS_ORIGINS` in `astro.config.mjs`
   (CSP `form-action`).
 - `src/i18n/locales/{pl,en}.json` — `pl` is the source of truth, `en` must match its shape (`Dict` in `src/i18n/index.ts`). `pick()` chooses a USOS
   LangDict value with Polish fallback (ZUT's `en` is often empty).

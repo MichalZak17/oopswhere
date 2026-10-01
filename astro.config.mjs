@@ -8,12 +8,14 @@ import vercel from "@astrojs/vercel";
 // Node server for Docker / Coolify. Override with DEPLOY_TARGET=node|vercel.
 const target = process.env.DEPLOY_TARGET ?? (process.env.VERCEL ? "vercel" : "node");
 
-// Every USOS installation the user can be sent to during login must be allowed
-// as a form-action target (the login POST answers with a 303 to USOS). Keep in sync
-// with src/config/installations.ts; a USOS_*_BASE_URL override (e2e mock) is added
-// at build time.
+// Every origin the user passes through by redirect during login must be allowed as a
+// form-action target: browsers check form-action on each hop of the redirect chain
+// started by the login POST (303 → USOS → the university's SSO), not only the first.
+// Keep in sync with src/config/installations.ts; a USOS_*_BASE_URL override (e2e mock)
+// is added at build time.
 const USOS_ORIGINS = [
     "https://usosapi.zut.edu.pl",
+    "https://login.zut.edu.pl", // ZUT SSO (Keycloak), USOS redirects here to sign in
     ...[process.env.USOS_ZUT_BASE_URL].filter(Boolean).map((u) => new URL(String(u)).origin),
 ];
 

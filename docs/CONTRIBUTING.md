@@ -18,7 +18,7 @@ Before opening a PR: `npm run check && npm test && npm run test:e2e`, and `npm r
    `services/tt/classgroup_dates2` works there.
 2. Add an entry to `src/config/installations.ts` (id, names, `apiBaseUrl`, `usoswebUrl`, `timeZone`,
    optional `buildingAliases`).
-3. Add the API origin to `USOS_ORIGINS` in `astro.config.mjs` (CSP `form-action`).
+3. Add the API origin and every SSO origin USOS redirects to during login (e.g. `login.zut.edu.pl`) to `USOS_ORIGINS` in `astro.config.mjs` (CSP `form-action` is checked on each redirect hop).
 4. Register a consumer key at `<apiBaseUrl>/developers/` and set `USOS_<ID>_CONSUMER_KEY` /
    `USOS_<ID>_CONSUMER_SECRET`.
 5. Optionally add a few public demo groups to `src/config/demo.ts`.
