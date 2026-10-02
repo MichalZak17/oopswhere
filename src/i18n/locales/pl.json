@@ -1,121 +1,236 @@
 {
     "meta": {
         "title": "Oopswhere",
-        "description": "Twój plan zajęć z USOS w czytelnej formie. Logujesz się raz, przez stronę uczelni. Bez bazy danych, bez haseł."
+        "description": "Twój plan z USOS, wreszcie czytelny. Jedno logowanie przez uczelnię. Bez bazy danych, bez haseł."
     },
     "landing": {
-        "eyebrow": "Plan zajęć dla studentów ZUT",
-        "title": "Która sala?\nJuż wiesz.",
-        "lead": "Twój plan z USOS — czytelny, szybki i zawsze pod ręką. Logujesz się raz, a nie co pięć minut.",
-        "login": "Zaloguj przez USOS",
-        "demo": "Zobacz przykładowy plan",
-        "loginUnavailable": "Logowanie jest wyłączone na tej instancji (brak klucza USOS API).",
-        "promiseTitle": "Jak to działa",
+        "eyebrow": "Twój plan, bez darmowej pracy detektywa",
+        "title": ["Co teraz?", "Co dalej?", "Gdzie?"],
+        "lead": "Co jest teraz, co potem, o której i gdzie. Wszystko na jednym ekranie.",
+        "login": "Wejdź przez portal USOS",
+        "demo": "Zobacz plan demo",
+        "loginUnavailable": "Logowanie wyłączone: brak klucza USOS API.",
+        "heroNote": "Logowanie przez ZUT. Hasło zostaje u nich.",
+        "previewCaption": "Godzina, zajęcia i sala na jednej karcie.",
+        "preview": {
+            "heading": "Twój dzień, zanim sam się zepsuje",
+            "sample": "Demo",
+            "chooseDay": "Wybierz dzień i oceń straty",
+            "dayLabel": "Dzisiaj w planie",
+            "now": "Teraz",
+            "next": "Następna ofiara",
+            "later": "Problem na później",
+            "room": "Sala, podobno",
+            "footer": "Godzina. Zajęcia. Sala. Razem.",
+            "days": [
+                {
+                    "short": "PN",
+                    "day": "12",
+                    "full": "Poniedziałek, 12 października",
+                    "count": "3 zajęcia",
+                    "classes": [
+                        {
+                            "time": "09:40–11:10",
+                            "name": "Testowanie oprogramowania",
+                            "room": "WI2 100",
+                            "type": "WK"
+                        },
+                        {
+                            "time": "11:30–13:00",
+                            "name": "Przetwarzanie i analiza danych",
+                            "room": "WI1 303",
+                            "type": "LB"
+                        },
+                        {
+                            "time": "13:15–14:45",
+                            "name": "Algorytmy 2",
+                            "room": "WI1 215",
+                            "type": "CW"
+                        }
+                    ]
+                },
+                {
+                    "short": "WT",
+                    "day": "13",
+                    "full": "Wtorek, 13 października",
+                    "count": "3 zajęcia",
+                    "classes": [
+                        {
+                            "time": "08:00–09:30",
+                            "name": "Bazy danych",
+                            "room": "WI2 203",
+                            "type": "WK"
+                        },
+                        {
+                            "time": "09:40–11:10",
+                            "name": "Projektowanie interfejsów",
+                            "room": "WI1 102",
+                            "type": "PR"
+                        },
+                        {
+                            "time": "11:30–13:00",
+                            "name": "Sieci komputerowe",
+                            "room": "WI2 315",
+                            "type": "LB"
+                        }
+                    ]
+                },
+                {
+                    "short": "ŚR",
+                    "day": "14",
+                    "full": "Środa, 14 października",
+                    "count": "3 zajęcia",
+                    "classes": [
+                        {
+                            "time": "09:40–11:10",
+                            "name": "Matematyka dyskretna",
+                            "room": "WI1 118",
+                            "type": "CW"
+                        },
+                        {
+                            "time": "11:30–13:00",
+                            "name": "Inżynieria oprogramowania",
+                            "room": "WI2 100",
+                            "type": "WK"
+                        },
+                        {
+                            "time": "13:15–14:45",
+                            "name": "Systemy operacyjne",
+                            "room": "WI1 303",
+                            "type": "LB"
+                        }
+                    ]
+                }
+            ]
+        },
+        "stripLabel": "Rzeczy, które USOS dziwnie utrudnia",
+        "strip": [
+            "Teraz, bez konsultacji z wyrocznią",
+            "Potem, bez pytania 14 osób na Messengerze",
+            "Gdzie, bez zadania pobocznego"
+        ],
+        "featuresKicker": "Niepopularna opinia: plan ma być czytelny",
+        "featuresTitle": "Plan, który przestał grać w chowanego.",
+        "featuresLead": "Wszystko, czego potrzebujesz przed zajęciami. Tak, nawet sala.",
+        "features": {
+            "next": {
+                "label": "Zaraz po Ciebie",
+                "title": "Następne zajęcia. Sprawa zamknięta, detektywie.",
+                "body": "Godzina, przedmiot i sala na jednej karcie.",
+                "artLabel": "Zaraz po Ciebie",
+                "artRoom": "Sala, podobno"
+            },
+            "week": {
+                "label": "Cały tydzień, bez litości",
+                "title": "Cały tydzień. Bez magisterki z klikania.",
+                "body": "Przeskakuj między dniami i znajdź wolne okienka bez grzebania w menu.",
+                "days": ["PN", "WT", "ŚR", "CZ", "PT"]
+            },
+            "clash": {
+                "label": "Plan wymaga klona",
+                "title": "Dwa zajęcia naraz? Powodzenia.",
+                "body": "Pokazuję oba. Nie sklonuję Cię, ale nie udam, że z planem wszystko gra."
+            },
+            "phone": {
+                "label": "W biegu przez kampus",
+                "title": "Telefon nie powinien wymagać zoomu 300%.",
+                "body": "Sprawdź następne zajęcia w drodze, bez rozsuwania ekranu palcami.",
+                "artLabel": "Następna ofiara",
+                "artRoom": "Znajdź salę"
+            }
+        },
+        "promiseKicker": "Bez zakładania kont",
+        "promiseTitle": "Jedno logowanie. Wiem, brzmi podejrzanie.",
+        "promiseLead": "Żadnego nowego konta ani hasła. Logowanie zostaje na stronie uczelni.",
         "promise": [
             [
-                "Hasło wpisujesz tylko na stronie ZUT.",
-                "Logowanie odbywa się przez uczelniany USOS. My nigdy nie widzimy Twojego hasła."
+                "Twoje hasło? ZUT może je zatrzymać.",
+                "Hasło wpisujesz tylko na stronie uczelni. Nigdy go nie widzę ani nie zapisuję."
             ],
             [
-                "Nie mamy bazy danych.",
-                "Zapamiętujemy tylko listę Twoich grup — w zaszyfrowanym ciasteczku, na Twoim urządzeniu."
+                "Baza studentów? Nie ma.",
+                "Lista Twoich grup jest w zaszyfrowanym ciasteczku na Twoim urządzeniu. Żadnej bazy z Twoim nazwiskiem."
             ],
             [
-                "Logujesz się raz.",
-                "Plan grup jest publiczny, więc potem pobieramy go bez Twojego konta. Wystarczy raz na semestr."
+                "Dane planu są publiczne. Spokojnie.",
+                "Po zalogowaniu pokazuję plan bez ponownego sięgania do Twojego konta. Gdy grupy się zmienią, po prostu odśwież."
             ]
         ],
-        "questionsTitle": "Dziś niepotrzebne",
-        "questions": [
-            "Zrzut ekranu planu",
-            "„Ktoś wie, gdzie mamy?”",
-            "Druga zakładka",
-            "Cierpliwość"
-        ],
-        "chips": ["1 logowanie na semestr", "sala: widoczna", "telefon: obsługiwany"],
-        "clicksTitle": "Kliknięcia do sali",
-        "clicksBefore": "Dotychczas",
-        "clicksNow": "Teraz",
-        "clicksUnit": "klików",
-        "clicksNote": "Liczone ręcznie, w przerwie między zajęciami.",
-        "winsTitle": "Co umie",
-        "wins": [
-            "Pokazuje, gdzie jest sala.",
-            "Pokazuje, kiedy.",
-            "Dwa zajęcia naraz? Stoją obok siebie, jak na kartce.",
-            "Działa na telefonie. Tak, na tym.",
-            "Pamięta, że logowanie już było.",
-            "Tryb ciemny. Nie ma za co."
-        ],
-        "faqTitle": "Pytania",
+        "faqKicker": "Pytania, które na pewno padną",
+        "faqTitle": "Tak, ktoś na pewno o to zapyta.",
+        "faqLead": "Oszczędź czat grupowy. Dość się nacierpiał.",
         "faq": [
             [
-                "Czy to oficjalna strona uczelni?",
-                "Nie. Oficjalność ma swoje zalety. Zostawiamy je uczelni."
+                "Czy to oficjalna strona?",
+                "Nie. Nikt na uczelni nie zatwierdził mojego wyboru czcionki. Używam danych USOS, a logowanie odbywa się na oficjalnej stronie uczelni."
             ],
-            ["Dlaczego to takie szybkie?", "Pokazujemy plan i nic poza tym. Podobno tak się da."],
             [
-                "Co, jeśli USOS będzie miał gorszy dzień?",
-                "Pokażemy ostatni pobrany plan i powiemy o tym cicho. Każdy ma gorsze dni."
+                "Powie mi, co mnie czeka?",
+                "Tak. Godzina i sala stoją tuż obok nazwy zajęć. Przełomowy pomysł, wiem."
             ],
-            ["Czy mnie wylogujecie?", "Jeśli tego zechcesz. Jest do tego przycisk."],
-            ["Ile to kosztuje?", "Nic. Jeśli coś nie gra, napisz na GitHubie. Odpowiemy."]
+            [
+                "Co, jeśli USOS padnie?",
+                "Pokażę ostatni pobrany plan i ostrzegę, że może być nieaktualny. USOS też miewa gorsze dni."
+            ],
+            ["Zmieniły mi się grupy. Mam przechlapane?", "Skądże. Odśwież je z menu konta."],
+            ["Ile to kosztuje?", "Nic. Kod jest otwarty, a błędy można zgłaszać na GitHubie."]
         ],
-        "closingTitle": "Nie musisz dziękować.",
-        "closingBody": "Wystarczy, że będziesz wiedzieć, gdzie masz salę.",
-        "closingCta": "Zaloguj się. Raz.",
+        "closingKicker": "O, proszę. Konsekwencje.",
+        "closingTitle": "Zajęcia bez questów pobocznych.",
+        "closingBody": "Zobacz, co masz, co dalej i gdzie iść.",
+        "closingCta": "Pokaż mi straty",
         "errors": {
-            "denied": "Logowanie przerwane. Spróbuj ponownie, kiedy zechcesz.",
-            "expired": "Sesja logowania wygasła. Spróbuj jeszcze raz.",
-            "error": "Nie udało się zalogować przez USOS. Spróbuj ponownie za chwilę.",
-            "nogroups": "Zalogowano, ale USOS nie zwrócił żadnych grup na ten semestr."
+            "denied": "Logowanie anulowane. Wygląda na lęk przed zobowiązaniami.",
+            "expired": "Sesja logowania wygasła. Spróbuj ponownie.",
+            "error": "USOS odmówił. Odczekaj chwilę i spróbuj ponownie.",
+            "nogroups": "Zalogowano, ale USOS nie zwrócił żadnych grup. Albo masz wolne, albo coś się zepsuło."
         }
     },
     "nav": {
-        "openSource": "Kod źródłowy",
-        "privacy": "Prywatność",
+        "openSource": "Kod źródłowy (oceń mnie)",
+        "privacy": "Prywatność (tak, jest)",
         "language": "English",
-        "theme": "Motyw",
-        "themeAuto": "Auto",
-        "themeLight": "Jasny",
-        "themeDark": "Ciemny"
+        "theme": "Wygląd",
+        "themeAuto": "Jak w systemie",
+        "themeLight": "Spalacz oczu",
+        "themeDark": "Słuszny wybór"
     },
     "cal": {
-        "prevWeek": "Poprzedni tydzień",
-        "nextWeek": "Następny tydzień",
-        "today": "Dziś",
-        "week": "Tydzień",
+        "prevWeek": "Poprzedni odcinek",
+        "nextWeek": "Problemy na przyszły tydzień",
+        "today": "Dziś, niestety",
+        "week": "Tydzień cierpienia",
         "session": "Zjazd",
         "of": "z",
-        "allDays": "Cały tydzień",
-        "classDays": "Tylko dni z zajęciami",
-        "emptyTitle": "Wolne.",
-        "emptyNext": "Najbliższe zajęcia:",
+        "allDays": "Pokaż cały bałagan",
+        "classDays": "Ukryj wolne dni",
+        "emptyTitle": "Nic. Podejrzanie spokojnie.",
+        "emptyNext": "Następny akademicki jumpscare:",
         "emptyNone": "W tym semestrze nie ma już zajęć.",
-        "jump": "Przejdź",
-        "now": "Teraz",
-        "next": "Następne",
+        "jump": "Skocz",
+        "now": "Właśnie teraz",
+        "next": "Następny problem",
         "in": "za",
         "until": "do",
-        "endsIn": "koniec za",
+        "endsIn": "wolność za",
         "minutes": "min",
         "hours": "godz.",
-        "tomorrow": "jutro",
+        "tomorrow": "problem na jutro",
         "group": "gr.",
         "room": "sala",
-        "lecturers": "Prowadzący",
-        "place": "Miejsce",
-        "time": "Termin",
-        "meetings": "Kolejne spotkania",
+        "lecturers": "Winni",
+        "place": "Dokąd idę",
+        "time": "Kiedy cierpię",
+        "meetings": "Przyszłe obowiązki",
         "showAllMeetings": "Pokaż wszystkie",
-        "noMoreMeetings": "To ostatnie spotkanie w semestrze.",
-        "openUsos": "Otwórz w USOSweb",
-        "close": "Zamknij",
-        "clash": "kolizja",
-        "hello": "Cześć",
-        "refresh": "Odśwież grupy",
-        "refreshHint": "Po zmianie grup w USOS",
-        "logout": "Wyloguj",
+        "noMoreMeetings": "To ostatnie spotkanie w tym semestrze.",
+        "openUsos": "Otwórz miejsce zbrodni",
+        "close": "Uciekaj",
+        "clash": "konflikt",
+        "hello": "siema",
+        "refresh": "Odśwież moją akademicką fabułę",
+        "refreshHint": "Użyj, gdy USOS zmieni Ci wątek",
+        "logout": "Wyciągnij mnie stąd",
         "groups": {
             "one": "grupa",
             "few": "grupy",
@@ -124,17 +239,17 @@
         },
         "asOf": "stan na",
         "language": "Język",
-        "account": "Twoje konto",
-        "menu": "Menu",
-        "demo": "To przykładowy plan kilku publicznych grup ZUT.",
-        "demoCta": "Zaloguj się, aby zobaczyć swój",
-        "stale": "USOS nie odpowiada — pokazujemy ostatnio pobrany plan.",
-        "missing": "Nie udało się pobrać części planu.",
-        "retry": "Spróbuj ponownie",
-        "gone": "Niektóre Twoje grupy zniknęły z USOS — odśwież listę grup.",
-        "newTerm": "Nowy semestr? Odśwież listę grup, aby zobaczyć nowy plan.",
-        "scope": "Plan pokazuje zajęcia Twoich grup. Egzaminy i odwołane zajęcia sprawdzaj w USOSweb.",
-        "loading": "Ładowanie…"
+        "account": "Twoja tożsamość akademicka",
+        "menu": "Różne",
+        "demo": "Demo zrobione z kilku publicznych grup ZUT.",
+        "demoCta": "Zaloguj się i zmierz się ze swoim",
+        "stale": "USOS jest offline. Pokazuję ostatni pobrany plan.",
+        "missing": "Część planu się nie załadowała. Bardzo w stylu.",
+        "retry": "Szturchnij jeszcze raz",
+        "gone": "Niektóre grupy zniknęły z USOS. Spróbuj je odświeżyć.",
+        "newTerm": "Nowy semestr. Odśwież grupy, żeby go zobaczyć.",
+        "scope": "Pokazuje tylko zajęcia Twoich grup. Egzaminy i odwołania są nadal w USOSweb.",
+        "loading": "Negocjuję z USOS…"
     },
     "types": {
         "WK": "Wykład",
@@ -153,31 +268,31 @@
         "OK": "Ocena końcowa"
     },
     "privacy": {
-        "title": "Prywatność",
+        "title": "Prywatność, ale czytelnie",
         "updated": "Ostatnia aktualizacja: 2 października 2026",
         "intro": [
-            "Oopswhere nie ma bazy danych i nigdy nie widzi Twojego hasła. Logujesz się na stronie Twojej uczelni (USOS), a my dostajemy jednorazowy dostęp, którego używamy tylko do pobrania listy Twoich grup zajęciowych i Twojego imienia. Zaraz potem unieważniamy ten dostęp.",
+            "Oopswhere nie ma bazy danych i nigdy nie widzi Twojego hasła. Logujesz się na stronie swojej uczelni (USOS), a ja dostaję jednorazowy dostęp, którego używam tylko do pobrania listy Twoich grup zajęciowych i Twojego imienia. Zaraz potem unieważniam ten dostęp.",
             "Oopswhere to niezależny projekt open source. Nie jest prowadzony przez ZUT ani z nim związany."
         ],
         "data": {
-            "title": "Twoje dane",
+            "title": "Twoje dane, nie moja kolekcja",
             "body": [
                 "Lista grup i imię są zapisywane w zaszyfrowanym ciasteczku w Twojej przeglądarce. Serwer niczego o Tobie nie przechowuje. Wylogowanie usuwa ciasteczko.",
-                "Plany grup zajęciowych, nazwiska prowadzących i sale są publicznymi danymi USOS. Pobieramy je z USOS anonimowo i przechowujemy przez krótki czas w pamięci podręcznej, żeby nie obciążać serwerów uczelni.",
-                "Podstawa prawna: Twoje grupy i imię przetwarzamy, bo bez nich nie pokażemy Ci planu, o który prosisz (art. 6 ust. 1 lit. b RODO). Podanie ich jest dobrowolne, ale bez logowania aplikacja nie pokaże Twojego planu. Nazwiska prowadzących pokazujemy jako część publicznego planu zajęć, w naszym prawnie uzasadnionym interesie (art. 6 ust. 1 lit. f RODO)."
+                "Plany grup zajęciowych, nazwiska prowadzących i sale są publicznymi danymi USOS. Pobieram je z USOS anonimowo i przechowuję przez krótki czas w pamięci podręcznej, żeby nie obciążać serwerów uczelni.",
+                "Podstawa prawna: Twoje grupy i imię przetwarzam, bo bez nich nie pokażę Ci planu, o który prosisz (art. 6 ust. 1 lit. b RODO). Podanie ich jest dobrowolne, ale bez logowania aplikacja nie pokaże Twojego planu. Nazwiska prowadzących pokazuję jako część publicznego planu zajęć, w moim prawnie uzasadnionym interesie (art. 6 ust. 1 lit. f RODO)."
             ]
         },
         "analytics": {
-            "title": "Analityka",
+            "title": "Analityka, ale za zgodą",
             "body": [
-                "Nasz serwer liczy wyniki logowania (udane, anulowane, błąd) i szybkość ładowania planu. Te liczby trafiają do PostHog (serwery w UE) bez Twojego adresu IP i bez niczego, co pozwalałoby Cię rozpoznać.",
-                "Tylko jeśli się zgodzisz, aplikacja mierzy też w przeglądarce: wyświetlenia stron, kliknięcia w kalendarzu, np. zmianę tygodnia, błędy aplikacji i szybkość stron, a także rodzaj przeglądarki i urządzenia oraz przybliżoną lokalizację (kraj, miasto) ustaloną z adresu IP. To również trafia do PostHog. PostHog nie zapisuje ciasteczek ani niczego w pamięci przeglądarki, nie nagrywa ekranu i nigdy nie dostaje Twojego imienia, grup ani planu. Twoją odpowiedź pamiętamy przez 6 miesięcy w ciasteczku ow_consent; możesz ją zmienić poniżej.",
-                "Podstawa prawna: liczniki na serwerze to nasz prawnie uzasadniony interes w utrzymaniu i ulepszaniu aplikacji (art. 6 ust. 1 lit. f RODO). Analityka w przeglądarce działa wyłącznie za Twoją zgodą (art. 6 ust. 1 lit. a RODO), którą możesz w każdej chwili wycofać; nie wpływa to na zgodność z prawem tego, co zebraliśmy wcześniej."
+                "Mój serwer liczy wyniki logowania (udane, anulowane, błąd) i szybkość ładowania planu. Te liczby trafiają do PostHog (serwery w UE) bez Twojego adresu IP i bez niczego, co pozwalałoby Cię rozpoznać.",
+                "Tylko jeśli się zgodzisz, aplikacja mierzy też w przeglądarce: wyświetlenia stron, działania w kalendarzu, np. zmianę tygodnia, błędy aplikacji i szybkość stron, a także rodzaj przeglądarki i urządzenia oraz przybliżoną lokalizację (kraj, miasto) ustaloną z adresu IP. To również trafia do PostHog. PostHog nie zapisuje ciasteczek ani niczego w pamięci przeglądarki, nie nagrywa ekranu i nigdy nie dostaje Twojego imienia, grup ani planu. Twoją odpowiedź pamiętam przez 6 miesięcy w ciasteczku ow_consent; możesz ją zmienić poniżej.",
+                "Podstawa prawna: liczniki na serwerze to mój prawnie uzasadniony interes w utrzymaniu i ulepszaniu aplikacji (art. 6 ust. 1 lit. f RODO). Analityka w przeglądarce działa wyłącznie za Twoją zgodą (art. 6 ust. 1 lit. a RODO), którą możesz w każdej chwili wycofać; nie wpływa to na zgodność z prawem tego, co zebrałem wcześniej."
             ]
         },
         "cookies": {
-            "title": "Ciasteczka",
-            "intro": "Używamy tylko ciasteczek potrzebnych do działania aplikacji i do zapamiętania Twoich wyborów. Żadne z nich nie służy do reklam ani śledzenia.",
+            "title": "Ciasteczka, te nudne przeglądarkowe",
+            "intro": "Używam tylko ciasteczek potrzebnych do działania aplikacji i do zapamiętania Twoich wyborów. Żadne z nich nie służy do reklam ani śledzenia.",
             "items": [
                 [
                     "ow_profile",
@@ -193,48 +308,48 @@
             ]
         },
         "recipients": {
-            "title": "Kto jeszcze ma dostęp",
+            "title": "Kto jeszcze widzi Twoje dane",
             "body": [
-                "Cloudflare (Cloudflare, Inc.) przekazuje cały ruch do naszego serwera i chroni go przed atakami, więc widzi Twój adres IP i przesyłane dane. Działa na całym świecie, także poza UE; przekazywanie danych opiera się na standardowych klauzulach umownych i programie EU–US Data Privacy Framework.",
-                "Firma hostingowa, u której działa nasz serwer, ma do niego dostęp techniczny.",
+                "Cloudflare (Cloudflare, Inc.) przekazuje cały ruch do mojego serwera i chroni go przed atakami, więc widzi Twój adres IP i przesyłane dane. Działa na całym świecie, także poza UE; przekazywanie danych opiera się na standardowych klauzulach umownych i programie EU–US Data Privacy Framework.",
+                "Firma hostingowa, u której działa mój serwer, ma do niego dostęp techniczny.",
                 "PostHog (serwery w UE) dostaje liczniki z serwera i, tylko po Twojej zgodzie, dane analityczne z przeglądarki.",
-                "Wszyscy trzej przetwarzają dane w naszym imieniu. Nikomu danych nie sprzedajemy ani nie udostępniamy."
+                "Wszyscy trzej przetwarzają dane w moim imieniu. Nikomu innemu danych nie sprzedaję ani nie udostępniam."
             ]
         },
         "retention": {
-            "title": "Jak długo",
+            "title": "Jak długo to zostaje",
             "items": [
-                "Ciasteczka: jak w tabeli wyżej. Wylogowanie od razu usuwa ciasteczko z grupami i imieniem.",
+                "Ciasteczka: jak wyżej. Wylogowanie od razu usuwa ciasteczko z grupami i imieniem.",
                 "Publiczne plany grup i nazwiska prowadzących: w pamięci serwera najwyżej 14 dni, nigdy na dysku; znikają przy każdym restarcie.",
                 "Dane analityczne w PostHog: co najmniej rok, bo tyle gwarantuje PostHog i krótszego okresu nie da się ustawić. Nie zawierają Twojego imienia, grup ani planu.",
                 "Cloudflare: zgodnie z jego polityką prywatności."
             ]
         },
         "rights": {
-            "title": "Twoje prawa",
+            "title": "Twoje supermoce z RODO",
             "body": [
                 "Masz prawo dostępu do swoich danych, ich sprostowania, usunięcia, ograniczenia przetwarzania i przeniesienia, prawo sprzeciwu wobec przetwarzania opartego na prawnie uzasadnionym interesie oraz prawo wycofania zgody na analitykę.",
-                "Większość z nich możesz zrealizować samodzielnie: wszystko, co o Tobie wiemy, jest w ciasteczku w Twojej przeglądarce, a wylogowanie je usuwa. Analitykę wyłączysz wyżej. Danych analitycznych nie potrafimy przypisać do konkretnej osoby, więc nie możemy ich wyszukać ani usunąć na Twoją prośbę.",
+                "Większość z nich możesz zrealizować samodzielnie: wszystko, co o Tobie wiem, jest w ciasteczku w Twojej przeglądarce, a wylogowanie je usuwa. Analitykę wyłączysz wyżej. Danych analitycznych nie potrafię przypisać do konkretnej osoby, więc nie mogę ich wyszukać ani usunąć na Twoją prośbę.",
                 "Możesz też złożyć skargę do Prezesa Urzędu Ochrony Danych Osobowych (ul. Stawki 2, 00-193 Warszawa, uodo.gov.pl).",
-                "Nie podejmujemy wobec Ciebie żadnych zautomatyzowanych decyzji i nie profilujemy Cię."
+                "Nie podejmuję wobec Ciebie żadnych zautomatyzowanych decyzji i nie profiluję Cię."
             ]
         },
-        "outro": "Nie wyświetlamy reklam i nie używamy zewnętrznych czcionek. Kod jest otwarty — możesz sprawdzić każde zdanie z tej strony.",
-        "back": "Wróć do planu"
+        "outro": "Żadnych reklam, tajemniczych trackerów ani zewnętrznych czcionek. Kod jest otwarty, więc możesz sprawdzić to sam.",
+        "back": "Wróć do moich problemów"
     },
     "consent": {
-        "text": "Czy możemy mierzyć, jak korzystasz z aplikacji (wyświetlenia, kliknięcia w kalendarzu, błędy, szybkość)? Robi to PostHog na serwerach w UE, bez ciasteczek, i nigdy nie widzi Twojego imienia, grup ani planu.",
+        "text": "Czy mogę zbierać podstawowe anonimowe statystyki użycia (wyświetlenia, kliknięcia, błędy, szybkość)? Zajmuje się tym PostHog na serwerach w UE, bez ciasteczek, i nigdy nie dostaje Twojego imienia, grup ani planu.",
         "more": "Szczegóły",
-        "yes": "Zgadzam się",
-        "no": "Nie zgadzam się",
-        "on": "Analityka w przeglądarce jest włączona.",
-        "off": "Analityka w przeglądarce jest wyłączona.",
-        "turnOn": "Włącz",
-        "turnOff": "Wyłącz"
+        "yes": "No dobra",
+        "no": "Absolutnie nie",
+        "on": "Analityka w przeglądarce włączona. Wykresy są zadowolone.",
+        "off": "Analityka w przeglądarce wyłączona. Statystycznie dla mnie nie istniejesz.",
+        "turnOn": "Nakarm wykresy",
+        "turnOff": "Zagłódź wykresy"
     },
     "notFound": {
-        "title": "Tej sali nie ma.",
-        "body": "Strona, której szukasz, nie istnieje.",
-        "back": "Wróć na start"
+        "title": "Zła sala.",
+        "body": "Ta strona nie istnieje. Zupełnie jak sala, która według Ciebie miała być na trzecim piętrze.",
+        "back": "Wróć do cywilizacji"
     }
 }

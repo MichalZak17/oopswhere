@@ -1,146 +1,258 @@
 {
     "meta": {
         "title": "Oopswhere",
-        "description": "Your USOS timetable, finally readable. Sign in once, through your university. No database, no passwords."
+        "description": "Your USOS timetable, finally readable. One university sign-in. No database, no passwords."
     },
     "landing": {
-        "eyebrow": "A timetable for ZUT students",
-        "title": "Which room?\nYou already know.",
-        "lead": "Your USOS timetable — clear, fast and always at hand. Sign in once, not every five minutes.",
-        "login": "Sign in with USOS",
-        "demo": "See a sample timetable",
-        "loginUnavailable": "Sign-in is disabled on this instance (no USOS API key configured).",
-        "promiseTitle": "How it works",
+        "eyebrow": "Your timetable, minus the unpaid detective work",
+        "title": ["What now?", "What's next?", "Where to?"],
+        "lead": "What's on, what's next, when and where. All on one screen.",
+        "login": "Enter through the USOS portal",
+        "demo": "Stalk the demo timetable",
+        "loginUnavailable": "Sign-in is off: no USOS API key configured.",
+        "heroNote": "Sign in through ZUT. Your password stays with them.",
+        "previewCaption": "Time, class and room on one card.",
+        "preview": {
+            "heading": "Your day, before it ruins itself",
+            "sample": "Demo reality",
+            "chooseDay": "Pick a day and inspect the damage",
+            "dayLabel": "Today's scheduled suffering",
+            "now": "Now",
+            "next": "Next victim",
+            "later": "Future problem",
+            "room": "Room, allegedly",
+            "footer": "Time. Class. Room. Together.",
+            "days": [
+                {
+                    "short": "MON",
+                    "day": "12",
+                    "full": "Monday, 12 October",
+                    "count": "3 classes",
+                    "classes": [
+                        {
+                            "time": "09:40–11:10",
+                            "name": "Software testing",
+                            "room": "WI2 100",
+                            "type": "WK"
+                        },
+                        {
+                            "time": "11:30–13:00",
+                            "name": "Data processing and analysis",
+                            "room": "WI1 303",
+                            "type": "LB"
+                        },
+                        {
+                            "time": "13:15–14:45",
+                            "name": "Algorithms 2",
+                            "room": "WI1 215",
+                            "type": "CW"
+                        }
+                    ]
+                },
+                {
+                    "short": "TUE",
+                    "day": "13",
+                    "full": "Tuesday, 13 October",
+                    "count": "3 classes",
+                    "classes": [
+                        {
+                            "time": "08:00–09:30",
+                            "name": "Databases",
+                            "room": "WI2 203",
+                            "type": "WK"
+                        },
+                        {
+                            "time": "09:40–11:10",
+                            "name": "Interface design",
+                            "room": "WI1 102",
+                            "type": "PR"
+                        },
+                        {
+                            "time": "11:30–13:00",
+                            "name": "Computer networks",
+                            "room": "WI2 315",
+                            "type": "LB"
+                        }
+                    ]
+                },
+                {
+                    "short": "WED",
+                    "day": "14",
+                    "full": "Wednesday, 14 October",
+                    "count": "3 classes",
+                    "classes": [
+                        {
+                            "time": "09:40–11:10",
+                            "name": "Discrete mathematics",
+                            "room": "WI1 118",
+                            "type": "CW"
+                        },
+                        {
+                            "time": "11:30–13:00",
+                            "name": "Software engineering",
+                            "room": "WI2 100",
+                            "type": "WK"
+                        },
+                        {
+                            "time": "13:15–14:45",
+                            "name": "Operating systems",
+                            "room": "WI1 303",
+                            "type": "LB"
+                        }
+                    ]
+                }
+            ]
+        },
+        "stripLabel": "Things USOS made weirdly hard to find",
+        "strip": [
+            "Now, without consulting an oracle",
+            "Next, without asking 14 people in Messenger",
+            "Where, without a side quest"
+        ],
+        "featuresKicker": "Controversial take: make it readable",
+        "featuresTitle": "A timetable that stopped playing hard to get.",
+        "featuresLead": "Everything you need before class. Yes, even the room.",
+        "features": {
+            "next": {
+                "label": "Coming for you next",
+                "title": "Next class. Case closed, detective.",
+                "body": "Time, subject and room on one card.",
+                "artLabel": "Coming for you next",
+                "artRoom": "Room, allegedly"
+            },
+            "week": {
+                "label": "The full weekly damage report",
+                "title": "Your whole week. No master's degree in clicking required.",
+                "body": "Jump between days and find your free hours without digging through menus.",
+                "days": ["MON", "TUE", "WED", "THU", "FRI"]
+            },
+            "clash": {
+                "label": "Schedule said 'clone yourself'",
+                "title": "Two classes at once? Skill issue, apparently.",
+                "body": "I show both. I can't clone you, but I won't pretend the schedule is fine."
+            },
+            "phone": {
+                "label": "While speed-walking across campus",
+                "title": "Your phone should not require 300% zoom.",
+                "body": "Check your next class on the move, no pinch-zooming.",
+                "artLabel": "Next victim",
+                "artRoom": "Find the room"
+            }
+        },
+        "promiseKicker": "No account-creation side quest",
+        "promiseTitle": "One sign-in. I know. Sounds fake.",
+        "promiseLead": "No new account, no new password. Sign-in stays on your university's site.",
         "promise": [
             [
-                "You only type your password on ZUT's site.",
-                "Sign-in goes through your university's USOS. We never see your password."
+                "Your password? ZUT can keep that.",
+                "You type your password only on the university's site. I never see or store it."
             ],
             [
-                "We have no database.",
-                "We only remember your list of class groups — in an encrypted cookie, on your device."
+                "A creepy student database? Nope.",
+                "Your class groups live in an encrypted cookie on your device. No database with your name on it."
             ],
             [
-                "You sign in once.",
-                "Group timetables are public, so after that we fetch them without your account. Once a semester is enough."
+                "The timetable data is already public. Relax.",
+                "After sign-in, I show your schedule without touching your account again. If your groups change, just refresh."
             ]
         ],
-        "questionsTitle": "Not needed today",
-        "questions": [
-            "A screenshot of the timetable",
-            "“Does anyone know where we are?”",
-            "A second tab",
-            "Patience"
-        ],
-        "chips": ["1 sign-in per semester", "room: visible", "phones: supported"],
-        "clicksTitle": "Clicks to your room",
-        "clicksBefore": "Until now",
-        "clicksNow": "Now",
-        "clicksUnit": "clicks",
-        "clicksNote": "Counted by hand, between classes.",
-        "winsTitle": "What it does",
-        "wins": [
-            "Shows where the room is.",
-            "Shows when.",
-            "Two classes at once? Side by side, like on paper.",
-            "Works on a phone. Yes, that one.",
-            "Remembers you've already signed in.",
-            "Dark mode. You're welcome."
-        ],
-        "faqTitle": "Questions",
+        "faqKicker": "Questions you were definitely going to ask",
+        "faqTitle": "Yes, somebody was going to ask this.",
+        "faqLead": "Save the group chat. It has suffered enough.",
         "faq": [
             [
-                "Is this the university's official site?",
-                "No. Being official has its advantages. We leave those to the university."
+                "Is this actually official?",
+                "No. Nobody at the university approved my font choices. I use USOS data, and sign-in happens on the official university site."
             ],
             [
-                "Why is it so fast?",
-                "We show the timetable and nothing else. Apparently that can be done."
+                "Can it tell me what's next?",
+                "Yes. Time and room sit right next to the class name. Groundbreaking, I know."
             ],
             [
-                "What if USOS has a bad day?",
-                "We show the last timetable we have and mention it quietly. Everyone has bad days."
+                "What if USOS goes down?",
+                "I show the last timetable I fetched and warn you it may be stale. USOS has bad days too."
             ],
-            ["Will I be signed out?", "If you want to be. There's a button for that."],
+            ["I changed groups. Am I cooked?", "Not at all. Refresh them from the account menu."],
             [
                 "How much does it cost?",
-                "Nothing. If something's off, write on GitHub. We'll answer."
+                "Nothing. The code is open-source, and bugs can be reported on GitHub."
             ]
         ],
-        "closingTitle": "No need to thank us.",
-        "closingBody": "Just know where your room is.",
-        "closingCta": "Sign in. Once.",
+        "closingKicker": "Oh look. Consequences.",
+        "closingTitle": "Classes without the Ubisoft quest markers.",
+        "closingBody": "See what you have, what's next and where to go.",
+        "closingCta": "Show me the damage",
         "errors": {
-            "denied": "Sign-in cancelled. Try again whenever you like.",
-            "expired": "The sign-in session expired. Please try again.",
-            "error": "Couldn't sign in with USOS. Please try again in a moment.",
-            "nogroups": "Signed in, but USOS returned no class groups for this semester."
+            "denied": "Sign-in cancelled. Commitment issues detected.",
+            "expired": "Your sign-in session expired. Try again.",
+            "error": "USOS said no. Wait a moment and try again.",
+            "nogroups": "Signed in, but USOS returned no groups. Either you're free or something broke."
         }
     },
     "nav": {
-        "openSource": "Source code",
-        "privacy": "Privacy",
+        "openSource": "Source code (judge me)",
+        "privacy": "Privacy (yes, I have one)",
         "language": "Polski",
-        "theme": "Theme",
-        "themeAuto": "Auto",
-        "themeLight": "Light",
-        "themeDark": "Dark"
+        "theme": "Vibe",
+        "themeAuto": "Whatever my OS says",
+        "themeLight": "Retina destroyer",
+        "themeDark": "Correct choice"
     },
     "cal": {
-        "prevWeek": "Previous week",
-        "nextWeek": "Next week",
-        "today": "Today",
-        "week": "Week",
+        "prevWeek": "Previous episode",
+        "nextWeek": "Next week's problems",
+        "today": "Today, unfortunately",
+        "week": "Week of suffering",
         "session": "Session",
         "of": "of",
-        "allDays": "Whole week",
-        "classDays": "Class days only",
-        "emptyTitle": "Nothing on.",
-        "emptyNext": "Next classes:",
+        "allDays": "Show the whole mess",
+        "classDays": "Hide free days",
+        "emptyTitle": "Nothing. Suspiciously peaceful.",
+        "emptyNext": "Next academic jumpscare:",
         "emptyNone": "No more classes this semester.",
-        "jump": "Go",
-        "now": "Now",
-        "next": "Next",
+        "jump": "Teleport",
+        "now": "Right now",
+        "next": "Next problem",
         "in": "in",
         "until": "until",
-        "endsIn": "ends in",
+        "endsIn": "freedom in",
         "minutes": "min",
         "hours": "h",
-        "tomorrow": "tomorrow",
-        "group": "gr.",
+        "tomorrow": "tomorrow's problem",
+        "group": "grp.",
         "room": "room",
-        "lecturers": "Lecturers",
-        "place": "Where",
-        "time": "When",
-        "meetings": "Upcoming meetings",
-        "showAllMeetings": "Show all",
-        "noMoreMeetings": "This is the last meeting this semester.",
-        "openUsos": "Open in USOSweb",
-        "close": "Close",
-        "clash": "clash",
-        "hello": "Hi",
-        "refresh": "Refresh groups",
-        "refreshHint": "After a group change in USOS",
-        "logout": "Sign out",
+        "lecturers": "People responsible",
+        "place": "Where am I going",
+        "time": "When am I suffering",
+        "meetings": "Future obligations",
+        "showAllMeetings": "Expose all of them",
+        "noMoreMeetings": "That's the last meeting this semester.",
+        "openUsos": "Open the original crime scene",
+        "close": "Escape",
+        "clash": "schedule beef",
+        "hello": "yo",
+        "refresh": "Refresh my academic lore",
+        "refreshHint": "Use after USOS changes your plotline",
+        "logout": "Get me out",
         "groups": {
             "one": "group",
             "few": "groups",
             "many": "groups",
             "other": "groups"
         },
-        "asOf": "as of",
+        "asOf": "last rescued",
         "language": "Language",
-        "account": "Your account",
-        "menu": "Menu",
-        "demo": "This is a sample timetable of a few public ZUT groups.",
-        "demoCta": "Sign in to see yours",
-        "stale": "USOS isn't responding — showing the last timetable we fetched.",
-        "missing": "Part of the timetable couldn't be loaded.",
-        "retry": "Try again",
-        "gone": "Some of your groups no longer exist in USOS — refresh your groups.",
-        "newTerm": "New semester? Refresh your groups to see the new timetable.",
-        "scope": "Shows your class groups' meetings. Check exams and cancellations in USOSweb.",
-        "loading": "Loading…"
+        "account": "Your academic identity",
+        "menu": "Stuff",
+        "demo": "A demo built from a few public ZUT groups.",
+        "demoCta": "Sign in and face yours",
+        "stale": "USOS is offline. Showing the last timetable I fetched.",
+        "missing": "Part of the timetable failed to load. Very on-brand.",
+        "retry": "Poke it again",
+        "gone": "Some of your groups are gone from USOS. Try refreshing them.",
+        "newTerm": "New semester. Refresh your groups to see it.",
+        "scope": "Shows your group meetings only. Exams and cancellations are still in USOSweb.",
+        "loading": "Negotiating with USOS…"
     },
     "types": {
         "WK": "Lecture",
@@ -159,31 +271,31 @@
         "OK": "Final assessment"
     },
     "privacy": {
-        "title": "Privacy",
+        "title": "Privacy, but readable",
         "updated": "Last updated: 2 October 2026",
         "intro": [
-            "Oopswhere has no database and never sees your password. You sign in on your university's own site (USOS), and we receive one-time access that we use only to read your list of class groups and your first name. We revoke that access right away.",
+            "Oopswhere has no database and never sees your password. You sign in on your university's own site (USOS), and I receive one-time access that I use only to read your list of class groups and your first name. I revoke that access right away.",
             "Oopswhere is an independent open-source project. It is not run by or affiliated with ZUT."
         ],
         "data": {
-            "title": "Your data",
+            "title": "Your data, not my collection hobby",
             "body": [
                 "The group list and first name are stored in an encrypted cookie in your browser. The server keeps nothing about you. Signing out deletes the cookie.",
-                "Class group timetables, lecturer names and rooms are public USOS data. We fetch them from USOS anonymously and cache them briefly so we don't put load on the university's servers.",
-                "Legal basis: we process your groups and first name because we can't show you the timetable you ask for without them (Art. 6(1)(b) GDPR). Providing them is voluntary, but without signing in the app can't show your timetable. We show lecturer names as part of the public timetable, in our legitimate interest (Art. 6(1)(f) GDPR)."
+                "Class group timetables, lecturer names and rooms are public USOS data. I fetch them from USOS anonymously and cache them briefly so I don't put load on the university's servers.",
+                "Legal basis: I process your groups and first name because I can't show you the timetable you ask for without them (Art. 6(1)(b) GDPR). Providing them is voluntary, but without signing in the app can't show your timetable. I show lecturer names as part of the public timetable, in my legitimate interest (Art. 6(1)(f) GDPR)."
             ]
         },
         "analytics": {
-            "title": "Analytics",
+            "title": "Analytics, with consent like adults",
             "body": [
-                "Our server counts login results (successful, cancelled, failed) and how fast the timetable loads. These counts go to PostHog (EU servers) without your IP address or anything else that could identify you.",
-                "Only if you agree, the app also measures in your browser: page views, calendar actions such as changing the week, app errors and page speed, along with the browser and device type and an approximate location (country, city) worked out from your IP address. This also goes to PostHog. PostHog sets no cookies and stores nothing in your browser, records no screen, and never receives your name, groups or timetable. We remember your answer for 6 months in the ow_consent cookie; you can change it below.",
-                "Legal basis: the server-side counts are our legitimate interest in keeping the app running and improving it (Art. 6(1)(f) GDPR). Browser analytics runs only with your consent (Art. 6(1)(a) GDPR), which you can withdraw at any time; that doesn't affect what was collected before."
+                "My server counts login results (successful, cancelled, failed) and how fast the timetable loads. These counts go to PostHog (EU servers) without your IP address or anything else that could identify you.",
+                "Only if you agree, the app also measures in your browser: page views, calendar actions such as changing the week, app errors and page speed, along with the browser and device type and an approximate location (country, city) worked out from your IP address. This also goes to PostHog. PostHog sets no cookies and stores nothing in your browser, records no screen, and never receives your name, groups or timetable. I remember your answer for 6 months in the ow_consent cookie; you can change it below.",
+                "Legal basis: the server-side counts are my legitimate interest in keeping the app running and improving it (Art. 6(1)(f) GDPR). Browser analytics runs only with your consent (Art. 6(1)(a) GDPR), which you can withdraw at any time; that doesn't affect what was collected before."
             ]
         },
         "cookies": {
-            "title": "Cookies",
-            "intro": "We only use cookies the app needs to work and to remember your choices. None of them are for advertising or tracking.",
+            "title": "Cookies, the boring browser kind",
+            "intro": "I only use cookies the app needs to work and to remember your choices. None of them are for advertising or tracking.",
             "items": [
                 [
                     "ow_profile",
@@ -199,16 +311,16 @@
             ]
         },
         "recipients": {
-            "title": "Who else handles data",
+            "title": "Who else touches the packets",
             "body": [
-                "Cloudflare (Cloudflare, Inc.) passes all traffic to our server and protects it from attacks, so it sees your IP address and the data sent. It operates worldwide, including outside the EU; transfers rely on standard contractual clauses and the EU–US Data Privacy Framework.",
-                "The hosting company that runs our server has technical access to it.",
+                "Cloudflare (Cloudflare, Inc.) passes all traffic to my server and protects it from attacks, so it sees your IP address and the data sent. It operates worldwide, including outside the EU; transfers rely on standard contractual clauses and the EU–US Data Privacy Framework.",
+                "The hosting company that runs my server has technical access to it.",
                 "PostHog (EU servers) receives the server-side counts and, only with your consent, the browser analytics.",
-                "All three process data on our behalf. We don't sell or share data with anyone else."
+                "All three process data on my behalf. I don't sell or share data with anyone else."
             ]
         },
         "retention": {
-            "title": "How long",
+            "title": "How long things stick around",
             "items": [
                 "Cookies: as listed above. Signing out deletes the cookie with your groups and first name right away.",
                 "Public group timetables and lecturer names: in the server's memory for at most 14 days, never on disk; gone at every restart.",
@@ -217,30 +329,30 @@
             ]
         },
         "rights": {
-            "title": "Your rights",
+            "title": "Your GDPR superpowers",
             "body": [
                 "You have the right to access, correct, delete and port your data, to restrict its processing, to object to processing based on legitimate interest, and to withdraw your consent to analytics.",
-                "You can exercise most of these yourself: everything we know about you is in the cookie in your browser, and signing out deletes it. You can turn analytics off above. We can't link analytics data to a particular person, so we can't look it up or delete it on request.",
+                "You can exercise most of these yourself: everything I know about you is in the cookie in your browser, and signing out deletes it. You can turn analytics off above. I can't link analytics data to a particular person, so I can't look it up or delete it on request.",
                 "You can also lodge a complaint with the Polish data protection authority, the President of the Personal Data Protection Office (ul. Stawki 2, 00-193 Warsaw, uodo.gov.pl).",
-                "We make no automated decisions about you and don't profile you."
+                "I make no automated decisions about you and don't profile you."
             ]
         },
-        "outro": "No ads, no third-party fonts. The code is open — you can verify every sentence on this page.",
-        "back": "Back to the timetable"
+        "outro": "No ads, no mystery trackers, no third-party fonts. The code is open, so you can check for yourself.",
+        "back": "Back to my problems"
     },
     "consent": {
-        "text": "Can we measure how you use the app (page views, calendar clicks, errors, speed)? PostHog does this on EU servers, without cookies, and never sees your name, groups or timetable.",
-        "more": "Details",
-        "yes": "Allow",
-        "no": "Don't allow",
-        "on": "Analytics in your browser is on.",
-        "off": "Analytics in your browser is off.",
-        "turnOn": "Turn on",
-        "turnOff": "Turn off"
+        "text": "Can I collect basic anonymous usage stats (page views, clicks, errors, speed)? PostHog handles them on EU servers, with no cookies, and never gets your name, groups or timetable.",
+        "more": "Receipts",
+        "yes": "Yeah, fine",
+        "no": "Absolutely not",
+        "on": "Browser analytics is on. The graphs are pleased.",
+        "off": "Browser analytics is off. You are now statistically invisible to me.",
+        "turnOn": "Let the graphs eat",
+        "turnOff": "Starve the graphs"
     },
     "notFound": {
-        "title": "No such room.",
-        "body": "The page you're looking for doesn't exist.",
-        "back": "Back to start"
+        "title": "Wrong room, bestie.",
+        "body": "This page does not exist. Much like the classroom you swear was on the third floor.",
+        "back": "Return to civilization"
     }
 }

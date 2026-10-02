@@ -1,0 +1,465 @@
+---
+import { t, type Lang } from "@/i18n";
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const preview = t(lang).landing.preview;
+const phases = [preview.now, preview.next, preview.later];
+---
+
+<div class="preview" data-schedule-preview>
+    <div class="preview-top">
+        <div class="preview-brand">
+            <span class="brand-mark" aria-hidden="true">
+                <i></i>
+                <i></i>
+                <i></i>
+            </span>
+            <span>{preview.heading}</span>
+        </div>
+        <span class="sample-tag">{preview.sample}</span>
+    </div>
+
+    <div class="day-switch" role="group" aria-label={preview.chooseDay}>
+        {preview.days.map((day, index) => (
+            <button
+                type="button"
+                class:list={["day-button", { selected: index === 0 }]}
+                data-preview-day={index}
+                aria-pressed={index === 0 ? "true" : "false"}
+                aria-controls={`preview-day-${index}`}
+            >
+                <span>{day.short}</span>
+                <strong>{day.day}</strong>
+            </button>
+        ))}
+    </div>
+
+    {preview.days.map((day, index) => (
+        <div
+            class="day-panel"
+            id={`preview-day-${index}`}
+            data-preview-panel={index}
+            hidden={index !== 0}
+        >
+            <div class="day-heading">
+                <div>
+                    <p class="overline">{preview.dayLabel}</p>
+                    <h3>{day.full}</h3>
+                </div>
+                <span class="class-count">{day.count}</span>
+            </div>
+            <ol class="timeline">
+                {day.classes.map((item, itemIndex) => (
+                    <li class:list={["timeline-row", { current: itemIndex === 0 }]}>
+                        <div class="phase">
+                            <span class="phase-dot" aria-hidden="true"></span>
+                            <span>{phases[itemIndex]}</span>
+                        </div>
+                        <article class="class-card" data-type={item.type}>
+                            <div class="card-top">
+                                <span class="class-time">{item.time}</span>
+                                <span class="class-type">{item.type}</span>
+                            </div>
+                            <h4>{item.name}</h4>
+                            <div class="card-bottom">
+                                <span class="room-label">{preview.room}</span>
+                                <strong>{item.room}</strong>
+                                <span class="room-arrow" aria-hidden="true">
+                                    ↗
+                                </span>
+                            </div>
+                        </article>
+                    </li>
+                ))}
+            </ol>
+        </div>
+    ))}
+
+    <div class="preview-foot">
+        <span class="foot-dot" aria-hidden="true"></span>
+        <span>{preview.footer}</span>
+    </div>
+</div>
+
+<script>
+    for (const preview of document.querySelectorAll<HTMLElement>("[data-schedule-preview]")) {
+        const buttons = preview.querySelectorAll<HTMLButtonElement>("[data-preview-day]");
+        const panels = preview.querySelectorAll<HTMLElement>("[data-preview-panel]");
+
+        for (const button of buttons) {
+            button.addEventListener("click", () => {
+                const selected = button.dataset.previewDay;
+                const previous = [...buttons].findIndex(
+                    (candidate) => candidate.getAttribute("aria-pressed") === "true",
+                );
+                if (button === buttons[previous]) return;
+                preview.dataset.direction = Number(selected) > previous ? "forward" : "backward";
+                for (const candidate of buttons) {
+                    const active = candidate === button;
+                    candidate.classList.toggle("selected", active);
+                    candidate.setAttribute("aria-pressed", String(active));
+                }
+                for (const panel of panels) {
+                    panel.hidden = panel.dataset.previewPanel !== selected;
+                }
+            });
+        }
+    }
+</script>
+
+<style>
+    .preview {
+        overflow: hidden;
+        border: 1px solid var(--rule-strong);
+        border-radius: 18px;
+        background: var(--paper-raised);
+        box-shadow: 0 28px 80px -38px oklch(0.22 0.01 60 / 0.28);
+    }
+    .preview-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 16px 20px;
+        background: oklch(0.22 0.012 60);
+        color: oklch(0.97 0.005 85);
+    }
+    .preview-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 0.83rem;
+        font-weight: 650;
+        letter-spacing: 0.01em;
+    }
+    .brand-mark {
+        display: grid;
+        gap: 3px;
+        width: 19px;
+    }
+    .brand-mark i {
+        display: block;
+        width: 100%;
+        height: 2px;
+        border-radius: 4px;
+        background: currentColor;
+    }
+    .brand-mark i:last-child {
+        width: 58%;
+        background: var(--accent);
+    }
+    .sample-tag {
+        border: 1px solid oklch(0.62 0.005 80 / 0.5);
+        border-radius: 999px;
+        padding: 5px 9px;
+        font-size: 0.67rem;
+        font-weight: 650;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+    .day-switch {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border-bottom: 1px solid var(--rule);
+    }
+    .day-button {
+        position: relative;
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        gap: 6px;
+        min-height: 58px;
+        padding: 12px 4px;
+        color: var(--ink-3);
+        transition:
+            background-color var(--dur-1) var(--ease-out),
+            color var(--dur-1) var(--ease-out);
+    }
+    .day-button::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--accent);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 320ms var(--ease-out);
+    }
+    .day-button + .day-button {
+        border-left: 1px solid var(--rule);
+    }
+    .day-button:hover {
+        background: var(--paper-sunk);
+        color: var(--ink);
+    }
+    .day-button.selected {
+        color: var(--ink);
+        background: var(--paper-raised);
+    }
+    .day-button.selected::after {
+        transform: scaleX(1);
+    }
+    .day-button span {
+        font-size: 0.76rem;
+        font-weight: 500;
+    }
+    .day-button strong {
+        font-size: 1rem;
+        font-weight: 680;
+        font-variant-numeric: tabular-nums;
+    }
+    .day-panel {
+        padding: 24px 22px 16px;
+    }
+    .day-panel[hidden] {
+        display: none;
+    }
+    .day-heading {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 24px;
+    }
+    .overline {
+        color: var(--ink-3);
+        font-size: 0.68rem;
+        font-weight: 650;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+    .day-heading h3 {
+        margin-top: 2px;
+        font-size: 1.5rem;
+        line-height: 1.1;
+        letter-spacing: -0.035em;
+    }
+    .class-count {
+        color: var(--ink-3);
+        font-size: 0.77rem;
+        white-space: nowrap;
+    }
+    .timeline {
+        display: grid;
+        gap: 11px;
+    }
+    .timeline-row {
+        display: grid;
+        grid-template-columns: 78px minmax(0, 1fr);
+        gap: 12px;
+    }
+    .phase {
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        gap: 7px;
+        padding-top: 16px;
+        color: var(--ink-3);
+        font-size: 0.74rem;
+        font-weight: 620;
+    }
+    .timeline-row:not(:last-child) .phase::after {
+        content: "";
+        position: absolute;
+        left: 4px;
+        top: 29px;
+        bottom: -28px;
+        width: 1px;
+        background: var(--rule-strong);
+    }
+    .phase-dot {
+        position: relative;
+        z-index: 1;
+        width: 9px;
+        height: 9px;
+        flex: none;
+        margin-top: 3px;
+        border-radius: 50%;
+        border: 2px solid var(--ink-3);
+        background: var(--paper-raised);
+    }
+    .current .phase {
+        color: var(--accent-text);
+    }
+    .current .phase-dot {
+        border-color: var(--accent);
+        background: var(--accent);
+        box-shadow: 0 0 0 4px color-mix(in oklch, var(--accent) 14%, transparent);
+    }
+    .current .phase-dot::after {
+        content: "";
+        position: absolute;
+        inset: -5px;
+        border: 1px solid var(--accent);
+        border-radius: 50%;
+        opacity: 0;
+    }
+    .class-card {
+        position: relative;
+        min-width: 0;
+        padding: 14px 15px 13px 18px;
+        border: 1px solid var(--rule);
+        border-radius: 9px;
+        background: oklch(var(--tint-l) var(--tint-c) var(--h));
+        transition: transform var(--dur-2) var(--ease-out);
+    }
+    .class-card:hover {
+        transform: translateX(4px);
+    }
+    .class-card::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        border-radius: 9px 0 0 9px;
+        background: oklch(var(--rule-l) var(--rule-c) var(--h));
+    }
+    .current .class-card {
+        border-color: color-mix(in oklch, var(--accent) 52%, var(--rule));
+        box-shadow: var(--shadow-lift);
+    }
+    .card-top,
+    .card-bottom {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .card-top {
+        justify-content: space-between;
+        color: var(--ink-2);
+        font-size: 0.72rem;
+        font-variant-numeric: tabular-nums;
+    }
+    .class-type {
+        font-weight: 750;
+        color: oklch(var(--code-l) var(--rule-c) var(--h));
+    }
+    .class-card h4 {
+        margin: 5px 0 10px;
+        font-size: 0.95rem;
+        line-height: 1.25;
+        letter-spacing: -0.012em;
+    }
+    .card-bottom {
+        padding-top: 8px;
+        border-top: 1px solid color-mix(in oklch, var(--ink) 12%, transparent);
+        font-size: 0.74rem;
+    }
+    .room-label {
+        color: var(--ink-2);
+    }
+    .card-bottom strong {
+        margin-left: auto;
+        font-size: 0.87rem;
+        font-weight: 750;
+        letter-spacing: -0.01em;
+    }
+    .room-arrow {
+        color: var(--accent-text);
+        font-size: 1rem;
+        line-height: 1;
+    }
+    .preview-foot {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 13px 21px;
+        border-top: 1px solid var(--rule);
+        color: var(--ink-3);
+        font-size: 0.72rem;
+    }
+    .foot-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent);
+    }
+    @media (prefers-reduced-motion: no-preference) {
+        .day-button strong {
+            transition: transform var(--dur-2) var(--ease-out);
+        }
+        .day-button:hover strong {
+            transform: translateY(-2px);
+        }
+        .preview {
+            --slide-x: 18px;
+        }
+        .preview[data-direction="backward"] {
+            --slide-x: -18px;
+        }
+        .day-panel:not([hidden]) {
+            animation: day-arrive 420ms var(--ease-out) both;
+        }
+        .day-panel:not([hidden]) .timeline-row {
+            animation: row-arrive 460ms var(--ease-out) both;
+        }
+        .day-panel:not([hidden]) .timeline-row:nth-child(1) {
+            animation-delay: 80ms;
+        }
+        .day-panel:not([hidden]) .timeline-row:nth-child(2) {
+            animation-delay: 145ms;
+        }
+        .day-panel:not([hidden]) .timeline-row:nth-child(3) {
+            animation-delay: 210ms;
+        }
+        .current .phase-dot::after {
+            animation: current-pulse 2.8s ease-out 1.2s infinite;
+        }
+        @keyframes day-arrive {
+            from {
+                opacity: 0;
+                transform: translateX(var(--slide-x));
+            }
+        }
+        @keyframes row-arrive {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+        }
+        @keyframes current-pulse {
+            0% {
+                opacity: 0.7;
+                transform: scale(0.7);
+            }
+            55%,
+            100% {
+                opacity: 0;
+                transform: scale(1.8);
+            }
+        }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .day-button::after,
+        .class-card {
+            transition: none;
+        }
+    }
+    @media (max-width: 520px) {
+        .preview-top {
+            padding: 13px 15px;
+        }
+        .day-panel {
+            padding: 20px 13px 14px;
+        }
+        .timeline-row {
+            grid-template-columns: 64px minmax(0, 1fr);
+            gap: 8px;
+        }
+        .phase {
+            font-size: 0.68rem;
+        }
+        .class-card {
+            padding: 12px 11px 11px 14px;
+        }
+    }
+</style>

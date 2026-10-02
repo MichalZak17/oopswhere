@@ -8,9 +8,19 @@ test.beforeEach(async ({ page }) => {
 
 test("landing explains the privacy model and offers sign-in", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("Która sala?");
-    await expect(page.getByText("Hasło wpisujesz tylko na stronie ZUT.")).toBeVisible();
-    await expect(page.getByRole("link", { name: "Zobacz przykładowy plan" })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("Co potem?");
+    await expect(
+        page.getByText("Hasło wpisujesz tylko na stronie uczelni. My nigdy go nie widzimy."),
+    ).toBeVisible();
+    await expect(
+        page.locator(".hero-actions").getByRole("link", { name: "Zobacz przykładowy plan" }),
+    ).toBeVisible();
+    await page.getByRole("button", { name: "WT 13" }).click();
+    await expect(page.getByText("Wtorek, 13 października")).toBeVisible();
+    await expect(page.getByRole("button", { name: "WT 13" })).toHaveAttribute(
+        "aria-pressed",
+        "true",
+    );
 });
 
 test("sign in once → calendar; token revoked; cookie is HttpOnly and holds no token", async ({
@@ -84,6 +94,6 @@ test("sign out clears the cookie", async ({ page, context }) => {
     await signIn(page);
     await page.getByRole("button", { name: /Ola/ }).click();
     await page.getByRole("button", { name: "Wyloguj" }).click();
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("Która sala?");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("Co potem?");
     expect((await context.cookies()).some((c) => c.name.endsWith("ow_profile"))).toBe(false);
 });
