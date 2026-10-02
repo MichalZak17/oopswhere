@@ -15,18 +15,19 @@ USOS data. No database, never sees passwords. Polish (default, `/`) and English 
   `/demo` uses public groups (dev only — production 404s unless `ENABLE_DEMO=true`, which e2e sets); the login button is disabled until `USOS_ZUT_CONSUMER_*` are set.
 - `npm run check` — `astro check` (TS + Astro + Svelte). Must be 0 errors / 0 warnings.
 - `npm test` — Vitest unit tests (`src/**/*.test.ts`, no network). The commit gate.
-- `npm run test:e2e` — Playwright: builds the **Node** target and runs it against the mock USOS
+- `npm run test:e2e` — Playwright: builds and runs the production server against the mock USOS
   (`tests/mock-usos/server.ts`). Locally uses installed Chrome (`channel: "chrome"`); CI uses Chromium.
-- `npm run build` (Vercel when `VERCEL=1`, else Node) · `npm run build:node` · `npm start`.
+- `npm run build` · `npm start` (runs `server.mjs`: the built Node server + graceful SIGTERM drain).
 - `npm run fixtures` — refresh `tests/fixtures/zut` from the public API (anonymous GETs only).
 - `npm run secret` — print a new `SESSION_SECRET`.
 
 Use **npm** (not pnpm). TypeScript is pinned to 6.x: `@astrojs/check` and `@astrojs/svelte` don't
-support TS 7 yet. `overrides` pins `path-to-regexp@6.3.0` under `@vercel/routing-utils` (audit fix).
+support TS 7 yet.
 
 ## Architecture
 
-**Astro 7 SSR + one Svelte 5 island (the calendar) + plain CSS.** No Tailwind/shadcn on purpose.
+**Astro 7 SSR (Node adapter, standalone) + one Svelte 5 island (the calendar) + plain CSS.** No
+Tailwind/shadcn on purpose. Self-hosted only: one long-lived Node process in Docker on Coolify.
 
 ### Data flow (the core idea)
 
@@ -54,8 +55,12 @@ Never store tokens, USOS user ids or emails. Never request `participants` (class
 - `src/lib/timetable/{load,normalize,types}.ts` — loader (budget, gone/missing/stale), raw → compact
   `MeetingTuple`s. `types.ts` ships to the browser: keep it free of server imports.
 - `src/lib/cache/*` + `src/lib/platform.ts` — SWR (fresh 30 min / background refresh until 6 h /
-  stale-on-error until 14 d), single-flight, concurrency limiter + circuit breaker. Node: in-memory LRU.
-  Vercel: 60 s memory tier + Vercel Runtime Cache (detected at runtime via `process.env.VERCEL`).
+  stale-on-error until 14 d), single-flight, concurrency limiter + circuit breaker, over one
+  process-wide in-memory LRU (lost on redeploy; that's fine, it's all public data).
+- `src/lib/request-guard.ts` + `src/middleware.ts` — proxy-aware Origin check (replaces Astro's
+  `checkOrigin`, which is off) and the canonical-host redirect to `SITE_URL`.
+- `server.mjs` — production entry: starts `dist/server/entry.mjs` with autostart disabled, drains on
+  SIGTERM (Node as PID 1 would otherwise ignore it).
 - `src/lib/time/*` — wall-clock dates. USOS times are naive Europe/Warsaw; **never convert to UTC**.
   Dates are `YYYY-MM-DD` strings, math via `Date.UTC`; "now" via `zonedNow(timeZone)`.
 - `src/lib/layout/lanes.ts` — clash layout (clusters → lanes → span); only truly overlapping pairs get
@@ -69,10 +74,18 @@ Never store tokens, USOS user ids or emails. Never request `participants` (class
   (CSP `form-action`).
 - `src/i18n/locales/{pl,en}.json` — `pl` is the source of truth, `en` must match its shape (`Dict` in `src/i18n/index.ts`). `pick()` chooses a USOS
   LangDict value with Polish fallback (ZUT's `en` is often empty).
-- `src/middleware.ts` — profile → `locals`, `ow_lang` redirect for `/`, security headers,
-  `Cache-Control: private, no-cache` on HTML.
+- `src/middleware.ts` — Origin check + canonical host, profile → `locals`, `ow_lang` redirect for `/`,
+  security headers, `Cache-Control: private, no-cache` on HTML.
 
 ### Rules that are easy to break
+
+- **The server never sees the visitor's protocol or proxy-free host.** Production is Cloudflare (TLS)
+  → Coolify's Traefik (http) → Node, so `ctx.url` is `http://…`. Anything that depends on the public
+  origin goes through `siteOrigin(url)` / `isHttps(url)` in `src/lib/env.ts` (driven by `SITE_URL`):
+  cookie `Secure`/`__Host-` prefixes, HSTS, absolute links, the OAuth callback, the Origin check.
+  Never `url.protocol === "https:"`, never `Astro.url.origin` for links. Don't re-enable
+  `security.checkOrigin`; `/api/health` must stay exempt from the canonical redirect (probed on
+  `localhost` from inside the container).
 
 - **No Astro route caching / CDN caching on personal pages or `/api/v1/timetable`** — the cache key
   ignores cookies and would leak one student's plan to another. Set `Cache-Control` in middleware or
@@ -96,10 +109,16 @@ Motion: transform/opacity only, `--ease-out`, 140/220/420 ms, everything off und
 
 ## Deployment
 
-- **Vercel**: `vercel.json` pins `fra1`. Env: `SESSION_SECRET`, `SITE_URL`, `USOS_ZUT_CONSUMER_KEY`,
-  `USOS_ZUT_CONSUMER_SECRET`.
-- **Docker / Coolify**: `Dockerfile` (Node 24 alpine, non-root, healthcheck `/api/health`, port 4321),
-  `docker-compose.yml`. `docker build --target test .` runs unit tests.
+Self-hosted on **Coolify** (build pack: Dockerfile), behind Cloudflare. Pushes to `master` auto-deploy.
+
+- `Dockerfile`: Node 24 alpine, multi-stage, non-root, `HEALTHCHECK` on `/api/health`, port 4321,
+  `CMD node server.mjs`. No build-time secrets (all config is runtime `astro:env` secrets).
+  `docker build --target test .` runs unit tests. `docker-compose.yml` is for local runs.
+- Env (runtime only): `SESSION_SECRET`, `SITE_URL` (public origin, e.g. `https://oopswhere.com` —
+  required, see the proxy rule above), `USOS_ZUT_CONSUMER_KEY`, `USOS_ZUT_CONSUMER_SECRET`.
+- Coolify health check, if enabled, must use `/api/health` (`/` on `localhost` gets the canonical 308).
+- Rolling deploys: Coolify waits for the new container to be healthy, then SIGTERMs the old one;
+  `server.mjs` drains for up to 8 s. CI builds and runs the image (`docker` job).
 
 ## Known limits (v1)
 

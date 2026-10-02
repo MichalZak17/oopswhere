@@ -6,7 +6,7 @@
 import type { ResolvedInstallation } from "@/lib/env";
 import { Limiter } from "@/lib/cache/limit";
 import { createSwr } from "@/lib/cache/swr";
-import { getPlatform } from "@/lib/platform";
+import { store, waitUntil } from "@/lib/platform";
 import { zonedNow } from "@/lib/time/zoned-now";
 import { classgroupDates, groupInfo, usersByIds } from "@/lib/usos/api";
 import { UsosError } from "@/lib/usos/client";
@@ -25,13 +25,7 @@ const isUpstreamFailure = (err: unknown) =>
     err instanceof UsosError &&
     (err.kind === "upstream" || err.kind === "timeout" || err.kind === "network");
 
-let swrPromise: Promise<ReturnType<typeof createSwr>> | undefined;
-function getSwr() {
-    swrPromise ??= getPlatform().then((p) =>
-        createSwr({ store: p.store, waitUntil: p.waitUntil, isPermanent }),
-    );
-    return swrPromise;
-}
+const swr = createSwr({ store, waitUntil, isPermanent });
 
 const PEOPLE_POLICY = { freshSec: 7 * 86_400, swrSec: 30 * 86_400, maxStaleSec: 90 * 86_400 };
 
@@ -61,7 +55,6 @@ async function loadGroup(
     unitId: number,
     groupNumber: number,
 ): Promise<GroupOutcome> {
-    const swr = await getSwr();
     try {
         const { value, stale } = await swr(
             `tt:v1:${inst.id}:${groupKey(unitId, groupNumber)}`,
@@ -79,7 +72,6 @@ async function loadPeople(
     ids: string[],
 ): Promise<Record<string, Person>> {
     if (ids.length === 0 || !inst.consumer) return {};
-    const { store } = await getPlatform();
     const out: Record<string, Person> = {};
     const todo: string[] = [];
     const now = Date.now();
@@ -142,7 +134,6 @@ export async function loadTimetable(
     opts: LoadOptions = {},
 ): Promise<TimetablePayload> {
     const deadline = opts.budgetMs ? Date.now() + opts.budgetMs : Infinity;
-    const { waitUntil } = await getPlatform();
 
     const outcomes = await Promise.all(
         groups.map(async ([unit, grp]) => {

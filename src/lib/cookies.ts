@@ -1,6 +1,6 @@
 /** Cookie names and flags. Prefixed (__Host-/__Secure-) whenever we're on HTTPS. */
 import type { AstroCookies } from "astro";
-import { sessionSecrets } from "@/lib/env";
+import { isHttps, sessionSecrets } from "@/lib/env";
 import { seal, unseal } from "@/lib/crypto/seal";
 import { isProfile, type Profile } from "@/lib/profile";
 
@@ -12,7 +12,7 @@ export { THEME_COOKIE } from "./theme";
 const PROFILE_MAX_AGE = 400 * 24 * 60 * 60; // browsers cap cookies at 400 days
 const OAUTH_MAX_AGE = 15 * 60;
 
-const isSecure = (url: URL) => url.protocol === "https:";
+const isSecure = isHttps;
 const profileName = (url: URL) => (isSecure(url) ? `__Host-${PROFILE}` : PROFILE);
 const oauthName = (url: URL) => (isSecure(url) ? `__Secure-${OAUTH}` : OAUTH);
 

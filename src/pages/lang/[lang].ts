@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { LANG_COOKIE } from "@/lib/cookies";
+import { isHttps } from "@/lib/env";
 
 const ALLOWED = new Set(["/", "/demo", "/privacy", "/en/", "/en/demo", "/en/privacy"]);
 
@@ -10,7 +11,7 @@ export const GET: APIRoute = ({ params, url, cookies, redirect }) => {
         path: "/",
         maxAge: 365 * 24 * 60 * 60,
         sameSite: "lax",
-        secure: url.protocol === "https:",
+        secure: isHttps(url),
     });
     const to = url.searchParams.get("to") ?? "";
     const fallback = lang === "en" ? "/en/" : "/";

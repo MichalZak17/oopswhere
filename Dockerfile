@@ -1,14 +1,15 @@
 # syntax=docker/dockerfile:1
 
-# Plain Node image for self-hosting (Coolify, any Docker host).
-# Vercel deployments don't use this file.
+# Production image (Coolify, or any Docker host): one Node process on port 4321.
+# Configuration is read at runtime, so the same image works on any domain with any keys;
+# no secret is needed at build time.
 
 FROM node:24-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
 RUN --mount=type=cache,target=/root/.npm npm ci
 COPY . .
-ENV DEPLOY_TARGET=node
+ENV ASTRO_TELEMETRY_DISABLED=1
 RUN npm run build
 
 # Unit tests against the full builder. Only built when targeted:
@@ -27,8 +28,10 @@ ENV NODE_ENV=production \
 COPY --from=pruned --chown=node:node /app/package.json ./
 COPY --from=pruned --chown=node:node /app/node_modules ./node_modules
 COPY --from=pruned --chown=node:node /app/dist ./dist
+COPY --from=pruned --chown=node:node /app/server.mjs ./
 USER node
 EXPOSE 4321
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
     CMD wget -qO- http://127.0.0.1:4321/api/health || exit 1
-CMD ["node", "dist/server/entry.mjs"]
+# server.mjs drains in-flight requests on SIGTERM, so rolling deploys drop nothing.
+CMD ["node", "server.mjs"]

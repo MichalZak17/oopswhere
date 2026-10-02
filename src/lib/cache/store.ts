@@ -44,25 +44,3 @@ export class MemoryStore implements CacheStore {
         return this.map.size;
     }
 }
-
-/** A fast local tier in front of a shared one (e.g. Vercel Runtime Cache). */
-export class TieredStore implements CacheStore {
-    constructor(
-        private readonly local: CacheStore,
-        private readonly shared: CacheStore,
-        private readonly localTtlSec = 60,
-    ) {}
-
-    async get<T>(key: string): Promise<CacheEntry<T> | null> {
-        const local = await this.local.get<T>(key);
-        if (local) return local;
-        const shared = await this.shared.get<T>(key).catch(() => null);
-        if (shared) await this.local.set(key, shared, this.localTtlSec);
-        return shared;
-    }
-
-    async set<T>(key: string, entry: CacheEntry<T>, ttlSec: number): Promise<void> {
-        await this.local.set(key, entry, Math.min(ttlSec, this.localTtlSec));
-        await this.shared.set(key, entry, ttlSec).catch(() => {});
-    }
-}

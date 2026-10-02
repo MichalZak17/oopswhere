@@ -2,11 +2,6 @@
 import { defineConfig, envField, fontProviders } from "astro/config";
 import svelte from "@astrojs/svelte";
 import node from "@astrojs/node";
-import vercel from "@astrojs/vercel";
-
-// One codebase, two homes: Vercel (default when building on Vercel) or a plain
-// Node server for Docker / Coolify. Override with DEPLOY_TARGET=node|vercel.
-const target = process.env.DEPLOY_TARGET ?? (process.env.VERCEL ? "vercel" : "node");
 
 // Every origin the user passes through by redirect during login must be allowed as a
 // form-action target: browsers check form-action on each hop of the redirect chain
@@ -21,7 +16,7 @@ const USOS_ORIGINS = [
 
 export default defineConfig({
     output: "server",
-    adapter: target === "vercel" ? vercel() : node({ mode: "standalone" }),
+    adapter: node({ mode: "standalone" }),
     integrations: [svelte()],
 
     i18n: {
@@ -41,7 +36,10 @@ export default defineConfig({
     markdown: { syntaxHighlight: false },
 
     security: {
-        checkOrigin: true,
+        // Behind a TLS-terminating proxy (Cloudflare → Coolify's Traefik) the server only
+        // sees http://, so Astro's built-in check would reject every https:// Origin.
+        // src/middleware.ts checks Origin against SITE_URL instead.
+        checkOrigin: false,
         csp: {
             directives: [
                 "default-src 'self'",

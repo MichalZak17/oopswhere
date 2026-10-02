@@ -1,4 +1,4 @@
-# Local production-like run, and a reference for Coolify:
+# Local production-like run. (Coolify builds the Dockerfile directly; see README → Deploy.)
 #   cp .env.example .env   # fill in SESSION_SECRET, SITE_URL and the USOS keys
 #   docker compose up --build
 services:

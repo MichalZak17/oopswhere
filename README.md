@@ -72,17 +72,46 @@ npm run dev                  # http://localhost:4321
 
 ## Deploy
 
-**Vercel** — import the repo, set the variables above (with your production `SITE_URL`). The adapter
-switches automatically on Vercel; functions run in `fra1`, next to the university.
+oopswhere is self-hosted: one Docker image, one Node process, no database. The production instance
+runs on [Coolify](https://coolify.io) behind Cloudflare.
 
-**Docker / Coolify**
+**Coolify**
+
+1. New resource → your Git repository, branch `master`, build pack **Dockerfile** (`/Dockerfile`).
+2. Ports exposes: `4321`. Domains: your domain(s), e.g. `https://oopswhere.com` (Cloudflare in
+   front: `http://` is fine too, Cloudflare terminates TLS).
+3. Environment variables (runtime only: untick _Available at Buildtime_, the build needs none):
+
+   | Variable                                             |                                                                                              |
+   | ---------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+   | `SESSION_SECRET`                                     | 32+ random bytes, `npm run secret`. To rotate, move the old one to `SESSION_SECRET_PREVIOUS` |
+   | `SITE_URL`                                           | The public origin exactly as visitors type it, e.g. `https://oopswhere.com` (see below)      |
+   | `USOS_ZUT_CONSUMER_KEY` / `USOS_ZUT_CONSUMER_SECRET` | Your USOS API consumer                                                                       |
+
+4. Health check: the image has a `HEALTHCHECK` on `/api/health`, which Coolify uses as is. If you
+   enable Coolify's own health check, point it at `/api/health` too (not `/`).
+
+Why `SITE_URL` matters: behind a TLS-terminating proxy (Cloudflare → Traefik) the app only ever sees
+plain `http://`. `SITE_URL` tells it the truth, and it decides the OAuth callback, `Secure`/`__Host-`
+cookies, HSTS, the Origin check on sign-in, and the canonical host: requests for any other host
+(`www.`, the server IP) are redirected there with a 308.
+
+On Cloudflare, also turn on **Always Use HTTPS** (SSL/TLS → Edge Certificates); the app can't see
+whether a visitor arrived over http.
+
+Redeploys are zero-downtime: Coolify waits for the new container's health check, then stops the old
+one; `server.mjs` drains in-flight requests on `SIGTERM`. The timetable cache lives in process memory,
+so the first visits after a deploy refetch from USOS (groups that miss the 1.5 s budget load right after the page).
+
+**Any Docker host**
 
 ```bash
 cp .env.example .env    # fill in
 docker compose up --build
 ```
 
-The image is a plain Node server on port 4321 with a health check at `/api/health`.
+The image is a plain Node server on port 4321 with a health check at `/api/health`. Put it behind any
+reverse proxy that terminates TLS and set `SITE_URL` to the public origin.
 
 ## Development
 

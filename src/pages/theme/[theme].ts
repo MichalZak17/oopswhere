@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { THEME_COOKIE } from "@/lib/cookies";
+import { isHttps } from "@/lib/env";
 import { asTheme } from "@/lib/theme";
 import { safeReturnTo } from "@/lib/return-to";
 
@@ -15,7 +16,7 @@ export const GET: APIRoute = ({ params, url, cookies, redirect }) => {
             path: "/",
             maxAge: 365 * 24 * 60 * 60,
             sameSite: "lax",
-            secure: url.protocol === "https:",
+            secure: isHttps(url),
         });
     }
     const to = url.searchParams.get("to") ?? "";

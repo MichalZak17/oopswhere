@@ -1,6 +1,6 @@
 /**
  * OAuth 1.0a (RFC 5849) request signing with HMAC-SHA1 on Web Crypto.
- * No dependencies, so it runs the same on Node, Vercel functions and edge runtimes.
+ * No dependencies, so it runs anywhere Web Crypto does (Node, browsers, workers).
  */
 
 /** RFC 3986 percent-encoding, as required by RFC 5849 §3.6 (never "+" for spaces). */

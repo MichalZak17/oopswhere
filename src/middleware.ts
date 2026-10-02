@@ -1,5 +1,7 @@
 import { defineMiddleware } from "astro:middleware";
 import { LANG_COOKIE, THEME_COOKIE, readProfile } from "@/lib/cookies";
+import { isHttps, siteOrigin } from "@/lib/env";
+import { canonicalRedirect, isCrossSiteWrite } from "@/lib/request-guard";
 import { asTheme } from "@/lib/theme";
 
 const SECURITY_HEADERS: Record<string, string> = {
@@ -12,6 +14,14 @@ const SECURITY_HEADERS: Record<string, string> = {
 };
 
 export const onRequest = defineMiddleware(async (ctx, next) => {
+    // The proxy hands us http://; SITE_URL says what visitors actually use.
+    const origin = siteOrigin(ctx.url);
+    if (isCrossSiteWrite(ctx.request, origin)) {
+        return new Response("Cross-site form submissions are forbidden", { status: 403 });
+    }
+    const canonical = canonicalRedirect(ctx.request, ctx.url, origin);
+    if (canonical) return ctx.redirect(canonical, 308);
+
     ctx.locals.profile = await readProfile(ctx.cookies, ctx.url);
 
     ctx.locals.theme = asTheme(ctx.cookies.get(THEME_COOKIE)?.value);
@@ -37,7 +47,7 @@ export const onRequest = defineMiddleware(async (ctx, next) => {
     ) {
         response.headers.set("Cache-Control", "private, no-cache");
     }
-    if (ctx.url.protocol === "https:") {
+    if (isHttps(ctx.url)) {
         response.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
     }
     return response;

@@ -15,7 +15,7 @@ export function sessionSecrets(): string[] {
     const previous = getSecret("SESSION_SECRET_PREVIOUS");
     if (!current) {
         if (import.meta.env.DEV) return [DEV_SECRET];
-        throw new ConfigError("SESSION_SECRET is not set. Generate one with `pnpm secret`.");
+        throw new ConfigError("SESSION_SECRET is not set. Generate one with `npm run secret`.");
     }
     return previous ? [current, previous] : [current];
 }
@@ -29,10 +29,19 @@ export function demoEnabled(): boolean {
     return import.meta.env.DEV || getSecret("ENABLE_DEMO") === "true";
 }
 
-/** Absolute origin used for OAuth callbacks. Falls back to the request origin in dev. */
+/**
+ * The public origin, as visitors see it: OAuth callbacks, canonical links, the Origin check.
+ * Behind a TLS-terminating proxy the request URL says http://, so production relies on
+ * SITE_URL. Falls back to the request origin in dev.
+ */
 export function siteOrigin(requestUrl: URL): string {
     const configured = getSecret("SITE_URL");
     return configured ? new URL(configured).origin : requestUrl.origin;
+}
+
+/** True when visitors reach us over HTTPS, even if the proxy hands us plain http. */
+export function isHttps(requestUrl: URL): boolean {
+    return siteOrigin(requestUrl).startsWith("https:");
 }
 
 export interface ResolvedInstallation extends Installation {

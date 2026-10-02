@@ -6,7 +6,6 @@ const MOCK = `http://127.0.0.1:${MOCK_PORT}/`;
 
 // The app is built and run exactly like production (Node adapter), pointed at the mock USOS.
 const appEnv = {
-    DEPLOY_TARGET: "node",
     HOST: "127.0.0.1",
     PORT: String(APP_PORT),
     SESSION_SECRET: "e2e-only-secret-0123456789abcdefghijklmnopq",
@@ -45,7 +44,7 @@ export default defineConfig({
             reuseExistingServer: false,
         },
         {
-            command: "npx astro build && node dist/server/entry.mjs",
+            command: "npx astro build && node server.mjs",
             url: `http://127.0.0.1:${APP_PORT}/api/health`,
             env: appEnv,
             timeout: 180_000,

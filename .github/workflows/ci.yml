@@ -20,21 +20,35 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm test
-      - name: Build (Node / Docker target)
-        run: npm run build:node
-      - name: Smoke test the Node build
+      - run: npm run build
+      - name: Smoke test the production server
         run: |
-          node dist/server/entry.mjs &
-          for i in $(seq 1 20); do curl -fsS http://127.0.0.1:4321/api/health && exit 0; sleep 0.5; done
-          exit 1
+          node server.mjs &
+          pid=$!
+          for i in $(seq 1 20); do curl -fsS http://127.0.0.1:4321/api/health && break; sleep 0.5; done
+          curl -fsS http://127.0.0.1:4321/api/health
+          # Graceful shutdown: SIGTERM must end the process promptly with exit code 0.
+          kill -TERM "$pid"
+          wait "$pid"
         env:
           HOST: 127.0.0.1
           PORT: 4321
           SESSION_SECRET: ci-only-secret-0123456789abcdefghijklmnopqrstuv
-      - name: Build (Vercel target)
-        run: npx astro build
-        env:
-          DEPLOY_TARGET: vercel
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the production image (what Coolify deploys)
+        run: docker build -t oopswhere:ci .
+      - name: Run it until the health check passes
+        run: |
+          docker run -d --name ow -p 4321:4321 \
+            -e SESSION_SECRET=ci-only-secret-0123456789abcdefghijklmnopqrstuv oopswhere:ci
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4321/api/health && break; sleep 1; done
+          curl -fsS http://127.0.0.1:4321/api/health
+          docker stop -t 10 ow
+          test "$(docker inspect -f '{{.State.ExitCode}}' ow)" = 0
 
   e2e:
     runs-on: ubuntu-latest

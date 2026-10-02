@@ -54,8 +54,19 @@ npm run dev                  # http://localhost:4321
 
 ## Wdrożenie
 
-- **Vercel** — zaimportuj repozytorium i ustaw powyższe zmienne.
-- **Docker / Coolify** — `docker compose up --build` (port 4321, health check `/api/health`).
+oopswhere jest hostowany samodzielnie: jeden obraz Dockera, jeden proces Node, bez bazy danych.
+Instancja produkcyjna działa na [Coolify](https://coolify.io) za Cloudflare.
+
+- **Coolify** — repozytorium Git, gałąź `master`, build pack **Dockerfile**, port `4321`. Ustaw
+  powyższe zmienne tylko w runtime (odznacz _Available at Buildtime_). `SITE_URL` to publiczny adres
+  dokładnie taki, jaki wpisują odwiedzający (np. `https://oopswhere.com`): za proxy aplikacja widzi
+  tylko `http://`, więc to on decyduje o callbacku OAuth, ciasteczkach `Secure`, HSTS, sprawdzaniu
+  Origin i kanonicznej domenie (inne hosty, np. `www.`, dostają przekierowanie 308). Health check:
+  `/api/health`. W Cloudflare włącz **Always Use HTTPS**.
+- **Dowolny host z Dockerem** — `docker compose up --build` (port 4321, health check `/api/health`),
+  za dowolnym reverse proxy z TLS.
+
+Szczegóły w [README](../README.md#deploy).
 
 ## Ograniczenia
 
