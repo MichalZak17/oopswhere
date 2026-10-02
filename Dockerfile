@@ -4,7 +4,8 @@
 # Configuration is read at runtime, so the same image works on any domain with any keys;
 # no secret is needed at build time.
 
-FROM node:24-alpine AS builder
+FROM alpine:3.24 AS builder
+RUN apk add --no-cache nodejs npm icu-data-full
 WORKDIR /app
 COPY package*.json ./
 RUN --mount=type=cache,target=/root/.npm npm ci
@@ -20,7 +21,8 @@ RUN npm test
 FROM builder AS pruned
 RUN npm prune --omit=dev
 
-FROM node:24-alpine
+FROM alpine:3.24
+RUN apk upgrade --no-cache && apk add --no-cache nodejs icu-data-full && adduser -D -u 1000 node
 WORKDIR /app
 ENV NODE_ENV=production \
     HOST=0.0.0.0 \

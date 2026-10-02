@@ -111,7 +111,9 @@ Motion: transform/opacity only, `--ease-out`, 140/220/420 ms, everything off und
 
 Self-hosted on **Coolify** (build pack: Dockerfile), behind Cloudflare. Pushes to `master` auto-deploy.
 
-- `Dockerfile`: Node 24 alpine, multi-stage, non-root, `HEALTHCHECK` on `/api/health`, port 4321,
+- `Dockerfile`: `alpine:3.24` + Alpine's `nodejs` (Node 24 LTS) and `icu-data-full` (without it
+  Polish dates render in English), not `node:24-alpine`: the runtime has no npm/yarn/corepack, whose
+  bundled deps were the image's CVEs. Multi-stage, non-root, `HEALTHCHECK` on `/api/health`, port 4321,
   `CMD node server.mjs`. No build-time secrets (all config is runtime `astro:env` secrets).
   `docker build --target test .` runs unit tests. `docker-compose.yml` is for local runs.
 - Env (runtime only): `SESSION_SECRET`, `SITE_URL` (public origin, e.g. `https://oopswhere.com` —
