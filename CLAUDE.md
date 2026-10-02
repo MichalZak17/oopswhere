@@ -114,7 +114,8 @@ Never store tokens, USOS user ids or emails. Never request `participants` (class
   group numbers, names, URLs or free text, and never `identify()`. No autocapture (the page is
   someone's timetable). The automatic browser events (`$pageview`/`$pageleave`, `$exception`,
   `$web_vitals`) carry the page URL, error messages, browser/device and IP-derived location, so
-  never put personal data in URLs. New data must fit the privacy page (`privacy.body`, both locales).
+  never put personal data in URLs. New data must fit the privacy page
+  (`privacy.*` in both locales; bump `privacy.updated` whenever its content changes).
   Nothing in the browser may send analytics before the visitor says yes: always go through
   `track()` in `client.ts`, never import `posthog-js` elsewhere.
 

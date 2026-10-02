@@ -14,7 +14,7 @@ const dict = t(lang);
 <aside class="consent" aria-labelledby="consent-text" data-consent-banner>
     <p id="consent-text">
         {dict.consent.text}{" "}
-        <a href={localePath(lang, "/privacy")}>{dict.consent.more}</a>
+        <a href={`${localePath(lang, "/privacy")}#analytics`}>{dict.consent.more}</a>
     </p>
     <form method="post" action="/consent">
         <input type="hidden" name="to" value={localePath(lang, path)} />

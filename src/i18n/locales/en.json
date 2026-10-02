@@ -160,14 +160,72 @@
     },
     "privacy": {
         "title": "Privacy",
-        "body": [
+        "updated": "Last updated: 2 October 2026",
+        "intro": [
             "Oopswhere has no database and never sees your password. You sign in on your university's own site (USOS), and we receive one-time access that we use only to read your list of class groups and your first name. We revoke that access right away.",
-            "The group list and first name are stored in an encrypted cookie in your browser. The server keeps nothing about you. Signing out deletes the cookie.",
-            "Class group timetables, lecturer names and rooms are public USOS data. We cache them briefly so we don't put load on the university's servers.",
-            "Our server counts login results (successful, cancelled, failed) and how fast the timetable loads. These counts go to PostHog (EU servers) without your IP address or anything else that could identify you.",
-            "Only if you agree, the app also measures in your browser: page views, calendar actions such as changing the week, app errors and page speed, along with the browser and device type and an approximate location (country, city) worked out from your IP address. This also goes to PostHog. PostHog sets no cookies and stores nothing in your browser, records no screen, and never receives your name, groups or timetable. We remember your answer for 6 months in the ow_consent cookie; you can change it below.",
-            "No ads, no third-party fonts. The code is open — you can verify every sentence on this page."
+            "Oopswhere is an independent open-source project. It is not run by or affiliated with ZUT."
         ],
+        "data": {
+            "title": "Your data",
+            "body": [
+                "The group list and first name are stored in an encrypted cookie in your browser. The server keeps nothing about you. Signing out deletes the cookie.",
+                "Class group timetables, lecturer names and rooms are public USOS data. We fetch them from USOS anonymously and cache them briefly so we don't put load on the university's servers.",
+                "Legal basis: we process your groups and first name because we can't show you the timetable you ask for without them (Art. 6(1)(b) GDPR). Providing them is voluntary, but without signing in the app can't show your timetable. We show lecturer names as part of the public timetable, in our legitimate interest (Art. 6(1)(f) GDPR)."
+            ]
+        },
+        "analytics": {
+            "title": "Analytics",
+            "body": [
+                "Our server counts login results (successful, cancelled, failed) and how fast the timetable loads. These counts go to PostHog (EU servers) without your IP address or anything else that could identify you.",
+                "Only if you agree, the app also measures in your browser: page views, calendar actions such as changing the week, app errors and page speed, along with the browser and device type and an approximate location (country, city) worked out from your IP address. This also goes to PostHog. PostHog sets no cookies and stores nothing in your browser, records no screen, and never receives your name, groups or timetable. We remember your answer for 6 months in the ow_consent cookie; you can change it below.",
+                "Legal basis: the server-side counts are our legitimate interest in keeping the app running and improving it (Art. 6(1)(f) GDPR). Browser analytics runs only with your consent (Art. 6(1)(a) GDPR), which you can withdraw at any time; that doesn't affect what was collected before."
+            ]
+        },
+        "cookies": {
+            "title": "Cookies",
+            "intro": "We only use cookies the app needs to work and to remember your choices. None of them are for advertising or tracking.",
+            "items": [
+                [
+                    "ow_profile",
+                    "Your groups and first name, encrypted. Until you sign out, at most 400 days."
+                ],
+                ["ow_oauth", "Protects the sign-in through USOS. 15 minutes."],
+                ["ow_lang, ow_theme", "Language and theme, if you change them. 1 year."],
+                ["ow_consent", "Your answer about analytics. 6 months."],
+                [
+                    "ow:allDays",
+                    "Browser storage, not a cookie: whether to show every day of the week. Until you clear your browser data."
+                ]
+            ]
+        },
+        "recipients": {
+            "title": "Who else handles data",
+            "body": [
+                "Cloudflare (Cloudflare, Inc.) passes all traffic to our server and protects it from attacks, so it sees your IP address and the data sent. It operates worldwide, including outside the EU; transfers rely on standard contractual clauses and the EU–US Data Privacy Framework.",
+                "The hosting company that runs our server has technical access to it.",
+                "PostHog (EU servers) receives the server-side counts and, only with your consent, the browser analytics.",
+                "All three process data on our behalf. We don't sell or share data with anyone else."
+            ]
+        },
+        "retention": {
+            "title": "How long",
+            "items": [
+                "Cookies: as listed above. Signing out deletes the cookie with your groups and first name right away.",
+                "Public group timetables and lecturer names: in the server's memory for at most 14 days, never on disk; gone at every restart.",
+                "Analytics data in PostHog: at least a year, because that's what PostHog guarantees and a shorter period can't be set. It contains no name, groups or timetable.",
+                "Cloudflare: according to its own privacy policy."
+            ]
+        },
+        "rights": {
+            "title": "Your rights",
+            "body": [
+                "You have the right to access, correct, delete and port your data, to restrict its processing, to object to processing based on legitimate interest, and to withdraw your consent to analytics.",
+                "You can exercise most of these yourself: everything we know about you is in the cookie in your browser, and signing out deletes it. You can turn analytics off above. We can't link analytics data to a particular person, so we can't look it up or delete it on request.",
+                "You can also lodge a complaint with the Polish data protection authority, the President of the Personal Data Protection Office (ul. Stawki 2, 00-193 Warsaw, uodo.gov.pl).",
+                "We make no automated decisions about you and don't profile you."
+            ]
+        },
+        "outro": "No ads, no third-party fonts. The code is open — you can verify every sentence on this page.",
         "back": "Back to the timetable"
     },
     "consent": {

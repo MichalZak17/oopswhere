@@ -10,15 +10,27 @@ interface Props {
 }
 const { lang } = Astro.props;
 const dict = t(lang);
+const privacy = dict.privacy;
 // Not asked yet counts as off: nothing runs in the browser before a yes.
 const analyticsOn = Astro.locals.consent === "yes";
 ---
 
-<Base lang={lang} path="/privacy" title={dict.privacy.title}>
+<Base lang={lang} path="/privacy" title={privacy.title}>
     <AppHeader lang={lang} profile={Astro.locals.profile} path="/privacy" />
     <main id="main" class="prose">
-        <h1>{dict.privacy.title}</h1>
-        {dict.privacy.body.map((p) => (
+        <h1>{privacy.title}</h1>
+        <p class="updated">{privacy.updated}</p>
+        {privacy.intro.map((p) => (
+            <p>{p}</p>
+        ))}
+
+        <h2 id="data">{privacy.data.title}</h2>
+        {privacy.data.body.map((p) => (
+            <p>{p}</p>
+        ))}
+
+        <h2 id="analytics">{privacy.analytics.title}</h2>
+        {privacy.analytics.body.map((p) => (
             <p>{p}</p>
         ))}
         {analyticsKey() && (
@@ -35,8 +47,38 @@ const analyticsOn = Astro.locals.consent === "yes";
                 </button>
             </form>
         )}
+
+        <h2 id="cookies">{privacy.cookies.title}</h2>
+        <p>{privacy.cookies.intro}</p>
+        <dl>
+            {privacy.cookies.items.map(([name, text]) => (
+                <div>
+                    <dt>{name}</dt>
+                    <dd>{text}</dd>
+                </div>
+            ))}
+        </dl>
+
+        <h2 id="recipients">{privacy.recipients.title}</h2>
+        {privacy.recipients.body.map((p) => (
+            <p>{p}</p>
+        ))}
+
+        <h2 id="retention">{privacy.retention.title}</h2>
+        <ul>
+            {privacy.retention.items.map((item) => (
+                <li>{item}</li>
+            ))}
+        </ul>
+
+        <h2 id="rights">{privacy.rights.title}</h2>
+        {privacy.rights.body.map((p) => (
+            <p>{p}</p>
+        ))}
+
+        <p class="outro">{privacy.outro}</p>
         <a class="back" href={localePath(lang, "/")}>
-            ← {dict.privacy.back}
+            ← {privacy.back}
         </a>
     </main>
     <Footer lang={lang} path="/privacy" />
@@ -54,11 +96,61 @@ const analyticsOn = Astro.locals.consent === "yes";
         letter-spacing: -0.045em;
         margin-bottom: 32px;
     }
-    p {
+    h2 {
+        margin: 44px 0 14px;
+        font-size: 1.35rem;
+        font-weight: 650;
+        letter-spacing: -0.025em;
+        scroll-margin-top: 24px;
+    }
+    p,
+    li,
+    dd {
         font-size: 1.08rem;
         line-height: 1.65;
         color: var(--ink-2);
+    }
+    p {
         margin-bottom: 18px;
+    }
+    .updated {
+        margin-top: -20px;
+        font-size: 0.92rem;
+        color: var(--ink-3);
+    }
+    dl {
+        margin-bottom: 18px;
+        border-top: 1px solid var(--rule);
+    }
+    dl div {
+        display: grid;
+        grid-template-columns: minmax(0, 11rem) minmax(0, 1fr);
+        gap: 4px 20px;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--rule);
+    }
+    dt {
+        font-weight: 600;
+        color: var(--ink);
+        overflow-wrap: anywhere;
+    }
+    dd {
+        margin: 0;
+    }
+    @media (max-width: 520px) {
+        dl div {
+            grid-template-columns: minmax(0, 1fr);
+        }
+    }
+    ul {
+        margin: 0 0 18px;
+        padding-left: 1.2em;
+    }
+    li {
+        margin-bottom: 8px;
+    }
+    .outro {
+        margin-top: 44px;
     }
     .consent {
         display: flex;

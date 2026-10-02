@@ -154,14 +154,72 @@
     },
     "privacy": {
         "title": "Prywatność",
-        "body": [
+        "updated": "Ostatnia aktualizacja: 2 października 2026",
+        "intro": [
             "Oopswhere nie ma bazy danych i nigdy nie widzi Twojego hasła. Logujesz się na stronie Twojej uczelni (USOS), a my dostajemy jednorazowy dostęp, którego używamy tylko do pobrania listy Twoich grup zajęciowych i Twojego imienia. Zaraz potem unieważniamy ten dostęp.",
-            "Lista grup i imię są zapisywane w zaszyfrowanym ciasteczku w Twojej przeglądarce. Serwer niczego o Tobie nie przechowuje. Wylogowanie usuwa ciasteczko.",
-            "Plany grup zajęciowych, nazwiska prowadzących i sale są publicznymi danymi USOS. Przechowujemy je przez krótki czas w pamięci podręcznej, żeby nie obciążać serwerów uczelni.",
-            "Nasz serwer liczy wyniki logowania (udane, anulowane, błąd) i szybkość ładowania planu. Te liczby trafiają do PostHog (serwery w UE) bez Twojego adresu IP i bez niczego, co pozwalałoby Cię rozpoznać.",
-            "Tylko jeśli się zgodzisz, aplikacja mierzy też w przeglądarce: wyświetlenia stron, kliknięcia w kalendarzu, np. zmianę tygodnia, błędy aplikacji i szybkość stron, a także rodzaj przeglądarki i urządzenia oraz przybliżoną lokalizację (kraj, miasto) ustaloną z adresu IP. To również trafia do PostHog. PostHog nie zapisuje ciasteczek ani niczego w pamięci przeglądarki, nie nagrywa ekranu i nigdy nie dostaje Twojego imienia, grup ani planu. Twoją odpowiedź pamiętamy przez 6 miesięcy w ciasteczku ow_consent; możesz ją zmienić poniżej.",
-            "Nie wyświetlamy reklam i nie używamy zewnętrznych czcionek. Kod jest otwarty — możesz sprawdzić każde zdanie z tej strony."
+            "Oopswhere to niezależny projekt open source. Nie jest prowadzony przez ZUT ani z nim związany."
         ],
+        "data": {
+            "title": "Twoje dane",
+            "body": [
+                "Lista grup i imię są zapisywane w zaszyfrowanym ciasteczku w Twojej przeglądarce. Serwer niczego o Tobie nie przechowuje. Wylogowanie usuwa ciasteczko.",
+                "Plany grup zajęciowych, nazwiska prowadzących i sale są publicznymi danymi USOS. Pobieramy je z USOS anonimowo i przechowujemy przez krótki czas w pamięci podręcznej, żeby nie obciążać serwerów uczelni.",
+                "Podstawa prawna: Twoje grupy i imię przetwarzamy, bo bez nich nie pokażemy Ci planu, o który prosisz (art. 6 ust. 1 lit. b RODO). Podanie ich jest dobrowolne, ale bez logowania aplikacja nie pokaże Twojego planu. Nazwiska prowadzących pokazujemy jako część publicznego planu zajęć, w naszym prawnie uzasadnionym interesie (art. 6 ust. 1 lit. f RODO)."
+            ]
+        },
+        "analytics": {
+            "title": "Analityka",
+            "body": [
+                "Nasz serwer liczy wyniki logowania (udane, anulowane, błąd) i szybkość ładowania planu. Te liczby trafiają do PostHog (serwery w UE) bez Twojego adresu IP i bez niczego, co pozwalałoby Cię rozpoznać.",
+                "Tylko jeśli się zgodzisz, aplikacja mierzy też w przeglądarce: wyświetlenia stron, kliknięcia w kalendarzu, np. zmianę tygodnia, błędy aplikacji i szybkość stron, a także rodzaj przeglądarki i urządzenia oraz przybliżoną lokalizację (kraj, miasto) ustaloną z adresu IP. To również trafia do PostHog. PostHog nie zapisuje ciasteczek ani niczego w pamięci przeglądarki, nie nagrywa ekranu i nigdy nie dostaje Twojego imienia, grup ani planu. Twoją odpowiedź pamiętamy przez 6 miesięcy w ciasteczku ow_consent; możesz ją zmienić poniżej.",
+                "Podstawa prawna: liczniki na serwerze to nasz prawnie uzasadniony interes w utrzymaniu i ulepszaniu aplikacji (art. 6 ust. 1 lit. f RODO). Analityka w przeglądarce działa wyłącznie za Twoją zgodą (art. 6 ust. 1 lit. a RODO), którą możesz w każdej chwili wycofać; nie wpływa to na zgodność z prawem tego, co zebraliśmy wcześniej."
+            ]
+        },
+        "cookies": {
+            "title": "Ciasteczka",
+            "intro": "Używamy tylko ciasteczek potrzebnych do działania aplikacji i do zapamiętania Twoich wyborów. Żadne z nich nie służy do reklam ani śledzenia.",
+            "items": [
+                [
+                    "ow_profile",
+                    "Twoje grupy i imię, zaszyfrowane. Do wylogowania, najdłużej 400 dni."
+                ],
+                ["ow_oauth", "Zabezpieczenie logowania przez USOS. 15 minut."],
+                ["ow_lang, ow_theme", "Język i motyw, jeśli je zmienisz. 1 rok."],
+                ["ow_consent", "Twoja odpowiedź w sprawie analityki. 6 miesięcy."],
+                [
+                    "ow:allDays",
+                    "Pamięć przeglądarki, nie ciasteczko: czy pokazywać wszystkie dni tygodnia. Do wyczyszczenia danych przeglądarki."
+                ]
+            ]
+        },
+        "recipients": {
+            "title": "Kto jeszcze ma dostęp",
+            "body": [
+                "Cloudflare (Cloudflare, Inc.) przekazuje cały ruch do naszego serwera i chroni go przed atakami, więc widzi Twój adres IP i przesyłane dane. Działa na całym świecie, także poza UE; przekazywanie danych opiera się na standardowych klauzulach umownych i programie EU–US Data Privacy Framework.",
+                "Firma hostingowa, u której działa nasz serwer, ma do niego dostęp techniczny.",
+                "PostHog (serwery w UE) dostaje liczniki z serwera i, tylko po Twojej zgodzie, dane analityczne z przeglądarki.",
+                "Wszyscy trzej przetwarzają dane w naszym imieniu. Nikomu danych nie sprzedajemy ani nie udostępniamy."
+            ]
+        },
+        "retention": {
+            "title": "Jak długo",
+            "items": [
+                "Ciasteczka: jak w tabeli wyżej. Wylogowanie od razu usuwa ciasteczko z grupami i imieniem.",
+                "Publiczne plany grup i nazwiska prowadzących: w pamięci serwera najwyżej 14 dni, nigdy na dysku; znikają przy każdym restarcie.",
+                "Dane analityczne w PostHog: co najmniej rok, bo tyle gwarantuje PostHog i krótszego okresu nie da się ustawić. Nie zawierają Twojego imienia, grup ani planu.",
+                "Cloudflare: zgodnie z jego polityką prywatności."
+            ]
+        },
+        "rights": {
+            "title": "Twoje prawa",
+            "body": [
+                "Masz prawo dostępu do swoich danych, ich sprostowania, usunięcia, ograniczenia przetwarzania i przeniesienia, prawo sprzeciwu wobec przetwarzania opartego na prawnie uzasadnionym interesie oraz prawo wycofania zgody na analitykę.",
+                "Większość z nich możesz zrealizować samodzielnie: wszystko, co o Tobie wiemy, jest w ciasteczku w Twojej przeglądarce, a wylogowanie je usuwa. Analitykę wyłączysz wyżej. Danych analitycznych nie potrafimy przypisać do konkretnej osoby, więc nie możemy ich wyszukać ani usunąć na Twoją prośbę.",
+                "Możesz też złożyć skargę do Prezesa Urzędu Ochrony Danych Osobowych (ul. Stawki 2, 00-193 Warszawa, uodo.gov.pl).",
+                "Nie podejmujemy wobec Ciebie żadnych zautomatyzowanych decyzji i nie profilujemy Cię."
+            ]
+        },
+        "outro": "Nie wyświetlamy reklam i nie używamy zewnętrznych czcionek. Kod jest otwarty — możesz sprawdzić każde zdanie z tej strony.",
         "back": "Wróć do planu"
     },
     "consent": {
