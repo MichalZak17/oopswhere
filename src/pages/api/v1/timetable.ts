@@ -3,6 +3,7 @@ import { DEFAULT_INSTALLATION } from "@/config/installations";
 import { DEMO_GROUPS } from "@/config/demo";
 import { demoEnabled, resolveInstallation } from "@/lib/env";
 import { loadTimetable } from "@/lib/timetable/load";
+import { trackTimetable } from "@/lib/analytics/server";
 
 async function etagOf(body: string): Promise<string> {
     const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(body));
@@ -32,7 +33,9 @@ export const GET: APIRoute = async ({ url, locals, request }) => {
     if (!inst) return Response.json({ error: "unknown_installation" }, { status: 404 });
 
     const groups = demo ? (DEMO_GROUPS[inst.id] ?? []) : profile!.g;
+    const startedAt = Date.now();
     const payload = await loadTimetable(inst, groups, { budgetMs: 8000 });
+    trackTimetable("api", payload, groups.length, startedAt, demo);
     // generatedAt/now change every call; leave them out of the validator.
     const etag = await etagOf(JSON.stringify({ ...payload, generatedAt: 0, nowMin: 0 }));
     const headers = {

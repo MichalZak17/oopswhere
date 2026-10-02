@@ -45,7 +45,9 @@ export default defineConfig({
                 "default-src 'self'",
                 "img-src 'self' data:",
                 "font-src 'self'",
-                "connect-src 'self'",
+                // PostHog Cloud EU (product analytics; only used when POSTHOG_KEY is set):
+                // event ingestion + the remote config JSON. Its JS is bundled, never loaded.
+                "connect-src 'self' https://eu.i.posthog.com https://eu-assets.i.posthog.com",
                 "base-uri 'none'",
                 "object-src 'none'",
                 "frame-ancestors 'none'",
@@ -92,6 +94,13 @@ export default defineConfig({
                 access: "secret",
                 optional: true,
                 url: true,
+            }),
+            // Product analytics (PostHog Cloud EU). Off when unset. Runtime config like the
+            // rest: the key is rendered into the page, not baked into the bundle.
+            POSTHOG_KEY: envField.string({
+                context: "server",
+                access: "secret",
+                optional: true,
             }),
             // /demo is dev-only; the e2e suite runs a production build and opts back in.
             ENABLE_DEMO: envField.boolean({

@@ -74,6 +74,18 @@ Never store tokens, USOS user ids or emails. Never request `participants` (class
   (CSP `form-action`).
 - `src/i18n/locales/{pl,en}.json` — `pl` is the source of truth, `en` must match its shape (`Dict` in `src/i18n/index.ts`). `pick()` chooses a USOS
   LangDict value with Polish fallback (ZUT's `en` is often empty).
+- `src/lib/analytics/` — PostHog Cloud EU product analytics, off unless `POSTHOG_KEY` is set.
+  Server: `track()` / `trackTimetable()` (login outcomes, timetable load timing), fire-and-forget,
+  random distinct id, no person profile; no consent needed (nothing about the visitor leaves
+  the server). Browser: **opt-in** — `client.ts` starts `posthog-js` only when `<html>` has
+  `data-ph` (the key) and `data-consent="yes"` (`ow_consent` cookie, `src/lib/consent.ts`).
+  `ConsentBanner.astro` asks (only with a key, no answer yet and no `Sec-GPC: 1`), with equal
+  yes/no buttons; `POST /consent` is the no-JS path, the privacy page turns it on/off. Lazy
+  after idle, cookieless, no autocapture, no replay; the island calls `track()`. Its web-vitals and
+  exception-autocapture extensions are bundled (`disable_external_dependency_loading`): no
+  PostHog-hosted JS runs. The CSP allows `eu.i.posthog.com` and `eu-assets.i.posthog.com` in
+  `connect-src` only (ingestion, remote config JSON); another region or a self-hosted PostHog
+  needs both the hosts in `client.ts`/`server.ts` and the CSP changed.
 - `src/middleware.ts` — Origin check + canonical host, profile → `locals`, `ow_lang` redirect for `/`,
   security headers, `Cache-Control: private, no-cache` on HTML.
 
@@ -98,6 +110,13 @@ Never store tokens, USOS user ids or emails. Never request `participants` (class
   is for large display text only.
 - Don't create `src/fetch.ts` (reserved by Astro 7).
 - Never log query strings, tokens or cookies.
+- Custom analytics events (`track()`) carry only closed-set values and counts: never USOS ids,
+  group numbers, names, URLs or free text, and never `identify()`. No autocapture (the page is
+  someone's timetable). The automatic browser events (`$pageview`/`$pageleave`, `$exception`,
+  `$web_vitals`) carry the page URL, error messages, browser/device and IP-derived location, so
+  never put personal data in URLs. New data must fit the privacy page (`privacy.body`, both locales).
+  Nothing in the browser may send analytics before the visitor says yes: always go through
+  `track()` in `client.ts`, never import `posthog-js` elsewhere.
 
 ## Design language
 
@@ -117,7 +136,9 @@ Self-hosted on **Coolify** (build pack: Dockerfile), behind Cloudflare. Pushes t
   `CMD node server.mjs`. No build-time secrets (all config is runtime `astro:env` secrets).
   `docker build --target test .` runs unit tests. `docker-compose.yml` is for local runs.
 - Env (runtime only): `SESSION_SECRET`, `SITE_URL` (public origin, e.g. `https://oopswhere.com` —
-  required, see the proxy rule above), `USOS_ZUT_CONSUMER_KEY`, `USOS_ZUT_CONSUMER_SECRET`.
+  required, see the proxy rule above), `USOS_ZUT_CONSUMER_KEY`, `USOS_ZUT_CONSUMER_SECRET`;
+  optional `POSTHOG_KEY` (PostHog Cloud EU project token). The PostHog project must
+  have cookieless server hash mode enabled, or browser events are dropped.
 - Coolify health check, if enabled, must use `/api/health` (`/` on `localhost` gets the canonical 308).
 - Rolling deploys: Coolify waits for the new container to be healthy, then SIGTERMs the old one;
   `server.mjs` drains for up to 8 s. CI builds and runs the image (`docker` job).

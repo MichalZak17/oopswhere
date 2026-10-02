@@ -1,0 +1,97 @@
+---
+import { localePath, t, type Lang } from "@/i18n";
+
+interface Props {
+    lang: Lang;
+    /** Path without the locale prefix, to come back to when JavaScript is off. */
+    path: string;
+}
+
+const { lang, path } = Astro.props;
+const dict = t(lang);
+---
+
+<aside class="consent" aria-labelledby="consent-text" data-consent-banner>
+    <p id="consent-text">
+        {dict.consent.text}{" "}
+        <a href={localePath(lang, "/privacy")}>{dict.consent.more}</a>
+    </p>
+    <form method="post" action="/consent">
+        <input type="hidden" name="to" value={localePath(lang, path)} />
+        {/* Same style for both answers: saying no must be as easy as saying yes. */}
+        <button class="btn btn-ghost" type="submit" name="choice" value="yes">
+            {dict.consent.yes}
+        </button>
+        <button class="btn btn-ghost" type="submit" name="choice" value="no">
+            {dict.consent.no}
+        </button>
+    </form>
+</aside>
+
+<style>
+    .consent {
+        position: fixed;
+        left: var(--gutter);
+        right: var(--gutter);
+        bottom: max(16px, env(safe-area-inset-bottom));
+        z-index: 50;
+        max-width: 460px;
+        padding: 16px 16px 14px 18px;
+        border: 1px solid var(--rule-strong);
+        border-radius: var(--radius-l);
+        background: var(--paper-raised);
+        box-shadow: var(--shadow-lift);
+        color: var(--ink-2);
+        font-size: 0.92rem;
+        line-height: 1.5;
+        /* Its own group, so the root cross-fade of a week change leaves it still. */
+        view-transition-name: consent;
+        animation: rise var(--dur-2) var(--ease-out) both;
+    }
+    @keyframes rise {
+        from {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+    }
+    a {
+        color: var(--ink);
+    }
+    form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 12px;
+    }
+    .btn {
+        height: 36px;
+        padding: 0 16px;
+        font-size: 0.9rem;
+    }
+</style>
+
+<script>
+    // Progressive enhancement: the form works without JS (cookie + redirect); with JS the
+    // answer applies in place, keeping the week, scroll position and open sheet.
+    import { initAnalytics, setConsent } from "@/lib/analytics/client";
+    import { asConsent, consentFromCookies } from "@/lib/consent";
+
+    const banner = document.querySelector<HTMLElement>("[data-consent-banner]");
+
+    banner?.addEventListener("submit", (e) => {
+        const choice = asConsent((e.submitter as HTMLButtonElement | null)?.value);
+        if (!choice) return;
+        e.preventDefault();
+        setConsent(choice);
+        banner.remove();
+    });
+
+    // Back/forward cache: the visitor may have answered on another page since.
+    addEventListener("pageshow", (e) => {
+        const choice = e.persisted ? consentFromCookies(document.cookie) : null;
+        if (!choice) return;
+        document.documentElement.dataset.consent = choice;
+        initAnalytics();
+        banner?.remove();
+    });
+</script>

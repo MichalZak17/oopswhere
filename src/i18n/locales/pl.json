@@ -158,9 +158,21 @@
             "Oopswhere nie ma bazy danych i nigdy nie widzi Twojego hasła. Logujesz się na stronie Twojej uczelni (USOS), a my dostajemy jednorazowy dostęp, którego używamy tylko do pobrania listy Twoich grup zajęciowych i Twojego imienia. Zaraz potem unieważniamy ten dostęp.",
             "Lista grup i imię są zapisywane w zaszyfrowanym ciasteczku w Twojej przeglądarce. Serwer niczego o Tobie nie przechowuje. Wylogowanie usuwa ciasteczko.",
             "Plany grup zajęciowych, nazwiska prowadzących i sale są publicznymi danymi USOS. Przechowujemy je przez krótki czas w pamięci podręcznej, żeby nie obciążać serwerów uczelni.",
-            "Nie używamy analityki, reklam ani zewnętrznych czcionek. Kod jest otwarty — możesz sprawdzić każde zdanie z tej strony."
+            "Nasz serwer liczy wyniki logowania (udane, anulowane, błąd) i szybkość ładowania planu. Te liczby trafiają do PostHog (serwery w UE) bez Twojego adresu IP i bez niczego, co pozwalałoby Cię rozpoznać.",
+            "Tylko jeśli się zgodzisz, aplikacja mierzy też w przeglądarce: wyświetlenia stron, kliknięcia w kalendarzu, np. zmianę tygodnia, błędy aplikacji i szybkość stron, a także rodzaj przeglądarki i urządzenia oraz przybliżoną lokalizację (kraj, miasto) ustaloną z adresu IP. To również trafia do PostHog. PostHog nie zapisuje ciasteczek ani niczego w pamięci przeglądarki, nie nagrywa ekranu i nigdy nie dostaje Twojego imienia, grup ani planu. Twoją odpowiedź pamiętamy przez 6 miesięcy w ciasteczku ow_consent; możesz ją zmienić poniżej.",
+            "Nie wyświetlamy reklam i nie używamy zewnętrznych czcionek. Kod jest otwarty — możesz sprawdzić każde zdanie z tej strony."
         ],
         "back": "Wróć do planu"
+    },
+    "consent": {
+        "text": "Czy możemy mierzyć, jak korzystasz z aplikacji (wyświetlenia, kliknięcia w kalendarzu, błędy, szybkość)? Robi to PostHog na serwerach w UE, bez ciasteczek, i nigdy nie widzi Twojego imienia, grup ani planu.",
+        "more": "Szczegóły",
+        "yes": "Zgadzam się",
+        "no": "Nie zgadzam się",
+        "on": "Analityka w przeglądarce jest włączona.",
+        "off": "Analityka w przeglądarce jest wyłączona.",
+        "turnOn": "Włącz",
+        "turnOff": "Wyłącz"
     },
     "notFound": {
         "title": "Tej sali nie ma.",

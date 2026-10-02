@@ -6,6 +6,8 @@ import "@/styles/view-transitions.css";
 import { t, type Lang } from "@/i18n";
 import { THEME_COLOR } from "@/lib/theme";
 import { siteOrigin } from "@/lib/env";
+import { analyticsKey } from "@/lib/analytics/server";
+import ConsentBanner from "@/components/astro/ConsentBanner.astro";
 
 interface Props {
     lang: Lang;
@@ -22,10 +24,21 @@ const theme = Astro.locals.theme;
 const site = siteOrigin(Astro.url);
 const plHref = new URL(path, site).toString();
 const enHref = new URL(path === "/" ? "/en/" : `/en${path}`, site).toString();
+const analytics = analyticsKey();
+const consent = Astro.locals.consent;
+// Global Privacy Control counts as "no" until the visitor turns analytics on themselves
+// (on the privacy page), so they never see the question.
+const askConsent =
+    analytics !== null && consent === null && Astro.request.headers.get("sec-gpc") !== "1";
 ---
 
 <!doctype html>
-<html lang={lang} data-theme={theme === "auto" ? undefined : theme}>
+<html
+    lang={lang}
+    data-theme={theme === "auto" ? undefined : theme}
+    data-ph={analytics}
+    data-consent={consent ?? undefined}
+>
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -63,5 +76,11 @@ const enHref = new URL(path === "/" ? "/en/" : `/en${path}`, site).toString();
             {lang === "pl" ? "Przejdź do treści" : "Skip to content"}
         </a>
         <slot />
+        {askConsent && <ConsentBanner lang={lang} path={path} />}
+        <script>
+            import { initAnalytics } from "@/lib/analytics/client";
+
+            initAnalytics();
+        </script>
     </body>
 </html>

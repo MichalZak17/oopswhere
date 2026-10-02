@@ -164,9 +164,21 @@
             "Oopswhere has no database and never sees your password. You sign in on your university's own site (USOS), and we receive one-time access that we use only to read your list of class groups and your first name. We revoke that access right away.",
             "The group list and first name are stored in an encrypted cookie in your browser. The server keeps nothing about you. Signing out deletes the cookie.",
             "Class group timetables, lecturer names and rooms are public USOS data. We cache them briefly so we don't put load on the university's servers.",
-            "No analytics, no ads, no third-party fonts. The code is open — you can verify every sentence on this page."
+            "Our server counts login results (successful, cancelled, failed) and how fast the timetable loads. These counts go to PostHog (EU servers) without your IP address or anything else that could identify you.",
+            "Only if you agree, the app also measures in your browser: page views, calendar actions such as changing the week, app errors and page speed, along with the browser and device type and an approximate location (country, city) worked out from your IP address. This also goes to PostHog. PostHog sets no cookies and stores nothing in your browser, records no screen, and never receives your name, groups or timetable. We remember your answer for 6 months in the ow_consent cookie; you can change it below.",
+            "No ads, no third-party fonts. The code is open — you can verify every sentence on this page."
         ],
         "back": "Back to the timetable"
+    },
+    "consent": {
+        "text": "Can we measure how you use the app (page views, calendar clicks, errors, speed)? PostHog does this on EU servers, without cookies, and never sees your name, groups or timetable.",
+        "more": "Details",
+        "yes": "Allow",
+        "no": "Don't allow",
+        "on": "Analytics in your browser is on.",
+        "off": "Analytics in your browser is off.",
+        "turnOn": "Turn on",
+        "turnOff": "Turn off"
     },
     "notFound": {
         "title": "No such room.",

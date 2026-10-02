@@ -3,12 +3,15 @@ import Base from "@/layouts/Base.astro";
 import AppHeader from "./AppHeader.astro";
 import Footer from "./Footer.astro";
 import { localePath, t, type Lang } from "@/i18n";
+import { analyticsKey } from "@/lib/analytics/server";
 
 interface Props {
     lang: Lang;
 }
 const { lang } = Astro.props;
 const dict = t(lang);
+// Not asked yet counts as off: nothing runs in the browser before a yes.
+const analyticsOn = Astro.locals.consent === "yes";
 ---
 
 <Base lang={lang} path="/privacy" title={dict.privacy.title}>
@@ -18,6 +21,20 @@ const dict = t(lang);
         {dict.privacy.body.map((p) => (
             <p>{p}</p>
         ))}
+        {analyticsKey() && (
+            <form class="consent" method="post" action="/consent">
+                <input type="hidden" name="to" value={localePath(lang, "/privacy")} />
+                <span>{analyticsOn ? dict.consent.on : dict.consent.off}</span>
+                <button
+                    class="btn btn-ghost"
+                    type="submit"
+                    name="choice"
+                    value={analyticsOn ? "no" : "yes"}
+                >
+                    {analyticsOn ? dict.consent.turnOff : dict.consent.turnOn}
+                </button>
+            </form>
+        )}
         <a class="back" href={localePath(lang, "/")}>
             ← {dict.privacy.back}
         </a>
@@ -42,6 +59,23 @@ const dict = t(lang);
         line-height: 1.65;
         color: var(--ink-2);
         margin-bottom: 18px;
+    }
+    .consent {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px 20px;
+        margin: 8px 0 18px;
+        padding: 12px 12px 12px 18px;
+        border: 1px solid var(--rule);
+        border-radius: var(--radius-l);
+        color: var(--ink-2);
+    }
+    .consent .btn {
+        height: 36px;
+        padding: 0 16px;
+        font-size: 0.9rem;
     }
     .back {
         display: inline-block;

@@ -9,6 +9,7 @@ import { DEFAULT_INSTALLATION } from "@/config/installations";
 import { DEMO_GROUPS } from "@/config/demo";
 import { resolveInstallation } from "@/lib/env";
 import { loadTimetable } from "@/lib/timetable/load";
+import { trackTimetable } from "@/lib/analytics/server";
 import { needsRefresh } from "@/lib/profile";
 import { isLocalDate, startOfWeek } from "@/lib/time/local-date";
 import { initialHeadingSpan } from "@/components/calendar/model";
@@ -24,7 +25,9 @@ const dict = t(lang);
 const profile = demo ? null : Astro.locals.profile;
 const inst = resolveInstallation(profile?.i ?? DEFAULT_INSTALLATION)!;
 const groups = demo ? (DEMO_GROUPS[inst.id] ?? []) : (profile?.g ?? []);
+const startedAt = Date.now();
 const payload = await loadTimetable(inst, groups, { budgetMs: 1500 });
+trackTimetable("page", payload, groups.length, startedAt, demo);
 
 const week = Astro.url.searchParams.get("week");
 const initialWeek = isLocalDate(week) ? week : null;

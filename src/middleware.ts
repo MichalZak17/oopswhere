@@ -3,6 +3,7 @@ import { LANG_COOKIE, THEME_COOKIE, readProfile } from "@/lib/cookies";
 import { isHttps, siteOrigin } from "@/lib/env";
 import { canonicalRedirect, isCrossSiteWrite } from "@/lib/request-guard";
 import { asTheme } from "@/lib/theme";
+import { CONSENT_COOKIE, asConsent } from "@/lib/consent";
 
 const SECURITY_HEADERS: Record<string, string> = {
     "X-Content-Type-Options": "nosniff",
@@ -25,6 +26,7 @@ export const onRequest = defineMiddleware(async (ctx, next) => {
     ctx.locals.profile = await readProfile(ctx.cookies, ctx.url);
 
     ctx.locals.theme = asTheme(ctx.cookies.get(THEME_COOKIE)?.value);
+    ctx.locals.consent = asConsent(ctx.cookies.get(CONSENT_COOKIE)?.value);
 
     // Remember the language choice without an Accept-Language redirect.
     if (

@@ -18,6 +18,7 @@
     } from "./model";
     import { fullDate, weekHeading } from "./format";
     import { canAnimate, morph, slide } from "./transitions";
+    import { track } from "@/lib/analytics/client";
     import type { CalDict, Types } from "./display";
     import WeekGrid from "./WeekGrid.svelte";
     import NextUp from "./NextUp.svelte";
@@ -79,6 +80,7 @@
     function setWeek(target: LocalDate) {
         if (target === anchor) return;
         const dir = target > anchor ? "next" : "prev";
+        track("week_changed", { direction: dir, to_this_week: target === thisWeek });
         void slide(dir, async () => {
             anchorOverride = target;
             await tick();
@@ -88,6 +90,7 @@
     const goToday = () => setWeek(thisWeek);
 
     async function openEvent(ev: ClassEvent, el: HTMLElement) {
+        track("class_opened");
         if (startOfWeek(ev.date) !== anchor) {
             // From "Next up": bring its week into view first, then open.
             anchorOverride = startOfWeek(ev.date);
@@ -122,6 +125,7 @@
 
     function toggleDays() {
         showAll = !showAll;
+        track("all_days_toggled", { show_all: showAll });
         try {
             localStorage.setItem("ow:allDays", showAll ? "1" : "0");
         } catch {
@@ -129,7 +133,7 @@
         }
     }
 
-    async function refresh() {
+    async function refresh(reason: "missing" | "resume" | "retry") {
         loadState = "loading";
         try {
             const res = await fetch(apiUrl, { headers: { Accept: "application/json" } });
@@ -140,6 +144,7 @@
         } catch {
             loadState = "failed";
         }
+        track("timetable_refreshed", { reason, ok: loadState === "idle" });
     }
 
     function onkeydown(e: KeyboardEvent) {
@@ -184,10 +189,10 @@
         const onVisible = () => {
             if (document.visibilityState !== "visible") return;
             tickClock();
-            if (Date.now() - lastFetch > 30 * 60_000) void refresh();
+            if (Date.now() - lastFetch > 30 * 60_000) void refresh("resume");
         };
         document.addEventListener("visibilitychange", onVisible);
-        if (payload.missing.length > 0) void refresh();
+        if (payload.missing.length > 0) void refresh("missing");
         const introTimer = setTimeout(() => (intro = false), 900);
         return () => {
             clearInterval(clock);
@@ -255,7 +260,7 @@
     {#if loadState === "failed" || (loadState === "idle" && fetched && fetched.missing.length > 0)}
         <p class="notice">
             {dict.missing}
-            <button class="link" onclick={refresh}>{dict.retry}</button>
+            <button class="link" onclick={() => refresh("retry")}>{dict.retry}</button>
         </p>
     {/if}
 

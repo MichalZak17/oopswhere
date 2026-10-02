@@ -14,6 +14,7 @@ const appEnv = {
     USOS_ZUT_CONSUMER_SECRET: "e2e-secret",
     USOS_ZUT_BASE_URL: MOCK,
     ENABLE_DEMO: "true",
+    POSTHOG_KEY: "",
 };
 
 export default defineConfig({

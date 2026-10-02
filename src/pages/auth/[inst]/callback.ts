@@ -8,6 +8,7 @@ import { loadTimetable } from "@/lib/timetable/load";
 import { accessToken, revokeToken } from "@/lib/usos/oauth";
 import { currentUser, participantGroups, termsBetween, type RawTerm } from "@/lib/usos/api";
 import type { Token } from "@/lib/usos/client";
+import { track, type LoginOutcome } from "@/lib/analytics/server";
 
 function constantTimeEqual(a: string, b: string): boolean {
     if (a.length !== b.length) return false;
@@ -24,18 +25,27 @@ function constantTimeEqual(a: string, b: string): boolean {
 export const GET: APIRoute = async ({ params, url, cookies, redirect }) => {
     const state = await takeOAuthState(cookies, url);
     const home = state?.r.startsWith("/en") ? "/en/" : "/";
-    const fail = (code: string) => {
+    const inst = resolveInstallation(params.inst);
+    // Counts only: outcome, where it failed, and how long the round trip through USOS took.
+    const report = (outcome: LoginOutcome, extra: Record<string, string | number> = {}) =>
+        track("login_finished", {
+            inst: inst?.id ?? "unknown",
+            outcome,
+            ...(state ? { duration_s: Math.round((Date.now() - state.t) / 1000) } : {}),
+            ...extra,
+        });
+    const fail = (code: Exclude<LoginOutcome, "ok">, stage?: string) => {
+        report(code, stage ? { stage } : {});
         const r = redirect(`${home}?auth=${code}`, 303);
         r.headers.set("Cache-Control", "no-store");
         r.headers.set("Referrer-Policy", "no-referrer");
         return r;
     };
 
-    const inst = resolveInstallation(params.inst);
     const oauthToken = url.searchParams.get("oauth_token") ?? "";
     const verifier = url.searchParams.get("oauth_verifier");
     if (!inst || !state || state.i !== inst.id || !constantTimeEqual(oauthToken, state.k))
-        return fail("expired");
+        return fail("expired", state ? "token_mismatch" : "no_state");
     if (!verifier) return fail("denied");
 
     let token: Token | null = null;
@@ -86,7 +96,7 @@ export const GET: APIRoute = async ({ params, url, cookies, redirect }) => {
         };
     } catch (err) {
         console.error("[auth] callback failed:", err instanceof Error ? err.message : "unknown");
-        return fail("error");
+        return fail("error", "usos");
     } finally {
         if (token) await revokeToken(inst, token);
     }
@@ -97,6 +107,7 @@ export const GET: APIRoute = async ({ params, url, cookies, redirect }) => {
     await loadTimetable(inst, profile.g, { budgetMs: 2500 }).catch(() => null);
 
     await writeProfile(cookies, url, profile);
+    report("ok", { groups: profile.g.length, terms: profile.t.length });
     const r = redirect(state.r, 303);
     r.headers.set("Cache-Control", "no-store");
     r.headers.set("Referrer-Policy", "no-referrer");
