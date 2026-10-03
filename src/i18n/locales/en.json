@@ -190,69 +190,69 @@
         }
     },
     "nav": {
-        "openSource": "Source code (judge me)",
-        "privacy": "Privacy (yes, I have one)",
+        "openSource": "Source code",
+        "privacy": "Privacy",
         "language": "Polski",
-        "theme": "Vibe",
-        "themeAuto": "Whatever my OS says",
-        "themeLight": "Retina destroyer",
-        "themeDark": "Correct choice"
+        "theme": "Theme",
+        "themeAuto": "System",
+        "themeLight": "Light",
+        "themeDark": "Dark"
     },
     "cal": {
-        "prevWeek": "Previous episode",
-        "nextWeek": "Next week's problems",
-        "today": "Today, unfortunately",
-        "week": "Week of suffering",
+        "prevWeek": "Previous week",
+        "nextWeek": "Next week",
+        "today": "Today",
+        "week": "Week",
         "session": "Session",
         "of": "of",
-        "allDays": "Show the whole mess",
-        "classDays": "Hide free days",
-        "emptyTitle": "Nothing. Suspiciously peaceful.",
-        "emptyNext": "Next academic jumpscare:",
+        "allDays": "Whole week",
+        "classDays": "Class days",
+        "emptyTitle": "No classes",
+        "emptyNext": "Next classes:",
         "emptyNone": "No more classes this semester.",
-        "jump": "Teleport",
-        "now": "Right now",
-        "next": "Next problem",
+        "jump": "Go",
+        "now": "Now",
+        "next": "Next",
         "in": "in",
         "until": "until",
-        "endsIn": "freedom in",
+        "endsIn": "ends in",
         "minutes": "min",
         "hours": "h",
-        "tomorrow": "tomorrow's problem",
+        "tomorrow": "tomorrow",
         "group": "grp.",
         "room": "room",
-        "lecturers": "People responsible",
-        "place": "Where am I going",
-        "time": "When am I suffering",
-        "meetings": "Future obligations",
-        "showAllMeetings": "Expose all of them",
+        "lecturers": "Lecturers",
+        "place": "Place",
+        "time": "Time",
+        "meetings": "Upcoming meetings",
+        "showAllMeetings": "Show all",
         "noMoreMeetings": "That's the last meeting this semester.",
-        "openUsos": "Open the original crime scene",
-        "close": "Escape",
-        "clash": "schedule beef",
-        "hello": "yo",
-        "refresh": "Refresh my academic lore",
-        "refreshHint": "Use after USOS changes your plotline",
-        "logout": "Get me out",
+        "openUsos": "Open in USOSweb",
+        "close": "Close",
+        "clash": "clash",
+        "hello": "hi",
+        "refresh": "Refresh groups",
+        "refreshHint": "Use after your groups change in USOS",
+        "logout": "Sign out",
         "groups": {
             "one": "group",
             "few": "groups",
             "many": "groups",
             "other": "groups"
         },
-        "asOf": "last rescued",
+        "asOf": "as of",
         "language": "Language",
-        "account": "Your academic identity",
-        "menu": "Stuff",
+        "account": "Account",
+        "menu": "Menu",
         "demo": "A demo built from a few public ZUT groups.",
-        "demoCta": "Sign in and face yours",
+        "demoCta": "Sign in to see yours",
         "stale": "USOS is offline. Showing the last timetable I fetched.",
-        "missing": "Part of the timetable failed to load. Very on-brand.",
-        "retry": "Poke it again",
+        "missing": "Part of the timetable failed to load.",
+        "retry": "Try again",
         "gone": "Some of your groups are gone from USOS. Try refreshing them.",
         "newTerm": "New semester. Refresh your groups to see it.",
-        "scope": "Shows your group meetings only. Exams and cancellations are still in USOSweb.",
-        "loading": "Negotiating with USOS…"
+        "scope": "Your groups only. Exams and cancellations: USOSweb.",
+        "loading": "Loading timetable…"
     },
     "types": {
         "WK": "Lecture",
@@ -271,14 +271,14 @@
         "OK": "Final assessment"
     },
     "privacy": {
-        "title": "Privacy, but readable",
-        "updated": "Last updated: 2 October 2026",
+        "title": "Privacy",
+        "updated": "Last updated: 3 October 2026",
         "intro": [
             "Oopswhere has no database and never sees your password. You sign in on your university's own site (USOS), and I receive one-time access that I use only to read your list of class groups and your first name. I revoke that access right away.",
             "Oopswhere is an independent open-source project. It is not run by or affiliated with ZUT."
         ],
         "data": {
-            "title": "Your data, not my collection hobby",
+            "title": "Your data",
             "body": [
                 "The group list and first name are stored in an encrypted cookie in your browser. The server keeps nothing about you. Signing out deletes the cookie.",
                 "Class group timetables, lecturer names and rooms are public USOS data. I fetch them from USOS anonymously and cache them briefly so I don't put load on the university's servers.",
@@ -286,7 +286,7 @@
             ]
         },
         "analytics": {
-            "title": "Analytics, with consent like adults",
+            "title": "Analytics",
             "body": [
                 "My server counts login results (successful, cancelled, failed) and how fast the timetable loads. These counts go to PostHog (EU servers) without your IP address or anything else that could identify you.",
                 "Only if you agree, the app also measures in your browser: page views, calendar actions such as changing the week, app errors and page speed, along with the browser and device type and an approximate location (country, city) worked out from your IP address. This also goes to PostHog. PostHog sets no cookies and stores nothing in your browser, records no screen, and never receives your name, groups or timetable. I remember your answer for 6 months in the ow_consent cookie; you can change it below.",
@@ -294,7 +294,7 @@
             ]
         },
         "cookies": {
-            "title": "Cookies, the boring browser kind",
+            "title": "Cookies",
             "intro": "I only use cookies the app needs to work and to remember your choices. None of them are for advertising or tracking.",
             "items": [
                 [
@@ -311,7 +311,7 @@
             ]
         },
         "recipients": {
-            "title": "Who else touches the packets",
+            "title": "Who receives your data",
             "body": [
                 "Cloudflare (Cloudflare, Inc.) passes all traffic to my server and protects it from attacks, so it sees your IP address and the data sent. It operates worldwide, including outside the EU; transfers rely on standard contractual clauses and the EU–US Data Privacy Framework.",
                 "The hosting company that runs my server has technical access to it.",
@@ -320,7 +320,7 @@
             ]
         },
         "retention": {
-            "title": "How long things stick around",
+            "title": "How long data is kept",
             "items": [
                 "Cookies: as listed above. Signing out deletes the cookie with your groups and first name right away.",
                 "Public group timetables and lecturer names: in the server's memory for at most 14 days, never on disk; gone at every restart.",
@@ -329,7 +329,7 @@
             ]
         },
         "rights": {
-            "title": "Your GDPR superpowers",
+            "title": "Your rights (GDPR)",
             "body": [
                 "You have the right to access, correct, delete and port your data, to restrict its processing, to object to processing based on legitimate interest, and to withdraw your consent to analytics.",
                 "You can exercise most of these yourself: everything I know about you is in the cookie in your browser, and signing out deletes it. You can turn analytics off above. I can't link analytics data to a particular person, so I can't look it up or delete it on request.",
@@ -338,21 +338,21 @@
             ]
         },
         "outro": "No ads, no mystery trackers, no third-party fonts. The code is open, so you can check for yourself.",
-        "back": "Back to my problems"
+        "back": "Back to timetable"
     },
     "consent": {
         "text": "Can I collect basic anonymous usage stats (page views, clicks, errors, speed)? PostHog handles them on EU servers, with no cookies, and never gets your name, groups or timetable.",
-        "more": "Receipts",
-        "yes": "Yeah, fine",
-        "no": "Absolutely not",
-        "on": "Browser analytics is on. The graphs are pleased.",
-        "off": "Browser analytics is off. You are now statistically invisible to me.",
-        "turnOn": "Let the graphs eat",
-        "turnOff": "Starve the graphs"
+        "more": "Details",
+        "yes": "Allow",
+        "no": "Decline",
+        "on": "Browser analytics is on.",
+        "off": "Browser analytics is off.",
+        "turnOn": "Turn on",
+        "turnOff": "Turn off"
     },
     "notFound": {
-        "title": "Wrong room, bestie.",
-        "body": "This page does not exist. Much like the classroom you swear was on the third floor.",
-        "back": "Return to civilization"
+        "title": "Page not found.",
+        "body": "This page does not exist.",
+        "back": "Back to home"
     }
 }

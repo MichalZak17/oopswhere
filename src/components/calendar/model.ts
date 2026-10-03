@@ -82,6 +82,20 @@ export function currentAndNext(
     return { current, next };
 }
 
+/**
+ * The week to open when the URL names none: the one holding the running or next class, so a
+ * Saturday (or a free week) lands on the classes that matter instead of an empty grid.
+ */
+export function landingWeek(
+    events: readonly ClassEvent[],
+    today: LocalDate,
+    nowMin: number,
+): LocalDate {
+    const { current, next } = currentAndNext(events, today, nowMin);
+    const target = current[0] ?? next;
+    return startOfWeek(target?.date ?? today);
+}
+
 /** First event on or after `date`. Events must be sorted. */
 export function firstOnOrAfter(events: readonly ClassEvent[], date: LocalDate): ClassEvent | null {
     return events.find((e) => e.date >= date) ?? null;

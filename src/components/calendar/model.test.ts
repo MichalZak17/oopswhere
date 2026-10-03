@@ -9,6 +9,7 @@ import {
     indexByDate,
     initialHeadingSpan,
     isWeekendProgramme,
+    landingWeek,
     visibleDays,
     weekDates,
 } from "./model";
@@ -74,5 +75,24 @@ describe("calendar model", () => {
         expect(weekHeading("en", ["2026-09-28", "2026-10-04"])).toMatch(
             /^28 September\s?–\s?4 October$/,
         );
+    });
+});
+
+describe("landingWeek", () => {
+    const events = expand(payload());
+
+    it("stays on the current week while a class is running or still ahead", () => {
+        expect(landingWeek(events, "2026-10-10", 500)).toBe("2026-10-05");
+        expect(landingWeek(events, "2026-10-11", 100)).toBe("2026-10-05");
+    });
+
+    it("skips ahead to the next class week when this one is over or empty", () => {
+        expect(landingWeek(events, "2026-10-11", 700)).toBe("2026-10-19");
+        expect(landingWeek(events, "2026-10-14", 0)).toBe("2026-10-19");
+    });
+
+    it("falls back to the current week when nothing is left", () => {
+        expect(landingWeek(events, "2026-12-01", 0)).toBe("2026-11-30");
+        expect(landingWeek([], "2026-10-14", 0)).toBe("2026-10-12");
     });
 });

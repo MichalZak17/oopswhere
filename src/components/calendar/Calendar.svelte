@@ -12,6 +12,7 @@
         headingSpan,
         indexByDate,
         isWeekendProgramme,
+        landingWeek,
         visibleDays,
         weekDates,
         type ClassEvent,
@@ -47,7 +48,10 @@
 
     // ---- navigation state -----------------------------------------------------
     let anchorOverride = $state<LocalDate | null>(null);
-    const anchor = $derived(anchorOverride ?? startOfWeek(initialWeek ?? payload.today));
+    const defaultWeek = $derived(landingWeek(expand(payload), payload.today, payload.nowMin));
+    const anchor = $derived(
+        anchorOverride ?? (initialWeek ? startOfWeek(initialWeek) : defaultWeek),
+    );
     let showAll = $state(false);
     let selected = $state.raw<ClassEvent | null>(null);
     let intro = $state(true);
@@ -67,6 +71,10 @@
     const thisWeek = $derived(startOfWeek(today));
     const upcoming = $derived(currentAndNext(events, today, nowMin));
     const nextFrom = $derived(firstOnOrAfter(events, anchor));
+
+    const soon = $derived(
+        upcoming.next && upcoming.next.date <= addDays(today, 1) ? upcoming.next : null,
+    );
     const canToggleDays = $derived(activeDays.length < 7);
 
     const eyebrow = $derived(
@@ -170,7 +178,7 @@
     // Keep ?week= in the address bar so reloads and shared links land on the same week.
     $effect(() => {
         const url = new URL(location.href);
-        if (anchor === thisWeek) url.searchParams.delete("week");
+        if (anchor === defaultWeek) url.searchParams.delete("week");
         else url.searchParams.set("week", anchor);
         if (url.href !== location.href) history.replaceState(history.state, "", url);
     });
@@ -266,7 +274,7 @@
 
     <NextUp
         current={upcoming.current}
-        next={upcoming.next}
+        next={soon}
         {today}
         {nowMin}
         {lang}
@@ -430,11 +438,11 @@
         display: grid;
         justify-items: start;
         gap: 12px;
-        padding: 72px 0 96px;
+        padding: 40px 0 56px;
         border-top: 1px solid var(--rule);
     }
     .empty-title {
-        font-size: clamp(2.4rem, 1.6rem + 3vw, 4rem);
+        font-size: clamp(1.8rem, 1.3rem + 1.8vw, 2.6rem);
         font-weight: 650;
         letter-spacing: -0.045em;
         line-height: 1;
@@ -470,7 +478,7 @@
             padding: 0 12px;
         }
         .empty {
-            padding: 48px 0 64px;
+            padding: 32px 0 40px;
         }
     }
 </style>

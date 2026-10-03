@@ -48,9 +48,12 @@
     animation-timing-function: var(--ease-out);
 }
 
-/* Default page cross-fade stays subtle. */
+::view-transition-old(*),
+::view-transition-new(*) {
+    mix-blend-mode: normal;
+}
 ::view-transition-old(root) {
-    animation: var(--dur-1) var(--ease-in) both vt-fade-out;
+    animation: none;
 }
 ::view-transition-new(root) {
     animation: var(--dur-2) var(--ease-out) both vt-fade-in;

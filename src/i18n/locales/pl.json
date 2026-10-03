@@ -187,50 +187,50 @@
         }
     },
     "nav": {
-        "openSource": "Kod źródłowy (oceń mnie)",
-        "privacy": "Prywatność (tak, jest)",
+        "openSource": "Kod źródłowy",
+        "privacy": "Prywatność",
         "language": "English",
-        "theme": "Wygląd",
-        "themeAuto": "Jak w systemie",
-        "themeLight": "Spalacz oczu",
-        "themeDark": "Słuszny wybór"
+        "theme": "Motyw",
+        "themeAuto": "Systemowy",
+        "themeLight": "Jasny",
+        "themeDark": "Ciemny"
     },
     "cal": {
-        "prevWeek": "Poprzedni odcinek",
-        "nextWeek": "Problemy na przyszły tydzień",
-        "today": "Dziś, niestety",
-        "week": "Tydzień cierpienia",
+        "prevWeek": "Poprzedni tydzień",
+        "nextWeek": "Następny tydzień",
+        "today": "Dziś",
+        "week": "Tydzień",
         "session": "Zjazd",
         "of": "z",
-        "allDays": "Pokaż cały bałagan",
-        "classDays": "Ukryj wolne dni",
-        "emptyTitle": "Nic. Podejrzanie spokojnie.",
-        "emptyNext": "Następny akademicki jumpscare:",
+        "allDays": "Cały tydzień",
+        "classDays": "Dni z zajęciami",
+        "emptyTitle": "Brak zajęć",
+        "emptyNext": "Następne zajęcia:",
         "emptyNone": "W tym semestrze nie ma już zajęć.",
-        "jump": "Skocz",
-        "now": "Właśnie teraz",
-        "next": "Następny problem",
+        "jump": "Przejdź",
+        "now": "Teraz",
+        "next": "Następne",
         "in": "za",
         "until": "do",
-        "endsIn": "wolność za",
+        "endsIn": "koniec za",
         "minutes": "min",
         "hours": "godz.",
-        "tomorrow": "problem na jutro",
+        "tomorrow": "jutro",
         "group": "gr.",
         "room": "sala",
-        "lecturers": "Winni",
-        "place": "Dokąd idę",
-        "time": "Kiedy cierpię",
-        "meetings": "Przyszłe obowiązki",
+        "lecturers": "Prowadzący",
+        "place": "Miejsce",
+        "time": "Termin",
+        "meetings": "Kolejne zajęcia",
         "showAllMeetings": "Pokaż wszystkie",
         "noMoreMeetings": "To ostatnie spotkanie w tym semestrze.",
-        "openUsos": "Otwórz miejsce zbrodni",
-        "close": "Uciekaj",
-        "clash": "konflikt",
-        "hello": "siema",
-        "refresh": "Odśwież moją akademicką fabułę",
-        "refreshHint": "Użyj, gdy USOS zmieni Ci wątek",
-        "logout": "Wyciągnij mnie stąd",
+        "openUsos": "Otwórz w USOSweb",
+        "close": "Zamknij",
+        "clash": "kolizja",
+        "hello": "cześć",
+        "refresh": "Odśwież grupy",
+        "refreshHint": "Użyj, gdy w USOS zmienią się Twoje grupy",
+        "logout": "Wyloguj",
         "groups": {
             "one": "grupa",
             "few": "grupy",
@@ -239,17 +239,17 @@
         },
         "asOf": "stan na",
         "language": "Język",
-        "account": "Twoja tożsamość akademicka",
-        "menu": "Różne",
+        "account": "Konto",
+        "menu": "Menu",
         "demo": "Demo zrobione z kilku publicznych grup ZUT.",
-        "demoCta": "Zaloguj się i zmierz się ze swoim",
+        "demoCta": "Zaloguj się i zobacz swój plan",
         "stale": "USOS jest offline. Pokazuję ostatni pobrany plan.",
-        "missing": "Część planu się nie załadowała. Bardzo w stylu.",
-        "retry": "Szturchnij jeszcze raz",
+        "missing": "Część planu się nie załadowała.",
+        "retry": "Spróbuj ponownie",
         "gone": "Niektóre grupy zniknęły z USOS. Spróbuj je odświeżyć.",
         "newTerm": "Nowy semestr. Odśwież grupy, żeby go zobaczyć.",
-        "scope": "Pokazuje tylko zajęcia Twoich grup. Egzaminy i odwołania są nadal w USOSweb.",
-        "loading": "Negocjuję z USOS…"
+        "scope": "Tylko zajęcia Twoich grup. Egzaminy i odwołania: USOSweb.",
+        "loading": "Ładowanie planu…"
     },
     "types": {
         "WK": "Wykład",
@@ -268,14 +268,14 @@
         "OK": "Ocena końcowa"
     },
     "privacy": {
-        "title": "Prywatność, ale czytelnie",
-        "updated": "Ostatnia aktualizacja: 2 października 2026",
+        "title": "Prywatność",
+        "updated": "Ostatnia aktualizacja: 3 października 2026",
         "intro": [
             "Oopswhere nie ma bazy danych i nigdy nie widzi Twojego hasła. Logujesz się na stronie swojej uczelni (USOS), a ja dostaję jednorazowy dostęp, którego używam tylko do pobrania listy Twoich grup zajęciowych i Twojego imienia. Zaraz potem unieważniam ten dostęp.",
             "Oopswhere to niezależny projekt open source. Nie jest prowadzony przez ZUT ani z nim związany."
         ],
         "data": {
-            "title": "Twoje dane, nie moja kolekcja",
+            "title": "Twoje dane",
             "body": [
                 "Lista grup i imię są zapisywane w zaszyfrowanym ciasteczku w Twojej przeglądarce. Serwer niczego o Tobie nie przechowuje. Wylogowanie usuwa ciasteczko.",
                 "Plany grup zajęciowych, nazwiska prowadzących i sale są publicznymi danymi USOS. Pobieram je z USOS anonimowo i przechowuję przez krótki czas w pamięci podręcznej, żeby nie obciążać serwerów uczelni.",
@@ -283,7 +283,7 @@
             ]
         },
         "analytics": {
-            "title": "Analityka, ale za zgodą",
+            "title": "Analityka",
             "body": [
                 "Mój serwer liczy wyniki logowania (udane, anulowane, błąd) i szybkość ładowania planu. Te liczby trafiają do PostHog (serwery w UE) bez Twojego adresu IP i bez niczego, co pozwalałoby Cię rozpoznać.",
                 "Tylko jeśli się zgodzisz, aplikacja mierzy też w przeglądarce: wyświetlenia stron, działania w kalendarzu, np. zmianę tygodnia, błędy aplikacji i szybkość stron, a także rodzaj przeglądarki i urządzenia oraz przybliżoną lokalizację (kraj, miasto) ustaloną z adresu IP. To również trafia do PostHog. PostHog nie zapisuje ciasteczek ani niczego w pamięci przeglądarki, nie nagrywa ekranu i nigdy nie dostaje Twojego imienia, grup ani planu. Twoją odpowiedź pamiętam przez 6 miesięcy w ciasteczku ow_consent; możesz ją zmienić poniżej.",
@@ -291,7 +291,7 @@
             ]
         },
         "cookies": {
-            "title": "Ciasteczka, te nudne przeglądarkowe",
+            "title": "Ciasteczka",
             "intro": "Używam tylko ciasteczek potrzebnych do działania aplikacji i do zapamiętania Twoich wyborów. Żadne z nich nie służy do reklam ani śledzenia.",
             "items": [
                 [
@@ -308,7 +308,7 @@
             ]
         },
         "recipients": {
-            "title": "Kto jeszcze widzi Twoje dane",
+            "title": "Odbiorcy danych",
             "body": [
                 "Cloudflare (Cloudflare, Inc.) przekazuje cały ruch do mojego serwera i chroni go przed atakami, więc widzi Twój adres IP i przesyłane dane. Działa na całym świecie, także poza UE; przekazywanie danych opiera się na standardowych klauzulach umownych i programie EU–US Data Privacy Framework.",
                 "Firma hostingowa, u której działa mój serwer, ma do niego dostęp techniczny.",
@@ -317,7 +317,7 @@
             ]
         },
         "retention": {
-            "title": "Jak długo to zostaje",
+            "title": "Okres przechowywania",
             "items": [
                 "Ciasteczka: jak wyżej. Wylogowanie od razu usuwa ciasteczko z grupami i imieniem.",
                 "Publiczne plany grup i nazwiska prowadzących: w pamięci serwera najwyżej 14 dni, nigdy na dysku; znikają przy każdym restarcie.",
@@ -326,7 +326,7 @@
             ]
         },
         "rights": {
-            "title": "Twoje supermoce z RODO",
+            "title": "Twoje prawa (RODO)",
             "body": [
                 "Masz prawo dostępu do swoich danych, ich sprostowania, usunięcia, ograniczenia przetwarzania i przeniesienia, prawo sprzeciwu wobec przetwarzania opartego na prawnie uzasadnionym interesie oraz prawo wycofania zgody na analitykę.",
                 "Większość z nich możesz zrealizować samodzielnie: wszystko, co o Tobie wiem, jest w ciasteczku w Twojej przeglądarce, a wylogowanie je usuwa. Analitykę wyłączysz wyżej. Danych analitycznych nie potrafię przypisać do konkretnej osoby, więc nie mogę ich wyszukać ani usunąć na Twoją prośbę.",
@@ -335,21 +335,21 @@
             ]
         },
         "outro": "Żadnych reklam, tajemniczych trackerów ani zewnętrznych czcionek. Kod jest otwarty, więc możesz sprawdzić to sam.",
-        "back": "Wróć do moich problemów"
+        "back": "Wróć do planu"
     },
     "consent": {
         "text": "Czy mogę zbierać podstawowe anonimowe statystyki użycia (wyświetlenia, kliknięcia, błędy, szybkość)? Zajmuje się tym PostHog na serwerach w UE, bez ciasteczek, i nigdy nie dostaje Twojego imienia, grup ani planu.",
         "more": "Szczegóły",
-        "yes": "No dobra",
-        "no": "Absolutnie nie",
-        "on": "Analityka w przeglądarce włączona. Wykresy są zadowolone.",
-        "off": "Analityka w przeglądarce wyłączona. Statystycznie dla mnie nie istniejesz.",
-        "turnOn": "Nakarm wykresy",
-        "turnOff": "Zagłódź wykresy"
+        "yes": "Zgadzam się",
+        "no": "Nie zgadzam się",
+        "on": "Analityka w przeglądarce jest włączona.",
+        "off": "Analityka w przeglądarce jest wyłączona.",
+        "turnOn": "Włącz",
+        "turnOff": "Wyłącz"
     },
     "notFound": {
-        "title": "Zła sala.",
-        "body": "Ta strona nie istnieje. Zupełnie jak sala, która według Ciebie miała być na trzecim piętrze.",
-        "back": "Wróć do cywilizacji"
+        "title": "Nie znaleziono strony.",
+        "body": "Ta strona nie istnieje.",
+        "back": "Wróć na stronę główną"
     }
 }

@@ -12,7 +12,7 @@ import { loadTimetable } from "@/lib/timetable/load";
 import { trackTimetable } from "@/lib/analytics/server";
 import { needsRefresh } from "@/lib/profile";
 import { isLocalDate, startOfWeek } from "@/lib/time/local-date";
-import { initialHeadingSpan } from "@/components/calendar/model";
+import { expand, initialHeadingSpan, landingWeek } from "@/components/calendar/model";
 import { weekHeading } from "@/components/calendar/format";
 
 interface Props {
@@ -32,10 +32,10 @@ trackTimetable("page", payload, groups.length, startedAt, demo);
 const week = Astro.url.searchParams.get("week");
 const initialWeek = isLocalDate(week) ? week : null;
 const path = demo ? "/demo" : "/";
-const title = weekHeading(
-    lang,
-    initialHeadingSpan(payload, startOfWeek(initialWeek ?? payload.today)),
-);
+const anchor = initialWeek
+    ? startOfWeek(initialWeek)
+    : landingWeek(expand(payload), payload.today, payload.nowMin);
+const title = weekHeading(lang, initialHeadingSpan(payload, anchor));
 const showNewTerm = profile ? needsRefresh(profile, payload.today) : false;
 ---
 

@@ -37,7 +37,7 @@ test("week navigation via buttons, keys and the address bar", async ({ page }) =
 
 test("an empty week offers a jump to the next classes", async ({ page }) => {
     await page.goto("/demo?week=2026-09-28");
-    await expect(page.getByText("Wolne.")).toBeVisible();
+    await expect(page.getByText("Brak zajęć")).toBeVisible();
     await page.getByRole("button", { name: /Przejdź/ }).click();
     await expect(page).toHaveURL(/week=2026-10-05/);
 });
