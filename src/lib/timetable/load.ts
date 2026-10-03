@@ -48,7 +48,9 @@ async function fetchGroup(
 }
 
 type GroupOutcome =
-    { status: "ok"; data: GroupData; stale: boolean } | { status: "gone" } | { status: "missing" };
+    | { status: "ok"; data: GroupData; stale: boolean; storedAt: number }
+    | { status: "gone" }
+    | { status: "missing" };
 
 async function loadGroup(
     inst: ResolvedInstallation,
@@ -56,12 +58,12 @@ async function loadGroup(
     groupNumber: number,
 ): Promise<GroupOutcome> {
     try {
-        const { value, stale } = await swr(
+        const { value, stale, storedAt } = await swr(
             `tt:v1:${inst.id}:${groupKey(unitId, groupNumber)}`,
             () => fetchGroup(inst, unitId, groupNumber),
             inst.tt,
         );
-        return { status: "ok", data: value, stale };
+        return { status: "ok", data: value, stale, storedAt };
     } catch (err) {
         return isPermanent(err) ? { status: "gone" } : { status: "missing" };
     }
@@ -152,6 +154,7 @@ export async function loadTimetable(
         inst: inst.id,
         timeZone: inst.timeZone,
         generatedAt: new Date().toISOString(),
+        updatedAt: null,
         ...zonedNow(inst.timeZone),
         groups: {},
         people: {},
@@ -162,8 +165,10 @@ export async function loadTimetable(
         gone: [],
     };
 
+    let oldest = Infinity;
     for (const [key, outcome] of outcomes) {
         if (outcome.status === "ok") {
+            oldest = Math.min(oldest, outcome.storedAt);
             payload.groups[key] = outcome.data.info;
             Object.assign(payload.buildings, outcome.data.buildings);
             payload.meetings.push(...outcome.data.meetings);
@@ -174,6 +179,7 @@ export async function loadTimetable(
             payload.missing.push(key as GroupKey);
         }
     }
+    if (Number.isFinite(oldest)) payload.updatedAt = new Date(oldest).toISOString();
     payload.meetings.sort((a, b) => (a[1] < b[1] ? -1 : a[1] > b[1] ? 1 : a[2] - b[2]));
 
     const ids = [...new Set(payload.meetings.flatMap((m) => m[6]))].map(String);

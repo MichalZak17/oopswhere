@@ -49,6 +49,30 @@ export function duration(lang: Lang, minutes: number): string {
     return `${m} min`;
 }
 
+const rtf = new Map<Lang, Intl.RelativeTimeFormat>();
+
+/** "przed chwilą", "12 min temu", "3 godz. temu", "2 dni temu" — for an age in ms. */
+export function ago(lang: Lang, justNow: string, ms: number): string {
+    const min = Math.floor(ms / 60_000);
+    if (min < 1) return justNow;
+    let f = rtf.get(lang);
+    if (!f) {
+        f = new Intl.RelativeTimeFormat(locale(lang), { style: "short" });
+        rtf.set(lang, f);
+    }
+    if (min < 60) return f.format(-min, "minute");
+    if (min < 24 * 60) return f.format(-Math.floor(min / 60), "hour");
+    return f.format(-Math.floor(min / (24 * 60)), "day");
+}
+
+/** "3 paź 2026, 14:05" in the university's timezone, for an instant. */
+export const instant = (lang: Lang, iso: string, timeZone: string) =>
+    new Intl.DateTimeFormat(locale(lang), {
+        dateStyle: "medium",
+        timeStyle: "short",
+        timeZone,
+    }).format(new Date(iso));
+
 export function capitalize(s: string): string {
     return s.charAt(0).toLocaleUpperCase() + s.slice(1);
 }

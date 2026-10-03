@@ -6,7 +6,7 @@
  *   age < maxStale     → refetch; if upstream fails, the cached value (stale: true)
  *   otherwise          → refetch or fail
  */
-import type { CacheStore } from "./store";
+import type { CacheEntry, CacheStore } from "./store";
 
 export interface SwrPolicy {
     freshSec: number;
@@ -18,6 +18,8 @@ export interface SwrResult<T> {
     value: T;
     /** True when served from an old entry because the refresh failed. */
     stale: boolean;
+    /** Unix ms when the value was fetched from upstream. */
+    storedAt: number;
 }
 
 export interface SwrDeps {
@@ -32,13 +34,17 @@ export function createSwr(deps: SwrDeps) {
     const now = deps.now ?? Date.now;
     const inflight = new Map<string, Promise<unknown>>();
 
-    function refresh<T>(key: string, fetcher: () => Promise<T>, policy: SwrPolicy): Promise<T> {
+    function refresh<T>(
+        key: string,
+        fetcher: () => Promise<T>,
+        policy: SwrPolicy,
+    ): Promise<CacheEntry<T>> {
         const running = inflight.get(key);
-        if (running) return running as Promise<T>;
+        if (running) return running as Promise<CacheEntry<T>>;
         const p = (async () => {
-            const value = await fetcher();
-            await deps.store.set(key, { value, storedAt: now() }, policy.maxStaleSec);
-            return value;
+            const entry = { value: await fetcher(), storedAt: now() };
+            await deps.store.set(key, entry, policy.maxStaleSec);
+            return entry;
         })().finally(() => inflight.delete(key));
         inflight.set(key, p);
         return p;
@@ -52,17 +58,17 @@ export function createSwr(deps: SwrDeps) {
         const entry = await deps.store.get<T>(key).catch(() => null);
         const ageSec = entry ? (now() - entry.storedAt) / 1000 : Infinity;
 
-        if (entry && ageSec < policy.freshSec) return { value: entry.value, stale: false };
+        if (entry && ageSec < policy.freshSec) return { ...entry, stale: false };
 
         if (entry && ageSec < policy.swrSec) {
             deps.waitUntil(refresh(key, fetcher, policy).catch(() => {}));
-            return { value: entry.value, stale: false };
+            return { ...entry, stale: false };
         }
 
         try {
-            return { value: await refresh(key, fetcher, policy), stale: false };
+            return { ...(await refresh(key, fetcher, policy)), stale: false };
         } catch (err) {
-            if (entry && !deps.isPermanent?.(err)) return { value: entry.value, stale: true };
+            if (entry && !deps.isPermanent?.(err)) return { ...entry, stale: true };
             throw err;
         }
     };

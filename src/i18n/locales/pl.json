@@ -249,7 +249,9 @@
         "gone": "Niektóre grupy zniknęły z USOS. Spróbuj je odświeżyć.",
         "newTerm": "Nowy semestr. Odśwież grupy, żeby go zobaczyć.",
         "scope": "Tylko zajęcia Twoich grup. Egzaminy i odwołania: USOSweb.",
-        "loading": "Ładowanie planu…"
+        "loading": "Ładowanie planu…",
+        "updated": "Zaktualizowano",
+        "justNow": "przed chwilą"
     },
     "types": {
         "WK": "Wykład",

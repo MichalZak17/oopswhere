@@ -52,6 +52,8 @@ export interface TimetablePayload {
     inst: string;
     timeZone: string;
     generatedAt: string;
+    /** When the oldest group was fetched from USOS (ISO); null when no group loaded. */
+    updatedAt: string | null;
     /** Server wall clock — the first render uses it so hydration matches. */
     today: LocalDate;
     nowMin: number;

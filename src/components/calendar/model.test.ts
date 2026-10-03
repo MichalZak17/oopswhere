@@ -19,6 +19,7 @@ const payload = (): TimetablePayload => ({
     inst: "zut",
     timeZone: "Europe/Warsaw",
     generatedAt: "",
+    updatedAt: null,
     today: "2026-10-10",
     nowMin: 500,
     groups: {},

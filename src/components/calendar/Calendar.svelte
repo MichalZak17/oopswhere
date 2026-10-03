@@ -17,7 +17,7 @@
         weekDates,
         type ClassEvent,
     } from "./model";
-    import { fullDate, weekHeading } from "./format";
+    import { ago, fullDate, instant, weekHeading } from "./format";
     import { canAnimate, morph, slide } from "./transitions";
     import { track } from "@/lib/analytics/client";
     import type { CalDict, Types } from "./display";
@@ -43,6 +43,8 @@
     let live = $state.raw<{ today: LocalDate; nowMin: number } | null>(null);
     const today = $derived(live?.today ?? data.today);
     const nowMin = $derived(live?.nowMin ?? data.nowMin);
+    /** Device clock; until hydration the server's, so the first render matches. */
+    let clientNow = $state<number | null>(null);
     let loadState = $state<"idle" | "loading" | "failed">("idle");
     let lastFetch = 0;
 
@@ -83,6 +85,14 @@
             : `${dict.week} ${isoWeek(anchor)}`,
     );
     const title = $derived(weekHeading(lang, headingSpan(dates, days, weekCount, showAll)));
+    const updatedAgo = $derived(
+        data.updatedAt &&
+            ago(
+                lang,
+                dict.justNow,
+                (clientNow ?? Date.parse(data.generatedAt)) - Date.parse(data.updatedAt),
+            ),
+    );
 
     // ---- actions ---------------------------------------------------------------
     function setWeek(target: LocalDate) {
@@ -196,7 +206,10 @@
             // ignore
         }
         lastFetch = Date.now();
-        const tickClock = () => (live = zonedNow(data.timeZone));
+        const tickClock = () => {
+            live = zonedNow(data.timeZone);
+            clientNow = Date.now();
+        };
         tickClock();
         const clock = setInterval(tickClock, 30_000);
         const onVisible = () => {
@@ -223,45 +236,56 @@
             <p class="eyebrow num">{eyebrow}</p>
             <h1 class="range">{title}</h1>
         </div>
-        <nav class="nav" aria-label={dict.week}>
-            <button
-                class="icon"
-                onclick={() => go(-1)}
-                aria-label={dict.prevWeek}
-                title={dict.prevWeek}
-            >
-                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"
-                    ><path
-                        d="M14.5 6l-6 6 6 6"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.6"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    /></svg
+        <div class="side">
+            {#if data.updatedAt && updatedAgo}
+                <p class="updated">
+                    {dict.updated}
+                    <time
+                        datetime={data.updatedAt}
+                        title={instant(lang, data.updatedAt, data.timeZone)}>{updatedAgo}</time
+                    >
+                </p>
+            {/if}
+            <nav class="nav" aria-label={dict.week}>
+                <button
+                    class="icon"
+                    onclick={() => go(-1)}
+                    aria-label={dict.prevWeek}
+                    title={dict.prevWeek}
                 >
-            </button>
-            <button class="today" onclick={goToday} disabled={anchor === thisWeek}
-                >{dict.today}</button
-            >
-            <button
-                class="icon"
-                onclick={() => go(1)}
-                aria-label={dict.nextWeek}
-                title={dict.nextWeek}
-            >
-                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"
-                    ><path
-                        d="M9.5 6l6 6-6 6"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.6"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    /></svg
+                    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"
+                        ><path
+                            d="M14.5 6l-6 6 6 6"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.6"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        /></svg
+                    >
+                </button>
+                <button class="today" onclick={goToday} disabled={anchor === thisWeek}
+                    >{dict.today}</button
                 >
-            </button>
-        </nav>
+                <button
+                    class="icon"
+                    onclick={() => go(1)}
+                    aria-label={dict.nextWeek}
+                    title={dict.nextWeek}
+                >
+                    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"
+                        ><path
+                            d="M9.5 6l6 6-6 6"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.6"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        /></svg
+                    >
+                </button>
+            </nav>
+        </div>
     </header>
 
     {#if data.stale.length > 0}
@@ -385,6 +409,18 @@
         letter-spacing: -0.04em;
     }
 
+    .side {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 10px;
+        flex-shrink: 0;
+    }
+    .updated {
+        font-size: 0.8rem;
+        color: var(--ink-3);
+        white-space: nowrap;
+    }
     .nav {
         display: flex;
         align-items: center;

@@ -252,7 +252,9 @@
         "gone": "Some of your groups are gone from USOS. Try refreshing them.",
         "newTerm": "New semester. Refresh your groups to see it.",
         "scope": "Your groups only. Exams and cancellations: USOSweb.",
-        "loading": "Loading timetable…"
+        "loading": "Loading timetable…",
+        "updated": "Updated",
+        "justNow": "just now"
     },
     "types": {
         "WK": "Lecture",

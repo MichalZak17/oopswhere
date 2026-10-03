@@ -23,8 +23,9 @@ describe("swr", () => {
     it("serves fresh values without refetching", async () => {
         const { swr } = setup();
         const fetcher = vi.fn().mockResolvedValue("v1");
-        expect(await swr("k", fetcher, policy)).toEqual({ value: "v1", stale: false });
-        expect(await swr("k", fetcher, policy)).toEqual({ value: "v1", stale: false });
+        const first = { value: "v1", stale: false, storedAt: 1_000_000 };
+        expect(await swr("k", fetcher, policy)).toEqual(first);
+        expect(await swr("k", fetcher, policy)).toEqual(first);
         expect(fetcher).toHaveBeenCalledTimes(1);
     });
 
@@ -33,10 +34,18 @@ describe("swr", () => {
         await swr("k", async () => "v1", policy);
         advance(120);
         const fetcher = vi.fn().mockResolvedValue("v2");
-        expect(await swr("k", fetcher, policy)).toEqual({ value: "v1", stale: false });
+        expect(await swr("k", fetcher, policy)).toEqual({
+            value: "v1",
+            stale: false,
+            storedAt: 1_000_000,
+        });
         await Promise.all(background);
         expect(fetcher).toHaveBeenCalledOnce();
-        expect(await swr("k", fetcher, policy)).toEqual({ value: "v2", stale: false });
+        expect(await swr("k", fetcher, policy)).toEqual({
+            value: "v2",
+            stale: false,
+            storedAt: 1_120_000,
+        });
     });
 
     it("falls back to stale data when upstream fails, but not for permanent errors", async () => {
@@ -46,6 +55,7 @@ describe("swr", () => {
         expect(await swr("k", () => Promise.reject(new Error("down")), policy)).toEqual({
             value: "v1",
             stale: true,
+            storedAt: 1_000_000,
         });
         await expect(swr("k", () => Promise.reject(new Error("gone")), policy)).rejects.toThrow(
             "gone",
