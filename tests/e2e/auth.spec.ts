@@ -8,12 +8,14 @@ test.beforeEach(async ({ page }) => {
 
 test("landing explains the privacy model and offers sign-in", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("Co potem?");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("Co dalej?");
     await expect(
-        page.getByText("Hasło wpisujesz tylko na stronie uczelni. My nigdy go nie widzimy."),
+        page.getByText(
+            "Hasło wpisujesz tylko na stronie uczelni. Nigdy go nie widzę ani nie zapisuję.",
+        ),
     ).toBeVisible();
     await expect(
-        page.locator(".hero-actions").getByRole("link", { name: "Zobacz przykładowy plan" }),
+        page.locator(".hero-actions").getByRole("link", { name: "Zobacz plan demo" }),
     ).toBeVisible();
     await page.getByRole("button", { name: "WT 13" }).click();
     await expect(page.getByText("Wtorek, 13 października")).toBeVisible();
@@ -58,7 +60,7 @@ test("groups from finished terms are ignored", async ({ page }) => {
 test("cancelling at the university login shows a calm message", async ({ page }) => {
     await mock(page, { deny: true });
     await signIn(page);
-    await expect(page.getByRole("alert")).toContainText("Logowanie przerwane");
+    await expect(page.getByRole("alert")).toContainText("Logowanie anulowane");
 });
 
 test("a forged callback is rejected", async ({ page }) => {
@@ -94,6 +96,6 @@ test("sign out clears the cookie", async ({ page, context }) => {
     await signIn(page);
     await page.getByRole("button", { name: /Ola/ }).click();
     await page.getByRole("button", { name: "Wyloguj" }).click();
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("Co potem?");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("Co dalej?");
     expect((await context.cookies()).some((c) => c.name.endsWith("ow_profile"))).toBe(false);
 });

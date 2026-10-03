@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
-import { mock } from "./helpers";
+import { expectWeekInUrl, mock } from "./helpers";
 
 test.beforeEach(async ({ page }) => {
     await mock(page, { deny: false, ttDown: false });
@@ -31,7 +31,7 @@ test("week navigation via buttons, keys and the address bar", async ({ page }) =
     await page.getByRole("button", { name: "Następny tydzień" }).click();
     await expect(page).toHaveURL(/week=2026-10-12/);
     await page.keyboard.press("ArrowLeft");
-    await expect(page).toHaveURL(/week=2026-10-05/);
+    await expectWeekInUrl(page, "2026-10-05");
     await expect(page.locator(".range")).toHaveText("10–11 października");
 });
 
@@ -39,7 +39,8 @@ test("an empty week offers a jump to the next classes", async ({ page }) => {
     await page.goto("/demo?week=2026-09-28");
     await expect(page.getByText("Brak zajęć")).toBeVisible();
     await page.getByRole("button", { name: /Przejdź/ }).click();
-    await expect(page).toHaveURL(/week=2026-10-05/);
+    await expectWeekInUrl(page, "2026-10-05");
+    await expect(page.locator(".range")).toHaveText("10–11 października");
 });
 
 test("class details: open, read, close with Escape, focus returns", async ({ page }) => {
