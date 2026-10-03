@@ -75,12 +75,26 @@
         e.preventDefault();
         onrequestclose();
     }
+    // A drag from inside the panel that ends on the backdrop (selecting text) fires its
+    // click on the dialog too; only close when the press also started on the backdrop.
+    let pressedBackdrop = false;
+    function onpointerdown(e: PointerEvent) {
+        pressedBackdrop = e.target === dialog;
+    }
     function onclick(e: MouseEvent) {
-        if (e.target === dialog) onrequestclose();
+        if (pressedBackdrop && e.target === dialog) onrequestclose();
+        pressedBackdrop = false;
     }
 </script>
 
-<dialog bind:this={dialog} class="sheet" {oncancel} {onclick} aria-labelledby="sheet-title">
+<dialog
+    bind:this={dialog}
+    class="sheet"
+    {oncancel}
+    {onpointerdown}
+    {onclick}
+    aria-labelledby="sheet-title"
+>
     {#if event && info}
         <div class="panel" bind:this={panel} data-type={info.type}>
             <header class="head">

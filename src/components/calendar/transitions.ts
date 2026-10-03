@@ -45,7 +45,23 @@ export async function slide(dir: "next" | "prev", update: Update): Promise<void>
     }
 }
 
-/** Shared-element morph between two elements (card ↔ detail sheet). */
+/**
+ * Whether the element is really on screen: in the viewport and not scrolled away inside
+ * the mobile day pager. A named element escapes its scroll container's clipping during a
+ * transition, so morphing to a card on another day would fly off the edge of the screen.
+ */
+function onScreen(el: HTMLElement): boolean {
+    const r = el.getBoundingClientRect();
+    const clip = el.closest("[data-pager]")?.getBoundingClientRect();
+    const left = clip?.left ?? 0;
+    const right = clip?.right ?? innerWidth;
+    return r.width > 0 && r.right > left && r.left < right && r.bottom > 0 && r.top < innerHeight;
+}
+
+/**
+ * Shared-element morph between two elements (card ↔ detail sheet). If the target isn't
+ * on screen after the update, the source just fades out where it is.
+ */
 export async function morph(
     from: Element | null | undefined,
     to: () => Element | null | undefined,
@@ -63,7 +79,7 @@ export async function morph(
                 from.style.viewTransitionName = "";
                 await update();
                 const el = to();
-                if (el instanceof HTMLElement) {
+                if (el instanceof HTMLElement && onScreen(el)) {
                     target = el;
                     el.style.viewTransitionName = "ev-morph";
                 }

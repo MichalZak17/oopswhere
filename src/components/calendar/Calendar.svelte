@@ -97,18 +97,19 @@
     const go = (delta: number) => setWeek(addDays(anchor, 7 * delta));
     const goToday = () => setWeek(thisWeek);
 
+    /** The card or "Next up" row the open sheet came from; the sheet closes back into it. */
+    let opener: HTMLElement | null = null;
+
     async function openEvent(ev: ClassEvent, el: HTMLElement) {
         track("class_opened");
-        if (startOfWeek(ev.date) !== anchor) {
-            // From "Next up": bring its week into view first, then open.
-            anchorOverride = startOfWeek(ev.date);
-            await tick();
-            el = (document.querySelector(`[data-ev="${CSS.escape(ev.id)}"]`) as HTMLElement) ?? el;
-        }
+        opener = el;
         await morph(
             el,
             () => sheet.panelEl(),
             async () => {
+                // From "Next up": bring its week into view under the sheet.
+                const week = startOfWeek(ev.date);
+                if (week !== anchor) anchorOverride = week;
                 selected = ev;
                 await tick();
                 sheet.show();
@@ -119,16 +120,20 @@
     async function closeEvent() {
         if (!selected) return;
         const id = selected.id;
+        const from = opener?.isConnected ? opener : null;
+        opener = null;
         await morph(
             sheet.panelEl(),
-            () => document.querySelector(`[data-ev="${CSS.escape(id)}"]`),
+            () => from ?? document.querySelector(`[data-ev="${CSS.escape(id)}"]`),
             async () => {
+                // close() returns focus to whatever had it before; help only where the
+                // click didn't focus the opener (Safari), and never scroll to it.
                 sheet.hide();
                 selected = null;
                 await tick();
+                if (document.activeElement === document.body) from?.focus({ preventScroll: true });
             },
         );
-        (document.querySelector(`[data-ev="${CSS.escape(id)}"]`) as HTMLElement | null)?.focus();
     }
 
     function toggleDays() {
@@ -356,8 +361,14 @@
         margin-bottom: 28px;
     }
     .title {
-        view-transition-name: cal-title;
         min-width: 0;
+    }
+    /* Named only during a week slide, so other transitions (the card morph) leave them alone. */
+    :global(html[data-nav-dir]) .title {
+        view-transition-name: cal-title;
+    }
+    :global(html[data-nav-dir]) .empty {
+        view-transition-name: cal-days;
     }
     .eyebrow {
         font-size: 0.8rem;
@@ -434,7 +445,6 @@
     }
 
     .empty {
-        view-transition-name: cal-days;
         display: grid;
         justify-items: start;
         gap: 12px;

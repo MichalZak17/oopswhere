@@ -84,10 +84,22 @@ html[data-nav-dir="prev"]::view-transition-new(cal-days) {
     animation-duration: 380ms;
     animation-timing-function: cubic-bezier(0.25, 1, 0.3, 1);
 }
+/* Both snapshots keep their own size, pinned top-left and cropped to the morphing box:
+   the sheet unfolds from the card instead of being stretched to its shape. */
 ::view-transition-old(ev-morph),
 ::view-transition-new(ev-morph) {
     height: 100%;
+    object-fit: none;
+    object-position: left top;
+    overflow: clip;
+    border-radius: var(--radius-l);
     animation-duration: 260ms;
+}
+/* The crop above cuts the sheet's shadow off its snapshot; while opening (the sheet is
+   already open in the new state) the morphing box carries it, so it doesn't pop in at the end. */
+html:has(.sheet[open])::view-transition-group(ev-morph) {
+    border-radius: var(--radius-l);
+    box-shadow: var(--shadow-sheet);
 }
 
 @media (prefers-reduced-motion: reduce) {

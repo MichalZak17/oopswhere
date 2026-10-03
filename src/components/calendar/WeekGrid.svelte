@@ -110,7 +110,7 @@
         </div>
     </div>
 
-    <div class="days" bind:this={scroller} {onscroll}>
+    <div class="days" data-pager bind:this={scroller} {onscroll}>
         {#each days as day, di (day)}
             {@const placed = placedByDay[di] ?? []}
             {@const isToday = day === today}
@@ -170,6 +170,9 @@
         --gutter-w: 52px;
         display: grid;
         grid-template-columns: var(--gutter-w) minmax(0, 1fr);
+    }
+    /* Named only during a week slide (see Calendar.svelte). */
+    :global(html[data-nav-dir]) .grid {
         view-transition-name: cal-days;
     }
 
