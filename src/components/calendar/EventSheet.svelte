@@ -18,6 +18,7 @@
         weekdayShort,
     } from "./format";
     import { pick } from "@/i18n/pick";
+    import { track } from "@/lib/analytics/client";
 
     interface Props {
         event: ClassEvent | null;
@@ -26,11 +27,22 @@
         lang: Lang;
         dict: CalDict;
         types: Types;
+        /** When set, lecturer names link to `${lecturerBase}${id}`. */
+        lecturerBase?: string | null;
         /** Called when the user asks to close (button, Esc, backdrop). */
         onrequestclose: () => void;
     }
 
-    let { event, events, data, lang, dict, types, onrequestclose }: Props = $props();
+    let {
+        event,
+        events,
+        data,
+        lang,
+        dict,
+        types,
+        lecturerBase = null,
+        onrequestclose,
+    }: Props = $props();
 
     let dialog: HTMLDialogElement;
     let panel = $state<HTMLElement>();
@@ -48,11 +60,16 @@
     const info = $derived(event ? data.groups[event.key] : undefined);
     const building = $derived(event?.buildingId ? data.buildings[event.buildingId] : undefined);
     const lecturers = $derived(
-        (event?.lecturerIds ?? [])
-            .map((id) => data.people[String(id)])
-            .filter(Boolean)
-            .map(([first, last, title]) => [title, first, last].filter(Boolean).join(" ")),
+        (event?.lecturerIds ?? []).flatMap((id) => {
+            const person = data.people[String(id)];
+            if (!person) return [];
+            const [first, last, title] = person;
+            const href = lecturerBase ? `${lecturerBase}${id}` : null;
+            return [{ id, name: [title, first, last].filter(Boolean).join(" "), href }];
+        }),
     );
+    // On a lecturer's own page, their name would only link back to it.
+    const here = $derived(typeof location === "undefined" ? "" : location.pathname);
     const upcoming = $derived(
         event
             ? events.filter(
@@ -141,8 +158,19 @@
                     <div>
                         <dt>{dict.lecturers}</dt>
                         <dd>
-                            {#each lecturers as name (name)}<span class="person">{name}</span
-                                >{/each}
+                            {#each lecturers as person (person.id)}
+                                {#if person.href && person.href !== here}
+                                    <a
+                                        class="person link"
+                                        href={person.href}
+                                        title={dict.lecturerPlan}
+                                        onclick={() => track("lecturer_opened", { from: "sheet" })}
+                                        >{person.name}</a
+                                    >
+                                {:else}
+                                    <span class="person">{person.name}</span>
+                                {/if}
+                            {/each}
                         </dd>
                     </div>
                 {/if}
@@ -317,6 +345,17 @@
     }
     .person {
         display: block;
+        width: fit-content;
+    }
+    .person.link {
+        color: var(--ink);
+        text-decoration: underline;
+        text-decoration-color: var(--rule-strong);
+        text-underline-offset: 0.22em;
+        transition: text-decoration-color var(--dur-1) var(--ease-out);
+    }
+    .person.link:hover {
+        text-decoration-color: currentColor;
     }
 
     .upcoming {

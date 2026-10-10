@@ -33,9 +33,25 @@
         initialWeek?: LocalDate | null;
         /** JSON endpoint with the same payload, for refreshes. */
         apiUrl: string;
+        /** Whose plan this is, when it isn't the visitor's own: prefixes the tab title. */
+        subject?: string | null;
+        /** Overrides the footer note on what the plan covers. */
+        scope?: string | null;
+        /** Lecturer names in the class sheet link to `${lecturerBase}${id}`. */
+        lecturerBase?: string | null;
     }
 
-    let { payload, lang, dict, types, initialWeek = null, apiUrl }: Props = $props();
+    let {
+        payload,
+        lang,
+        dict,
+        types,
+        initialWeek = null,
+        apiUrl,
+        subject = null,
+        scope = null,
+        lecturerBase = null,
+    }: Props = $props();
 
     // ---- data & clock ---------------------------------------------------------
     let fetched = $state.raw<TimetablePayload | null>(null);
@@ -187,7 +203,7 @@
 
     // The tab shows the week on screen; the server renders the first one into <title>.
     $effect(() => {
-        document.title = title;
+        document.title = subject ? `${subject} · ${title}` : title;
     });
 
     // Keep ?week= in the address bar so reloads and shared links land on the same week.
@@ -234,7 +250,8 @@
     <header class="head">
         <div class="title">
             <p class="eyebrow num">{eyebrow}</p>
-            <h1 class="range">{title}</h1>
+            <!-- On someone else's plan the page heading is their name. -->
+            <svelte:element this={subject ? "h2" : "h1"} class="range">{title}</svelte:element>
         </div>
         <div class="side">
             {#if data.updatedAt && updatedAgo}
@@ -352,7 +369,7 @@
     {/if}
 
     <footer class="foot">
-        <p class="scope">{dict.scope}</p>
+        <p class="scope">{scope ?? dict.scope}</p>
         {#if canToggleDays}
             <button class="link" onclick={toggleDays} aria-pressed={showAll}>
                 {showAll ? dict.classDays : dict.allDays}
@@ -369,6 +386,7 @@
     {lang}
     {dict}
     {types}
+    {lecturerBase}
     onrequestclose={closeEvent}
 />
 

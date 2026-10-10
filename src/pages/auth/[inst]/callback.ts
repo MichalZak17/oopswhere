@@ -2,6 +2,7 @@ import type { APIRoute } from "astro";
 import { resolveInstallation } from "@/lib/env";
 import { takeOAuthState, writeProfile } from "@/lib/cookies";
 import { MAX_GROUPS, type Profile } from "@/lib/profile";
+import { TERM_HORIZON_DAYS, relevantTerms, termFinish } from "@/lib/terms";
 import { zonedNow } from "@/lib/time/zoned-now";
 import { addDays } from "@/lib/time/local-date";
 import { loadTimetable } from "@/lib/timetable/load";
@@ -60,14 +61,10 @@ export const GET: APIRoute = async ({ params, url, cookies, redirect }) => {
         const { today } = zonedNow(inst.timeZone);
         let terms: RawTerm[] = participant.terms ?? [];
         if (terms.length === 0)
-            terms = await termsBetween(inst, today, addDays(today, 120)).catch(() => []);
-        // Keep terms that haven't finished and start within the next ~4 months.
-        const horizon = addDays(today, 120);
-        const relevant = terms.filter(
-            (t) =>
-                (t.finish_date ?? t.end_date ?? "9999") >= today &&
-                (t.start_date ?? "0000") <= horizon,
-        );
+            terms = await termsBetween(inst, today, addDays(today, TERM_HORIZON_DAYS)).catch(
+                () => [],
+            );
+        const relevant = relevantTerms(terms, today);
         const termIds = new Set(relevant.map((t) => t.id));
 
         const seen = new Set<string>();
@@ -89,9 +86,7 @@ export const GET: APIRoute = async ({ params, url, cookies, redirect }) => {
             i: inst.id,
             n: (user?.first_name ?? "").trim().slice(0, 40),
             a: Math.floor(Date.now() / 1000),
-            t: relevant.map(
-                (t) => [t.id, t.finish_date ?? t.end_date ?? today] as [string, string],
-            ),
+            t: relevant.map((t) => [t.id, termFinish(t, today)] as [string, string]),
             g: groups.slice(0, MAX_GROUPS),
         };
     } catch (err) {

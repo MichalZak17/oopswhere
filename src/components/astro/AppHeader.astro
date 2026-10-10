@@ -2,6 +2,7 @@
 import Wordmark from "./Wordmark.astro";
 import LoginButton from "./LoginButton.astro";
 import ThemeSwitch from "./ThemeSwitch.astro";
+import LecturerSearch from "@/components/search/LecturerSearch.svelte";
 import { localePath, t, type Lang } from "@/i18n";
 import type { Profile } from "@/lib/profile";
 
@@ -37,6 +38,13 @@ const readOn = profile
     <div class="right">
         {profile ? (
             <>
+                <LecturerSearch
+                    client:load
+                    lang={lang}
+                    dict={dict.search}
+                    base={localePath(lang, "/lecturer/")}
+                    api="/api/v1/lecturers"
+                />
                 <button class="account" popovertarget="account-menu" aria-haspopup="menu">
                     <span class="avatar" aria-hidden="true">
                         {profile.n.charAt(0) || "·"}

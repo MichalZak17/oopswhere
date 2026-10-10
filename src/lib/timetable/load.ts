@@ -19,9 +19,10 @@ import {
 } from "./normalize";
 import type { GroupKey, TimetablePayload } from "./types";
 
-const limiter = new Limiter({ concurrency: 6, failureThreshold: 5, cooldownMs: 60_000 });
-const isPermanent = (err: unknown) => err instanceof UsosError && err.kind === "not_found";
-const isUpstreamFailure = (err: unknown) =>
+/** One limiter and circuit breaker for every USOS call the app makes on a visitor's behalf. */
+export const limiter = new Limiter({ concurrency: 6, failureThreshold: 5, cooldownMs: 60_000 });
+export const isPermanent = (err: unknown) => err instanceof UsosError && err.kind === "not_found";
+export const isUpstreamFailure = (err: unknown) =>
     err instanceof UsosError &&
     (err.kind === "upstream" || err.kind === "timeout" || err.kind === "network");
 

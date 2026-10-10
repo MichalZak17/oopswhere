@@ -251,7 +251,29 @@
         "scope": "Tylko zajęcia Twoich grup. Egzaminy i odwołania: USOSweb.",
         "loading": "Ładowanie planu…",
         "updated": "Zaktualizowano",
-        "justNow": "przed chwilą"
+        "justNow": "przed chwilą",
+        "lecturerPlan": "Plan zajęć prowadzącego"
+    },
+    "search": {
+        "button": "Prowadzący",
+        "open": "Szukaj prowadzącego",
+        "placeholder": "Imię lub nazwisko prowadzącego",
+        "hint": "Wpisz co najmniej 2 litery imienia lub nazwiska.",
+        "loading": "Szukam…",
+        "empty": "Nikt taki tu nie uczy. Sprawdź pisownię.",
+        "error": "USOS nie odpowiada. Spróbuj za chwilę.",
+        "results": "Prowadzący",
+        "close": "Zamknij"
+    },
+    "lecturer": {
+        "kicker": "Plan prowadzącego",
+        "back": "Twój plan",
+        "usos": "Profil w USOSweb",
+        "scope": "Wszystkie grupy, które prowadzi w tym semestrze. Konsultacje, egzaminy i odwołania: USOSweb.",
+        "gateTitle": "Plany prowadzących są dla zalogowanych.",
+        "gateBody": "Zaloguj się przez USOS, a wrócisz prosto tutaj.",
+        "error": "USOS nie odpowiada, a tego planu nie mam jeszcze w pamięci. Spróbuj za chwilę.",
+        "retry": "Spróbuj ponownie"
     },
     "types": {
         "WK": "Wykład",
@@ -271,7 +293,7 @@
     },
     "privacy": {
         "title": "Prywatność",
-        "updated": "Ostatnia aktualizacja: 3 października 2026",
+        "updated": "Ostatnia aktualizacja: 10 października 2026",
         "intro": [
             "Oopswhere nie ma bazy danych i nigdy nie widzi Twojego hasła. Logujesz się na stronie swojej uczelni (USOS), a ja dostaję jednorazowy dostęp, którego używam tylko do pobrania listy Twoich grup zajęciowych i Twojego imienia. Zaraz potem unieważniam ten dostęp.",
             "Oopswhere to niezależny projekt open source. Nie jest prowadzony przez ZUT ani z nim związany."
@@ -281,7 +303,8 @@
             "body": [
                 "Lista grup i imię są zapisywane w zaszyfrowanym ciasteczku w Twojej przeglądarce. Serwer niczego o Tobie nie przechowuje. Wylogowanie usuwa ciasteczko.",
                 "Plany grup zajęciowych, nazwiska prowadzących i sale są publicznymi danymi USOS. Pobieram je z USOS anonimowo i przechowuję przez krótki czas w pamięci podręcznej, żeby nie obciążać serwerów uczelni.",
-                "Podstawa prawna: Twoje grupy i imię przetwarzam, bo bez nich nie pokażę Ci planu, o który prosisz (art. 6 ust. 1 lit. b RODO). Podanie ich jest dobrowolne, ale bez logowania aplikacja nie pokaże Twojego planu. Nazwiska prowadzących pokazuję jako część publicznego planu zajęć, w moim prawnie uzasadnionym interesie (art. 6 ust. 1 lit. f RODO)."
+                "Po zalogowaniu możesz wyszukać prowadzącego i zobaczyć jego plan. Wpisany tekst wysyłam do USOS tylko po to, by znaleźć pasujących pracowników uczelni (USOS nie pokazuje w tym wyszukiwaniu studentów), i nie zapisuję go nigdzie poza krótką pamięcią podręczną, bez związku z Tobą. Plany, tytuły i jednostki prowadzących to publiczne dane USOS.",
+                "Podstawa prawna: Twoje grupy i imię przetwarzam, bo bez nich nie pokażę Ci planu, o który prosisz (art. 6 ust. 1 lit. b RODO). Podanie ich jest dobrowolne, ale bez logowania aplikacja nie pokaże Twojego planu. Nazwiska, tytuły, jednostki i plany prowadzących pokazuję jako publiczne dane o zajęciach, w moim prawnie uzasadnionym interesie (art. 6 ust. 1 lit. f RODO)."
             ]
         },
         "analytics": {
@@ -322,7 +345,7 @@
             "title": "Okres przechowywania",
             "items": [
                 "Ciasteczka: jak wyżej. Wylogowanie od razu usuwa ciasteczko z grupami i imieniem.",
-                "Publiczne plany grup i nazwiska prowadzących: w pamięci serwera najwyżej 14 dni, nigdy na dysku; znikają przy każdym restarcie.",
+                "Publiczne plany grup i dane prowadzących: w pamięci serwera najwyżej 14 dni, a wyszukiwane hasła najwyżej 2 dni; nigdy na dysku, znikają przy każdym restarcie.",
                 "Dane analityczne w PostHog: co najmniej rok, bo tyle gwarantuje PostHog i krótszego okresu nie da się ustawić. Nie zawierają Twojego imienia, grup ani planu.",
                 "Cloudflare: zgodnie z jego polityką prywatności."
             ]

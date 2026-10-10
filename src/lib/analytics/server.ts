@@ -51,12 +51,13 @@ export function trackTimetable(
     payload: { inst: string; missing: unknown[]; stale: unknown[]; gone: unknown[] },
     groups: number,
     startedAt: number,
-    demo: boolean,
+    view: "own" | "demo" | "lecturer",
 ): void {
     track("timetable_loaded", {
         inst: payload.inst,
         source,
-        demo,
+        view,
+        demo: view === "demo",
         duration_ms: Date.now() - startedAt,
         groups,
         missing: payload.missing.length,

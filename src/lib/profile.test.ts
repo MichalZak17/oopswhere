@@ -46,6 +46,8 @@ describe("safeReturnTo", () => {
             "/en/demo",
             "/?week=2026-10-05",
             "/en/?week=2026-10-05",
+            "/lecturer/1294960",
+            "/en/lecturer/1294960?week=2026-10-12",
         ]) {
             expect(safeReturnTo(ok)).toBe(ok);
         }
@@ -56,6 +58,10 @@ describe("safeReturnTo", () => {
             "javascript:alert(1)",
             "/en/../../x",
             "/?week=<x>",
+            "/lecturer/",
+            "/lecturer/0123",
+            "/lecturer/12/../../x",
+            "/lecturer/12345678901",
             42,
             null,
         ]) {

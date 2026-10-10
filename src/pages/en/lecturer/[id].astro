@@ -1,0 +1,24 @@
+---
+import LecturerView from "@/components/astro/LecturerView.astro";
+import { resolveInstallation } from "@/lib/env";
+import { loadLecturerTimetable } from "@/lib/lecturers/load";
+import { isStaffId } from "@/lib/lecturers/normalize";
+import { trackTimetable } from "@/lib/analytics/server";
+
+// Empty 404s are rerouted to the 404 page.
+const id = Astro.params.id;
+if (!isStaffId(id)) return new Response(null, { status: 404 });
+
+// Signed out: no USOS calls at all, just the sign-in prompt.
+const profile = Astro.locals.profile;
+const inst = profile ? resolveInstallation(profile.i) : null;
+const startedAt = Date.now();
+const loaded = inst ? await loadLecturerTimetable(inst, id, { budgetMs: 1500 }) : null;
+if (loaded?.status === "gone") return new Response(null, { status: 404 });
+if (loaded?.status === "error") Astro.response.status = 503;
+if (loaded?.status === "ok")
+    trackTimetable("page", loaded.payload, loaded.groups, startedAt, "lecturer");
+const result = !profile ? null : loaded?.status === "ok" ? loaded : { status: "error" as const };
+---
+
+<LecturerView lang="en" id={id} result={result} />

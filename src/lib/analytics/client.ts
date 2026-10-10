@@ -12,6 +12,7 @@
  */
 import type { PostHog } from "posthog-js";
 import { CONSENT_COOKIE, CONSENT_MAX_AGE, type Consent } from "@/lib/consent";
+import { scrubProperties } from "./scrub";
 
 type Props = Record<string, string | number | boolean>;
 
@@ -60,6 +61,14 @@ async function start(key: string): Promise<PostHog | null> {
         disable_product_tours: true,
         disable_conversations: true,
         mask_personal_data_properties: true,
+        // Page URLs can name a lecturer (/lecturer/<USOS id>): replace the id before sending.
+        before_send: (event) => {
+            if (!event) return event;
+            scrubProperties(event.properties);
+            scrubProperties(event.$set);
+            scrubProperties(event.$set_once);
+            return event;
+        },
         respect_dnt: true,
     });
     // Lets dashboards filter out local testing.

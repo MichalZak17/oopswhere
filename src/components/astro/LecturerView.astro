@@ -1,0 +1,217 @@
+---
+import Base from "@/layouts/Base.astro";
+import AppHeader from "./AppHeader.astro";
+import Footer from "./Footer.astro";
+import LoginButton from "./LoginButton.astro";
+import Calendar from "@/components/calendar/Calendar.svelte";
+import { localePath, pick, t, type Lang } from "@/i18n";
+import { resolveInstallation } from "@/lib/env";
+import { DEFAULT_INSTALLATION } from "@/config/installations";
+import type { Lecturer } from "@/lib/lecturers/types";
+import { fullName, plainName } from "@/lib/lecturers/types";
+import type { TimetablePayload } from "@/lib/timetable/types";
+import { isLocalDate, startOfWeek } from "@/lib/time/local-date";
+import { expand, initialHeadingSpan, landingWeek } from "@/components/calendar/model";
+import { weekHeading } from "@/components/calendar/format";
+
+interface Props {
+    lang: Lang;
+    id: string;
+    /** null: signed out. */
+    result:
+        | { status: "ok"; lecturer: Lecturer; payload: TimetablePayload }
+        | { status: "error" }
+        | null;
+}
+
+const { lang, id, result } = Astro.props;
+const dict = t(lang);
+const profile = Astro.locals.profile;
+const path = `/lecturer/${id}`;
+const here = localePath(lang, path);
+const home = localePath(lang, "/");
+
+let title = dict.lecturer.kicker;
+let initialWeek: string | null = null;
+let usosHref: string | null = null;
+if (result?.status === "ok") {
+    const week = Astro.url.searchParams.get("week");
+    initialWeek = isLocalDate(week) ? week : null;
+    const { payload } = result;
+    const anchor = initialWeek
+        ? startOfWeek(initialWeek)
+        : landingWeek(expand(payload), payload.today, payload.nowMin);
+    title = `${plainName(result.lecturer)} · ${weekHeading(lang, initialHeadingSpan(payload, anchor))}`;
+    const inst = resolveInstallation(profile?.i ?? DEFAULT_INSTALLATION);
+    // `id` is digits only (isStaffId), so it goes into the URL as is.
+    if (inst)
+        usosHref = `${inst.usoswebUrl}kontroler.php?_action=katalog2/osoby/pokazOsobe&os_id=${id}`;
+}
+---
+
+<Base lang={lang} path={path} title={title} noindex>
+    <AppHeader lang={lang} profile={profile} path={path} />
+    <main id="main" class="main">
+        {result === null ? (
+            <section class="gate">
+                <p class="kicker">{dict.lecturer.kicker}</p>
+                <h1>{dict.lecturer.gateTitle}</h1>
+                <p class="lead">{dict.lecturer.gateBody}</p>
+                <LoginButton lang={lang} returnTo={here} />
+            </section>
+        ) : result.status === "error" ? (
+            <section class="gate">
+                <p class="kicker">{dict.lecturer.kicker}</p>
+                <h1>{dict.lecturer.error}</h1>
+                <a class="btn btn-ghost" href={here}>
+                    {dict.lecturer.retry}
+                </a>
+            </section>
+        ) : (
+            <>
+                <header class="who">
+                    <a class="back" href={home}>
+                        <span aria-hidden="true">←</span> {dict.lecturer.back}
+                    </a>
+                    <div class="id">
+                        <p class="kicker">{dict.lecturer.kicker}</p>
+                        <h1 class="name">{fullName(result.lecturer)}</h1>
+                        {result.lecturer.unit && (
+                            <p class="unit">{pick(result.lecturer.unit, lang)}</p>
+                        )}
+                    </div>
+                    {usosHref && (
+                        <a class="usos" href={usosHref} target="_blank" rel="noopener noreferrer">
+                            {dict.lecturer.usos}
+                            <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
+                                <path
+                                    d="M5 11l6-6M6 5h5v5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.4"
+                                    stroke-linecap="round"
+                                />
+                            </svg>
+                        </a>
+                    )}
+                </header>
+                <Calendar
+                    client:load
+                    payload={result.payload}
+                    lang={lang}
+                    dict={dict.cal}
+                    types={dict.types}
+                    initialWeek={initialWeek}
+                    apiUrl={`/api/v1/lecturers/${id}`}
+                    subject={plainName(result.lecturer)}
+                    scope={dict.lecturer.scope}
+                    lecturerBase={localePath(lang, "/lecturer/")}
+                />
+            </>
+        )}
+    </main>
+    <Footer lang={lang} path={path} />
+</Base>
+
+<style>
+    .main {
+        max-width: var(--page-max);
+        margin: 0 auto;
+        padding: 20px var(--gutter) 0;
+        min-height: 70vh;
+    }
+
+    .who {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: end;
+        gap: 14px 24px;
+        margin-bottom: 40px;
+        padding-bottom: 22px;
+        border-bottom: 1px solid var(--rule);
+    }
+    .back {
+        grid-column: 1 / -1;
+        justify-self: start;
+        display: inline-flex;
+        gap: 6px;
+        font-size: 0.88rem;
+        font-weight: 550;
+        color: var(--ink-2);
+        text-decoration: none;
+    }
+    .back:hover {
+        color: var(--ink);
+    }
+    .back span {
+        transition: transform var(--dur-1) var(--ease-out);
+    }
+    .back:hover span {
+        transform: translateX(-3px);
+    }
+    .kicker {
+        font-size: 0.8rem;
+        font-weight: 550;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        margin-bottom: 6px;
+    }
+    .name {
+        font-size: clamp(1.35rem, 1.1rem + 0.9vw, 1.75rem);
+        line-height: 1.15;
+        font-weight: 650;
+        letter-spacing: -0.025em;
+        text-wrap: balance;
+    }
+    .unit {
+        margin-top: 4px;
+        color: var(--ink-2);
+        font-size: 0.95rem;
+    }
+    .usos {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.88rem;
+        color: var(--ink-2);
+        text-decoration: underline;
+        text-decoration-color: var(--rule-strong);
+        text-underline-offset: 0.2em;
+        white-space: nowrap;
+    }
+    .usos:hover {
+        color: var(--ink);
+        text-decoration-color: currentColor;
+    }
+
+    .gate {
+        display: grid;
+        justify-items: start;
+        gap: 14px;
+        max-width: 640px;
+        padding: 10vh 0 12vh;
+    }
+    .gate h1 {
+        font-size: clamp(1.9rem, 1.3rem + 2vw, 2.8rem);
+        line-height: 1.05;
+        font-weight: 650;
+        letter-spacing: -0.04em;
+        text-wrap: balance;
+    }
+    .gate .lead {
+        color: var(--ink-2);
+        font-size: 1.05rem;
+        margin-bottom: 8px;
+    }
+
+    @media (max-width: 560px) {
+        .who {
+            grid-template-columns: minmax(0, 1fr);
+            margin-bottom: 28px;
+        }
+        .usos {
+            justify-self: start;
+        }
+    }
+</style>

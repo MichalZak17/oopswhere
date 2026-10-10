@@ -45,6 +45,14 @@ Tailwind/shadcn on purpose. Self-hosted only: one long-lived Node process in Doc
 
 Never store tokens, USOS user ids or emails. Never request `participants` (classmates' data).
 
+4. Lecturers (signed-in only): `GET /api/v1/lecturers?q=` → `users/search2` with
+   `among=current_teachers` (consumer-signed; USOS hides students from consumer-only search, by
+   name and by index number). `/lecturer/[id]` → `groups/lecturer` (anonymous) + `users/user`,
+   keep the running terms' groups (`relevantTerms`, same rule as login) and feed them to the same
+   `loadTimetable()`. Ids that teach nothing 404 (so a student's id is never a name lookup).
+   Other students' plans are unreachable through the API by design (`tt/student`,
+   `groups/participant` take no `user_id`); they can only be shared by their owner.
+
 ### Key files
 
 - `src/lib/oauth1/sign.ts` — RFC 5849 HMAC-SHA1 signer on Web Crypto (tested against RFC vectors).
@@ -53,7 +61,13 @@ Never store tokens, USOS user ids or emails. Never request `participants` (class
 - `src/lib/usos/{client,oauth,api}.ts` — USOS calls. Signed calls are POST + `Authorization` header;
   `oauth_*` params go to the header automatically.
 - `src/lib/timetable/{load,normalize,types}.ts` — loader (budget, gone/missing/stale), raw → compact
-  `MeetingTuple`s. `types.ts` ships to the browser: keep it free of server imports.
+  `MeetingTuple`s. `types.ts` ships to the browser: keep it free of server imports. `load.ts` also
+  exports the one USOS `limiter`/circuit breaker every visitor-triggered call goes through.
+  `response.ts` — ETag/304 JSON for timetable endpoints.
+- `src/lib/lecturers/{load,normalize,types}.ts` — lecturer search (own 1000-entry LRU so searches
+  can't evict timetables, 1-day cache), lecturer data (`lect:v1:` 6 h fresh, misses cached 1 h),
+  `loadLecturerTimetable()`. `types.ts` ships to the browser.
+- `src/lib/terms.ts` — which terms count as current (shared by the login callback and lecturers).
 - `src/lib/cache/*` + `src/lib/platform.ts` — SWR (fresh 30 min / background refresh until 6 h /
   stale-on-error until 14 d), single-flight, concurrency limiter + circuit breaker, over one
   process-wide in-memory LRU (lost on redeploy; that's fine, it's all public data).
@@ -65,6 +79,12 @@ Never store tokens, USOS user ids or emails. Never request `participants` (class
   Dates are `YYYY-MM-DD` strings, math via `Date.UTC`; "now" via `zonedNow(timeZone)`.
 - `src/lib/layout/lanes.ts` — clash layout (clusters → lanes → span); only truly overlapping pairs get
   `conflict`.
+- `src/components/search/LecturerSearch.svelte` — header search (signed-in only): combobox in a
+  native `<dialog>`, `/` opens it, debounced + aborted fetches.
+- `src/components/astro/LecturerView.astro` + `src/pages/{,en/}lecturer/[id].astro` — lecturer page
+  (sign-in gate, 404 for non-teachers, 503 on USOS errors). `Calendar` takes `subject` (makes the week
+  heading an `h2` and prefixes the tab title), `scope`, and `lecturerBase` (lecturer names in the
+  class sheet link to their pages; set only for signed-in visitors).
 - `src/components/calendar/` — `Calendar.svelte` (state, keyboard, URL `?week=`, refresh),
   `WeekGrid` (grid; on < 720 px container width a scroll-snap day pager + day strip), `EventCard`,
   `NextUp`, `EventSheet` (native `<dialog>`), `model.ts`/`display.ts`/`format.ts` (pure helpers),
@@ -109,12 +129,16 @@ Never store tokens, USOS user ids or emails. Never request `participants` (class
 - Small text must use `--ink-3` or darker / `--accent-text` (axe AA is enforced in e2e). `--ink-faint`
   is for large display text only.
 - Don't create `src/fetch.ts` (reserved by Astro 7).
+- Lecturer search and pages stay behind the profile cookie (they spend our consumer key). Search
+  only ever uses `among=current_teachers`; the mock USOS rejects anything else. New redirect
+  targets must be added to `safeReturnTo` (`src/lib/return-to.ts`).
 - Never log query strings, tokens or cookies.
 - Custom analytics events (`track()`) carry only closed-set values and counts: never USOS ids,
   group numbers, names, URLs or free text, and never `identify()`. No autocapture (the page is
   someone's timetable). The automatic browser events (`$pageview`/`$pageleave`, `$exception`,
   `$web_vitals`) carry the page URL, error messages, browser/device and IP-derived location, so
-  never put personal data in URLs. New data must fit the privacy page
+  never put personal data in URLs (ids that must be in a path, like `/lecturer/<id>`, get a
+  placeholder in `src/lib/analytics/scrub.ts` before any browser event is sent). New data must fit the privacy page
   (`privacy.*` in both locales; bump `privacy.updated` whenever its content changes).
   Nothing in the browser may send analytics before the visitor says yes: always go through
   `track()` in `client.ts`, never import `posthog-js` elsewhere.

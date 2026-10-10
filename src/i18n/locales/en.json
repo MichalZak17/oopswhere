@@ -254,7 +254,29 @@
         "scope": "Your groups only. Exams and cancellations: USOSweb.",
         "loading": "Loading timetable…",
         "updated": "Updated",
-        "justNow": "just now"
+        "justNow": "just now",
+        "lecturerPlan": "Lecturer's timetable"
+    },
+    "search": {
+        "button": "Lecturers",
+        "open": "Find a lecturer",
+        "placeholder": "Lecturer's first or last name",
+        "hint": "Type at least 2 letters of a first or last name.",
+        "loading": "Searching…",
+        "empty": "Nobody by that name teaches here. Check the spelling.",
+        "error": "USOS isn't answering. Try again in a moment.",
+        "results": "Lecturers",
+        "close": "Close"
+    },
+    "lecturer": {
+        "kicker": "Lecturer's timetable",
+        "back": "Your timetable",
+        "usos": "Profile in USOSweb",
+        "scope": "Every group they teach this term. Office hours, exams and cancellations: USOSweb.",
+        "gateTitle": "Lecturer timetables are for signed-in students.",
+        "gateBody": "Sign in through USOS and you'll land right back here.",
+        "error": "USOS isn't answering and I don't have this timetable cached yet. Try again in a moment.",
+        "retry": "Try again"
     },
     "types": {
         "WK": "Lecture",
@@ -274,7 +296,7 @@
     },
     "privacy": {
         "title": "Privacy",
-        "updated": "Last updated: 3 October 2026",
+        "updated": "Last updated: 10 October 2026",
         "intro": [
             "Oopswhere has no database and never sees your password. You sign in on your university's own site (USOS), and I receive one-time access that I use only to read your list of class groups and your first name. I revoke that access right away.",
             "Oopswhere is an independent open-source project. It is not run by or affiliated with ZUT."
@@ -284,7 +306,8 @@
             "body": [
                 "The group list and first name are stored in an encrypted cookie in your browser. The server keeps nothing about you. Signing out deletes the cookie.",
                 "Class group timetables, lecturer names and rooms are public USOS data. I fetch them from USOS anonymously and cache them briefly so I don't put load on the university's servers.",
-                "Legal basis: I process your groups and first name because I can't show you the timetable you ask for without them (Art. 6(1)(b) GDPR). Providing them is voluntary, but without signing in the app can't show your timetable. I show lecturer names as part of the public timetable, in my legitimate interest (Art. 6(1)(f) GDPR)."
+                "Once signed in, you can look up a lecturer and see their timetable. What you type goes to USOS only to find matching university staff (USOS doesn't show students in this search), and I don't store it anywhere except a short-lived cache, unlinked to you. Lecturers' timetables, titles and departments are public USOS data.",
+                "Legal basis: I process your groups and first name because I can't show you the timetable you ask for without them (Art. 6(1)(b) GDPR). Providing them is voluntary, but without signing in the app can't show your timetable. I show lecturers' names, titles, departments and timetables as public data about classes, in my legitimate interest (Art. 6(1)(f) GDPR)."
             ]
         },
         "analytics": {
@@ -325,7 +348,7 @@
             "title": "How long data is kept",
             "items": [
                 "Cookies: as listed above. Signing out deletes the cookie with your groups and first name right away.",
-                "Public group timetables and lecturer names: in the server's memory for at most 14 days, never on disk; gone at every restart.",
+                "Public group timetables and lecturer data: in the server's memory for at most 14 days, and search terms for at most 2 days; never on disk, gone at every restart.",
                 "Analytics data in PostHog: at least a year, because that's what PostHog guarantees and a shorter period can't be set. It contains no name, groups or timetable.",
                 "Cloudflare: according to its own privacy policy."
             ]

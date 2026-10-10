@@ -6,9 +6,13 @@
  * Control endpoints (test-only):
  *   POST /__control  {"deny":bool,"ttDown":bool}   change behaviour
  *   GET  /__state                                  { revoked, signatureFailures }
+ *
+ * Staff: two named lecturers (STAFF) teach the fixture groups their ids appear in, plus a
+ * group in a finished term that must never be loaded; NOT_TEACHING is a known user with no
+ * groups (think: a student's id), which must never get a lecturer page.
  */
 import { createHmac } from "node:crypto";
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 
 const PORT = Number(process.env.MOCK_USOS_PORT ?? 4500);
@@ -23,6 +27,41 @@ const GROUPS: [number, number][] = [
     [12940, 321],
     [35564, 1],
 ];
+
+interface StaffMember {
+    first_name: string;
+    last_name: string;
+    titles: { before: string | null; after: string | null };
+    unit: string;
+}
+const STAFF: Record<string, StaffMember> = {
+    "1265207": {
+        first_name: "Ewa",
+        last_name: "Testerska",
+        titles: { before: "dr inż.", after: null },
+        unit: "Katedra Inżynierii Oprogramowania",
+    },
+    "34016": {
+        first_name: "Marek",
+        last_name: "Danecki",
+        titles: { before: "dr hab.", after: "prof. ZUT" },
+        unit: "Katedra Systemów Multimedialnych",
+    },
+};
+const NOT_TEACHING = "777";
+
+const staffUser = (id: string, s: StaffMember) => ({
+    id,
+    first_name: s.first_name,
+    last_name: s.last_name,
+    titles: s.titles,
+    employment_positions: [
+        {
+            position: { id: "5", name: { pl: "adiunkt", en: "" } },
+            faculty: { id: "K", name: { pl: s.unit, en: "" } },
+        },
+    ],
+});
 
 const tokenSecrets = new Map<string, string>(); // request + access tokens
 const callbacks = new Map<string, string>();
@@ -83,6 +122,22 @@ function fixture(name: string): unknown | null {
     const file = new URL(name, FIXTURES);
     return existsSync(file) ? JSON.parse(readFileSync(file, "utf8")) : null;
 }
+
+/** Fixture groups whose meetings list this lecturer. */
+function groupsTaughtBy(userId: string): [number, number][] {
+    const dir = new URL("classgroup_dates2/", FIXTURES);
+    return readdirSync(dir).flatMap((name) => {
+        const activities = JSON.parse(readFileSync(new URL(name, dir), "utf8")) as {
+            lecturer_ids?: number[];
+        }[];
+        const teaches = activities.some((a) => a.lecturer_ids?.map(String).includes(userId));
+        const [unit, group] = name.replace(".json", "").split("-").map(Number);
+        return teaches ? [[unit, group] as [number, number]] : [];
+    });
+}
+
+const fold = (s: string) =>
+    s.normalize("NFD").replace(/\p{M}/gu, "").replace(/ł/g, "l").replace(/Ł/g, "L").toLowerCase();
 
 async function readBody(req: IncomingMessage): Promise<string> {
     let data = "";
@@ -179,8 +234,65 @@ createServer(async (req, res) => {
         }
         case "users/user": {
             const oauth = verify(req, url, body);
-            if (!oauth?.oauth_token) return json(res, 401, { message: "token required" });
-            return json(res, 200, { first_name: "Ola" });
+            if (!oauth) return json(res, 401, { message: "consumer required" });
+            const userId = body.get("user_id");
+            if (!userId) {
+                if (!oauth.oauth_token) return json(res, 401, { message: "token required" });
+                return json(res, 200, { first_name: "Ola" });
+            }
+            if (STAFF[userId]) return json(res, 200, staffUser(userId, STAFF[userId]));
+            if (userId === NOT_TEACHING)
+                return json(res, 200, {
+                    id: userId,
+                    first_name: "Ola",
+                    last_name: "Studentka",
+                    titles: null,
+                    employment_positions: [],
+                });
+            return json(res, 200, null);
+        }
+        case "users/search2": {
+            if (!verify(req, url, body)) return json(res, 401, { message: "consumer required" });
+            if (body.get("among") !== "current_teachers")
+                return json(res, 400, { message: "the app only ever searches teachers" });
+            const words = fold(body.get("query") ?? "")
+                .split(" ")
+                .filter(Boolean);
+            const items = Object.entries(STAFF)
+                .filter(([, s]) => {
+                    const name = fold(`${s.first_name} ${s.last_name}`);
+                    return words.length > 0 && words.every((w) => name.includes(w));
+                })
+                .map(([id, s]) => ({ user: staffUser(id, s) }));
+            return json(res, 200, { items, next_page: false });
+        }
+        case "groups/lecturer": {
+            const userId = url.searchParams.get("user_id") ?? "";
+            if (!STAFF[userId]) return json(res, 200, { groups: {}, terms: [] });
+            return json(res, 200, {
+                groups: {
+                    "2026/2027-Z": groupsTaughtBy(userId).map(([u, g]) => ({
+                        course_unit_id: u,
+                        group_number: g,
+                        term_id: "2026/2027-Z",
+                    })),
+                    "2025/2026-L": [{ course_unit_id: 1, group_number: 1, term_id: "2025/2026-L" }],
+                },
+                terms: [
+                    {
+                        id: "2026/2027-Z",
+                        start_date: "2026-10-01",
+                        end_date: "2027-02-28",
+                        finish_date: "2027-02-28",
+                    },
+                    {
+                        id: "2025/2026-L",
+                        start_date: "2026-03-01",
+                        end_date: "2026-09-30",
+                        finish_date: "2026-09-30",
+                    },
+                ],
+            });
         }
         case "users/users": {
             if (!verify(req, url, body)) return json(res, 401, { message: "consumer required" });
@@ -191,12 +303,14 @@ createServer(async (req, res) => {
                 Object.fromEntries(
                     ids.map((id) => [
                         id,
-                        {
-                            id,
-                            first_name: "Jan",
-                            last_name: `Nowak-${id}`,
-                            titles: { before: "dr", after: null },
-                        },
+                        STAFF[id]
+                            ? staffUser(id, STAFF[id])
+                            : {
+                                  id,
+                                  first_name: "Jan",
+                                  last_name: `Nowak-${id}`,
+                                  titles: { before: "dr", after: null },
+                              },
                     ]),
                 ),
             );

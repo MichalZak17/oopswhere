@@ -48,6 +48,12 @@ export interface RawUser {
     first_name?: string;
     last_name?: string;
     titles?: { before?: string | null; after?: string | null } | null;
+    employment_positions?: RawEmployment[] | null;
+}
+
+export interface RawEmployment {
+    position?: { id?: string; name?: RawLang } | null;
+    faculty?: { id?: string; name?: RawLang } | null;
 }
 
 const TT_FIELDS = [
@@ -117,4 +123,49 @@ export function termsBetween(inst: ResolvedInstallation, from: string, to: strin
     return usosCall<RawTerm[]>(inst, "terms/search", {
         params: { min_finish_date: from, max_start_date: to },
     });
+}
+
+const STAFF_FIELDS = "id|first_name|last_name|titles|employment_positions";
+
+/**
+ * Current teachers matching a name, at most 10 (USOS caps a page at 20). Needs only the
+ * consumer key. Without a user token USOS never returns students here, which is what we want.
+ */
+export function searchTeachers(inst: ResolvedInstallation, query: string) {
+    return usosCall<{ items: { user: RawUser }[]; next_page?: boolean }>(inst, "users/search2", {
+        params: {
+            lang: "pl",
+            query,
+            among: "current_teachers",
+            num: 10,
+            fields: `items[user[${STAFF_FIELDS}]]|next_page`,
+        },
+        signed: true,
+    });
+}
+
+/** A staff member's name, titles and department. Needs only the consumer key; null if unknown. */
+export function staffMember(inst: ResolvedInstallation, userId: string) {
+    return usosCall<RawUser | null>(inst, "users/user", {
+        params: { user_id: userId, fields: STAFF_FIELDS },
+        signed: true,
+    });
+}
+
+/**
+ * Groups a staff member teaches in the active terms, keyed by term. Anonymous: USOS treats
+ * teachers' schedules as public. Empty for anyone who isn't teaching (students included).
+ */
+export function lecturerGroups(inst: ResolvedInstallation, userId: string) {
+    return usosCall<{ groups: Record<string, RawGroup[]>; terms?: RawTerm[] }>(
+        inst,
+        "groups/lecturer",
+        {
+            params: {
+                user_id: userId,
+                active_terms: "true",
+                fields: "course_unit_id|group_number|term_id",
+            },
+        },
+    );
 }
