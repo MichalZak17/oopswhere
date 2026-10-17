@@ -2,6 +2,7 @@
 import { langText } from "@/lib/timetable/normalize";
 import { relevantTerms } from "@/lib/terms";
 import type { LocalDate } from "@/lib/time/local-date";
+import type { GroupKey, TimetablePayload } from "@/lib/timetable/types";
 import type { RawGroup, RawTerm, RawUser } from "@/lib/usos/api";
 import type { Lecturer } from "./types";
 
@@ -74,4 +75,30 @@ export function currentGroups(data: LecturerData, today: LocalDate, max = 150): 
         .filter(([term]) => data.terms.length === 0 || terms.has(term))
         .slice(0, max)
         .map(([, unit, num]) => [unit, num]);
+}
+
+/**
+ * A lecturer's own meetings. `groups/lecturer` lists every group someone is attached to, but a
+ * lab group's meetings are often split between several people (each meeting has its own
+ * `lecturer_ids`), so the whole group's schedule would show them in two buildings at once.
+ * Meetings with no lecturer listed stay: USOS just doesn't say who runs them. Groups that
+ * have meetings, none of them theirs, are dropped.
+ */
+export function onlyTheirMeetings(payload: TimetablePayload, lecturerId: string): TimetablePayload {
+    const id = Number(lecturerId);
+    const meetings = payload.meetings.filter((m) => m[6].length === 0 || m[6].includes(id));
+    const scheduled = new Set(payload.meetings.map((m) => m[0]));
+    const theirs = new Set(meetings.map((m) => m[0]));
+    const groups = Object.fromEntries(
+        Object.entries(payload.groups).filter(
+            ([key]) => theirs.has(key as GroupKey) || !scheduled.has(key as GroupKey),
+        ),
+    ) as TimetablePayload["groups"];
+    const people = new Set(meetings.flatMap((m) => m[6]).map(String));
+    return {
+        ...payload,
+        groups,
+        meetings,
+        people: Object.fromEntries(Object.entries(payload.people).filter(([p]) => people.has(p))),
+    };
 }

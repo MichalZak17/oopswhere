@@ -5,7 +5,9 @@ import {
     normalizeLecturer,
     normalizeLecturerData,
     normalizeQuery,
+    onlyTheirMeetings,
 } from "./normalize";
+import type { MeetingTuple, TimetablePayload } from "@/lib/timetable/types";
 import { fullName, plainName } from "./types";
 import { relevantTerms } from "@/lib/terms";
 
@@ -128,6 +130,64 @@ describe("lecturer groups", () => {
 
     it("caps the group count", () => {
         expect(currentGroups(data, "2027-02-10", 2)).toHaveLength(2);
+    });
+});
+
+describe("onlyTheirMeetings", () => {
+    // Lecturer 25219 at ZUT, week of 2026-10-12: attached to every lab group of a course, but
+    // most of its meetings are run by colleagues (real classgroup_dates2 lecturer_ids).
+    const m = (key: `${number}-${number}`, date: string, start: number, ids: number[]) =>
+        [key, date, start, start + 90, "1", "WI_WI2", ids, null] as MeetingTuple;
+    const info = (group: number) => ({
+        courseId: "X",
+        course: { pl: "Wprowadzenie do informatyki" },
+        type: "LB",
+        typeName: { pl: "Laboratorium" },
+        group,
+        url: null,
+    });
+    const payload: TimetablePayload = {
+        v: 1,
+        inst: "zut",
+        timeZone: "Europe/Warsaw",
+        generatedAt: "",
+        updatedAt: null,
+        today: "2026-10-17",
+        nowMin: 0,
+        groups: {
+            "25858-231": info(231),
+            "72241-1131": info(1131),
+            "72241-1212": info(1212),
+            "72241-9": info(9),
+        },
+        people: {
+            "25219": ["Krzysztof", "Lorenz", "dr"],
+            "34016": ["A", "B", "mgr"],
+            "1276599": ["C", "D", "mgr"],
+        },
+        buildings: {},
+        meetings: [
+            m("25858-231", "2026-10-12", 855, [25219]),
+            m("72241-1131", "2026-10-12", 855, [34016]),
+            m("72241-1212", "2026-10-12", 855, [1276599]),
+            m("72241-1212", "2026-10-19", 855, [1276599, 25219]),
+            m("72241-1212", "2026-10-26", 855, []),
+        ],
+        missing: [],
+        stale: [],
+        gone: [],
+    };
+
+    it("keeps only meetings they run (or nobody is listed for), and the groups they're in", () => {
+        const out = onlyTheirMeetings(payload, "25219");
+        expect(out.meetings.map((x) => `${x[0]} ${x[1]}`)).toEqual([
+            "25858-231 2026-10-12",
+            "72241-1212 2026-10-19",
+            "72241-1212 2026-10-26",
+        ]);
+        // 72241-1131 had meetings, none theirs; 72241-9 isn't scheduled yet, so it stays.
+        expect(Object.keys(out.groups).sort()).toEqual(["25858-231", "72241-1212", "72241-9"]);
+        expect(Object.keys(out.people).sort()).toEqual(["1276599", "25219"]);
     });
 });
 

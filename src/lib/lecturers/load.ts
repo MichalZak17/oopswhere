@@ -23,6 +23,7 @@ import {
     normalizeLecturer,
     normalizeLecturerData,
     normalizeQuery,
+    onlyTheirMeetings,
     type LecturerData,
 } from "./normalize";
 import { MIN_QUERY, type Lecturer } from "./types";
@@ -102,6 +103,6 @@ export async function loadLecturerTimetable(
     const outcome = await loadLecturer(inst, id);
     if (outcome.status !== "ok") return outcome;
     const groups = currentGroups(outcome.data, zonedNow(inst.timeZone).today);
-    const payload = await loadTimetable(inst, groups, opts);
+    const payload = onlyTheirMeetings(await loadTimetable(inst, groups, opts), id);
     return { status: "ok", lecturer: outcome.data.lecturer, payload, groups: groups.length };
 }

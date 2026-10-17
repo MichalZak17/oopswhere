@@ -1,0 +1,8 @@
+---
+import SubjectsView from "@/components/astro/SubjectsView.astro";
+
+// Signed out there is nothing to list: the landing page is where signing in starts.
+if (!Astro.locals.profile) return Astro.redirect("/en/", 303);
+---
+
+<SubjectsView lang="en" />

@@ -2,7 +2,7 @@
     import type { BuildingInfo, GroupInfo, Lang } from "@/lib/timetable/types";
     import type { ClassEvent } from "./model";
     import { courseName, placeLabel, typeCode, type CalDict, type Types } from "./display";
-    import { timeRange } from "./format";
+    import { formatMinutes } from "./format";
 
     interface Props {
         ev: ClassEvent;
@@ -37,7 +37,9 @@
     style:--i={index}
     onclick={() => onopen(ev, el)}
 >
-    <span class="time">{timeRange(ev.start, ev.end)}</span>
+    <span class="time"
+        >{formatMinutes(ev.start)}<span class="end">–{formatMinutes(ev.end)}</span></span
+    >
     <span class="title">{courseName(info, lang)}</span>
     <span class="meta">
         <b>{typeCode(info)}</b><span class="grp"
@@ -104,9 +106,12 @@
     }
 
     .time {
+        flex-shrink: 0;
         font-size: 0.74rem;
         color: var(--ink-2);
         letter-spacing: 0.01em;
+        white-space: nowrap;
+        overflow: hidden;
     }
     .title {
         font-weight: 620;
@@ -165,6 +170,19 @@
         .flag,
         .grp {
             display: none;
+        }
+    }
+    /* Side-by-side lanes: the start time is enough, and long Polish words must break inside
+       the card instead of running off its edge. */
+    @container (width < 100px) {
+        .end {
+            display: none;
+        }
+        .title {
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            overflow-wrap: anywhere;
+            hyphens: auto;
         }
     }
 

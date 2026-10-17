@@ -1,0 +1,312 @@
+---
+import Base from "@/layouts/Base.astro";
+import AppHeader from "./AppHeader.astro";
+import Footer from "./Footer.astro";
+import { localePath, t, type Lang } from "@/i18n";
+import { resolveInstallation } from "@/lib/env";
+import { loadTimetable } from "@/lib/timetable/load";
+import { buildSubjects } from "@/lib/timetable/subjects";
+import { trackTimetable } from "@/lib/analytics/server";
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const dict = t(lang);
+const copy = dict.subjects;
+// The pages redirect signed-out visitors before rendering this.
+const profile = Astro.locals.profile!;
+const inst = resolveInstallation(profile.i)!;
+
+const startedAt = Date.now();
+const payload = await loadTimetable(inst, profile.g, { budgetMs: 1500 });
+trackTimetable("page", payload, profile.g.length, startedAt, "own");
+
+const rows = buildSubjects(payload, lang);
+const path = "/subjects";
+const here = localePath(lang, path);
+const lecturerBase = localePath(lang, "/lecturer/");
+const notice = payload.missing.length
+    ? dict.cal.missing
+    : payload.gone.length
+      ? dict.cal.gone
+      : payload.stale.length
+        ? dict.cal.stale
+        : null;
+
+/** "wykład": the dictionary's name for the type, lower-cased to follow the subject's name. */
+const kind = (type: string, fallback: string) =>
+    (dict.types[type] ?? (fallback || type)).toLocaleLowerCase(lang);
+---
+
+<Base lang={lang} path={path} title={copy.title} noindex>
+    <AppHeader lang={lang} profile={profile} path={path} />
+    <main id="main" class="main">
+        <header class="head">
+            <a class="back" href={localePath(lang, "/")}>
+                <span aria-hidden="true">←</span>
+                {copy.back}
+            </a>
+            <h1 id="subjects-title">{copy.title}</h1>
+            <p class="hint">{copy.hint}</p>
+        </header>
+
+        {notice && (
+            <p class="notice" role="status">
+                {notice}
+                {payload.missing.length > 0 && (
+                    <>
+                        {" "}
+                        <a href={here}>{dict.cal.retry}</a>
+                    </>
+                )}
+            </p>
+        )}
+
+        {rows.length === 0 ? (
+            <p class="empty">{copy.empty}</p>
+        ) : (
+            <div class="scroll">
+                <table aria-labelledby="subjects-title">
+                    <thead>
+                        <tr>
+                            <th scope="col">{copy.colSubject}</th>
+                            <th scope="col">{copy.colLecturer}</th>
+                            <th scope="col" class="sign">
+                                {copy.colSign}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {rows.map((row) => (
+                            <tr>
+                                <th scope="row">
+                                    {row.course} – {kind(row.type, row.typeName)}
+                                    <span class="group">
+                                        {copy.group} {row.group}
+                                    </span>
+                                </th>
+                                <td>
+                                    {row.lecturers.length > 0 ? (
+                                        <ul>
+                                            {row.lecturers.map((l) => (
+                                                <li>
+                                                    <a
+                                                        href={`${lecturerBase}${l.id}`}
+                                                        title={copy.lecturerPlan}
+                                                    >
+                                                        {l.name}
+                                                    </a>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    ) : (
+                                        <span class="none">{copy.noLecturer}</span>
+                                    )}
+                                </td>
+                                <td class="sign"></td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        )}
+    </main>
+    <Footer lang={lang} path={path} />
+</Base>
+
+<style>
+    .main {
+        max-width: var(--page-max);
+        margin: 0 auto;
+        padding: 20px var(--gutter) 0;
+        min-height: 70vh;
+    }
+
+    .head {
+        display: grid;
+        gap: 10px;
+        margin-bottom: 32px;
+    }
+    .back {
+        justify-self: start;
+        display: inline-flex;
+        gap: 6px;
+        font-size: 0.88rem;
+        font-weight: 550;
+        color: var(--ink-2);
+        text-decoration: none;
+    }
+    .back:hover {
+        color: var(--ink);
+    }
+    .back span {
+        transition: transform var(--dur-1) var(--ease-out);
+    }
+    .back:hover span {
+        transform: translateX(-3px);
+    }
+    h1 {
+        font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.3rem);
+        line-height: 1.1;
+        font-weight: 650;
+        letter-spacing: -0.035em;
+        text-wrap: balance;
+    }
+    .hint {
+        max-width: 60ch;
+        color: var(--ink-3);
+        font-size: 0.9rem;
+    }
+    .notice {
+        margin-bottom: 20px;
+        padding: 10px 16px;
+        border: 1px solid var(--rule);
+        border-radius: var(--radius-m);
+        color: var(--ink-2);
+        font-size: 0.92rem;
+    }
+    .notice a {
+        color: var(--ink);
+        text-decoration: underline;
+        text-underline-offset: 0.2em;
+    }
+    .empty {
+        max-width: 52ch;
+        padding: 6vh 0;
+        color: var(--ink-2);
+    }
+
+    .scroll {
+        overflow-x: auto;
+        margin-bottom: 56px;
+    }
+    table {
+        width: 100%;
+        min-width: 560px;
+        border-collapse: collapse;
+        border: 1px solid var(--rule-strong);
+        font-variant-numeric: tabular-nums;
+    }
+    th,
+    td {
+        padding: 14px 18px;
+        border: 1px solid var(--rule-strong);
+        vertical-align: middle;
+        text-align: center;
+    }
+    thead th {
+        background: var(--paper-sunk);
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--ink-2);
+    }
+    tbody th {
+        width: 38%;
+        font-weight: 600;
+        color: var(--ink);
+    }
+    td {
+        width: 34%;
+        color: var(--ink);
+    }
+    .sign {
+        width: 28%;
+    }
+    tbody tr {
+        height: 76px;
+    }
+    .group {
+        display: block;
+        margin-top: 2px;
+        font-size: 0.8rem;
+        font-weight: 450;
+        color: var(--ink-3);
+    }
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    li + li {
+        margin-top: 4px;
+    }
+    td a {
+        color: inherit;
+        text-decoration: none;
+    }
+    td a:hover {
+        text-decoration: underline;
+        text-decoration-color: var(--rule-strong);
+        text-underline-offset: 0.2em;
+    }
+    .none {
+        color: var(--ink-3);
+        font-size: 0.9rem;
+    }
+
+    /* A phone has no use for an empty column to sign in: it shows up again on paper. */
+    @media screen and (max-width: 640px) {
+        table {
+            min-width: 0;
+        }
+        .sign {
+            display: none;
+        }
+        tbody th {
+            width: 55%;
+        }
+        td {
+            width: 45%;
+        }
+        th,
+        td {
+            padding: 12px 12px;
+        }
+    }
+
+    @media print {
+        :global(.app-header),
+        :global(.footer),
+        :global(.banner),
+        .back,
+        .hint,
+        .notice {
+            display: none;
+        }
+        .main {
+            padding: 0;
+            min-height: 0;
+        }
+        .head {
+            margin-bottom: 16px;
+        }
+        .scroll {
+            overflow: visible;
+            margin: 0;
+        }
+        table,
+        th,
+        td {
+            border-color: #000;
+        }
+        table,
+        h1,
+        th,
+        td,
+        a {
+            color: #000;
+            background: none;
+        }
+        .group,
+        .none {
+            color: #333;
+        }
+        tr {
+            break-inside: avoid;
+        }
+    }
+</style>

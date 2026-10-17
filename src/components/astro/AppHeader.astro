@@ -68,6 +68,9 @@ const readOn = profile
                             {groupCount} {dict.cal.groups[plural]} · {dict.cal.asOf} {readOn}
                         </p>
                     </div>
+                    <a class="item" href={localePath(lang, "/subjects")}>
+                        {dict.subjects.menu}
+                    </a>
                     <form method="post" action={`/auth/${profile.i}/login`}>
                         <input type="hidden" name="returnTo" value={home} />
                         <button class="item" type="submit">

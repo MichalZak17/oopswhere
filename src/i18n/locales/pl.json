@@ -275,6 +275,19 @@
         "error": "USOS nie odpowiada, a tego planu nie mam jeszcze w pamięci. Spróbuj za chwilę.",
         "retry": "Spróbuj ponownie"
     },
+    "subjects": {
+        "menu": "Przedmioty",
+        "title": "Twoje przedmioty",
+        "back": "Twój plan",
+        "colSubject": "Przedmiot",
+        "colLecturer": "Prowadzący",
+        "colSign": "Podpis",
+        "group": "gr.",
+        "noLecturer": "brak danych",
+        "empty": "Nie mam jeszcze żadnych Twoich grup. Odśwież je z menu konta.",
+        "hint": "Tabela jest gotowa do wydruku: Ctrl/Cmd+P lub „Zapisz jako PDF”. Kolumna „Podpis” zostaje pusta.",
+        "lecturerPlan": "Plan zajęć prowadzącego"
+    },
     "types": {
         "WK": "Wykład",
         "LB": "Laboratorium",

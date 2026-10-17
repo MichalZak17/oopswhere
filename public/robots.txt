@@ -4,3 +4,5 @@ Disallow: /auth/
 Disallow: /api/
 Disallow: /lecturer/
 Disallow: /en/lecturer/
+Disallow: /subjects
+Disallow: /en/subjects

@@ -278,6 +278,19 @@
         "error": "USOS isn't answering and I don't have this timetable cached yet. Try again in a moment.",
         "retry": "Try again"
     },
+    "subjects": {
+        "menu": "Subjects",
+        "title": "Your subjects",
+        "back": "Your timetable",
+        "colSubject": "Subject",
+        "colLecturer": "Lecturer",
+        "colSign": "Signature",
+        "group": "gr.",
+        "noLecturer": "not available",
+        "empty": "I don't have any of your groups yet. Refresh them from the account menu.",
+        "hint": "The table is print-ready: Ctrl/Cmd+P or “Save as PDF”. The signature column stays blank.",
+        "lecturerPlan": "Lecturer's timetable"
+    },
     "types": {
         "WK": "Lecture",
         "LB": "Laboratory",
